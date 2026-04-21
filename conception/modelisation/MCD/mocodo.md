@@ -6,7 +6,11 @@ https://www.mocodo.net/?mcd=eNpVUcGOgyAQvfMVfACH7dWb69IuaVY3apv0RKhOWxJFM-Bu9u8X
 ```
 
 ```
-https://www.mocodo.net/?mcd=eNpVkcFuwyAMhu88BQ_AYb3mlmU0RVXJlKaTekKMuCtSSiJDNu3tB6TpNiFkY8vfb5uCFI9D4q0auRX1qS070cjC9oyCC6idAXUBYNToSRsbvhn1QYfZMzpO4Kz7UNdxRh8JZdWJN9Gdc7HTt1jUgzdop2BHx-hkTZgRVgDZlUdGnyRd6_KjKjteN-2ZrE6mDfodBvKn49jz6cjblLxY9EEteoN-uHDTdmD03WK4ql6HGJq0918jRh6OA5BDueexg82GPjfNXsg6N5Cw5B7I2uu40WJQOqTF9Nn2M-o0Gqm55HFxd1onqj3voitXMFlCBU08BA_4mQuVm2-AvxITWgP3_1hOtStlzZc9vbai4urQvIit4G0OLVzyP0MXnbyzJNfPJon9AIEllLg=
+https://www.mocodo.net/?mcd=eNpVUstuwyAQvPMVfACH5pqb6xIHucEVJpVysoi9aVAdbAHu4-8LJk4TIZll8czuzoDWaFkI3cXZXm4plyzPJK0JfuJ4X1NB8GqFBd0IWm8bWZWUo4cTXmPdEeyHTzAEa-cm6BrlCYafUVtwIUZ5xTes2ItMsoqv4-9gvFWmheYEQHCrRtVq_0uw88pPjuBhBKPNR3MeJutQlkv2zuRhhhp1CZAOXGv16PUQqo669ZOFBY62Wep_wc2HOFZRiQNagpmtV0fo72UIQsSx4-VJW-ebVK9XtxAuSvcEH7X156ZTPqRG5dz3YAOfHXpAu6yMCgbhnquqZLy4qYmuibn2MmzYrU-amaRdN1kVR0MF5VQkPwJb8KakMoR8IUYplTwIaoP9moGNmS5g_0uMVrcwG57VNSv4TJfsDZ2J6pWi-Ek8SZMoRb7NeHF9DG-C5bTZVS9sw664VBw93uA7kthTN7Wxoz-4wbpv
+
+
+
+
 
 
 
@@ -17,7 +21,7 @@ https://www.mocodo.net/?mcd=eNpVkcFuwyAMhu88BQ_AYb3mlmU0RVXJlKaTekKMuCtSSiJDNu3t
 
 ```
 
-:
+
 :
 :
 :
@@ -26,10 +30,16 @@ https://www.mocodo.net/?mcd=eNpVkcFuwyAMhu88BQ_AYb3mlmU0RVXJlKaTekKMuCtSSiJDNu3t
 
 
 :
+:
+:
+:
+:
+
+AUTHENTICATES, 0N USER, 11 REFRESH_TOKEN
+REFRESH_TOKEN : id, token, issued_at, expires_at
 CONFIGURATION:id, entrance_fee, capacity, status, opening_hours
-:
 ACTIVITY:id, name, description, picture, status
-CATEGORY_HAS_ACTIVITY, 0N ACTIVITY, 0N CATEGORY
+HAS, 0N ACTIVITY, 0N CATEGORY
 CATEGORY:id, label
 
 :
@@ -39,19 +49,19 @@ CATEGORY:id, label
 :
 :
 
-USER:id,first_ name, last_name, email, birth_date, password, role
-USER_BOOKS_RESERVATION, 11 RESERVATION, 0N USER
-RESERVATION:id, status, start_at, end_at, duration
-RESERVATION_GENERATES_TICKET, 11 TICKET, 1N RESERVATION
+USER:id,first_name, last_name, email, birth_date, password, role
+MAKES, 11 BOOKING, 0N USER
+BOOKING:id, status, start_at, end_at, duration
+GENERATES, 11 TICKET, 1N BOOKING
 TICKET: id, reservation_numer, status, price
 :
 
 
+ASSIGN, 11 USER, 0N ROLE
+ROLE: id, label
 :
 :
-:
-:
-TICKET_HAS_PRICE_MODIFER, 0N PRICE_MODIFIER, 0N TICKET
+CHANGES, 0N PRICE_MODIFIER, 0N TICKET
 PRICE_MODIFIER : id, label, reduction
 
 

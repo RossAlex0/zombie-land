@@ -15,23 +15,23 @@
 
 | Method | Route | Accès |
 |--------|-------|-------|
-| GET | /api/users | Admin |
-| GET | /api/users/:id | Admin |
-| GET | /api/users/me | Authentifié |
-| PATCH | /api/users/me | Authentifié |
-| PATCH | /api/users/:id | Admin |
-| DELETE | /api/users/:id | Admin |
+| GET | /api/user | Admin |
+| GET | /api/user/:id | Admin |
+| GET | /api/user/me | Authentifié |
+| PATCH | /api/user/me | Authentifié |
+| PATCH | /api/user/:id | Admin |
+| DELETE | /api/user/:id | Admin |
 
 ## Ticket
 
 | Method | Route | Accès |
 |--------|-------|-------|
-| GET | /api/tickets | Public |
-| GET | /api/tickets/:id | Public |
-| GET | /api/tickets/me | Authentifié |
-| POST | /api/tickets | Authentifié |
-| PATCH | /api/tickets/:id | Admin |
-| DELETE | /api/tickets/:id | Admin |
+| GET | /api/ticket | Public |
+| GET | /api/ticket/:id | Public |
+| GET | /api/ticket/me | Authentifié |
+| POST | /api/ticket | Authentifié |
+| PATCH | /api/ticket/:id | Admin |
+| DELETE | /api/ticket/:id | Admin |
 
 
 ## Booking
@@ -65,6 +65,16 @@
 | POST | /api/category | Admin |
 | PATCH | /api/category/:id | Admin |
 | DELETE | /api/activity/:id | Admin |
+
+## Role
+
+| Method | Route | Accès |
+|--------|-------|-------|
+| GET | /api/role | Authentifié |
+| GET | /api/role/:id | Authentifié |
+| POST | /api/role | Admin |
+| PATCH | /api/role/:id | Admin |
+| DELETE | /api/role/:id | Admin |
 
 ## Configuration ( singleton ) 
 

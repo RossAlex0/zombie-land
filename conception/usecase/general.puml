@@ -1,0 +1,49 @@
+@startuml use_cases_zombieland
+
+left to right direction
+
+actor "Visiteur" as visitor
+actor "Utilisateur" as user
+actor "Administrateur" as admin
+
+rectangle ZombieLand {
+  usecase "Consulter les attractions" as UC1
+  usecase "Filtrer par catégorie" as UC2
+  usecase "Voir le détail d'une attraction" as UC3
+  usecase "S'inscrire" as UC4
+  usecase "Se connecter" as UC5
+  usecase "Réserver des billets" as UC6
+  usecase "Voir mes réservations" as UC7
+  usecase "Annuler une réservation" as UC8
+  usecase "Gérer mon profil" as UC9
+  usecase "Gérer les attractions" as UC10
+  usecase "Gérer les catégories" as UC11
+  usecase "Gérer les membres" as UC12
+  usecase "Gérer les réservations" as UC13
+  usecase "Gérer les prix" as UC14
+}
+
+visitor --> UC1
+visitor --> UC2
+visitor --> UC3
+visitor --> UC4
+visitor --> UC5
+
+user --> UC1
+user --> UC2
+user --> UC3
+user --> UC6
+user --> UC7
+user --> UC8
+user --> UC9
+
+admin --> UC10
+admin --> UC11
+admin --> UC12
+admin --> UC13
+admin --> UC14
+
+
+
+
+@enduml

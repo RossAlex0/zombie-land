@@ -20,6 +20,6 @@
 
 ├── 🤷‍♂️ `/profil` — Utilisateur connecté 
 
-├── 🤷‍♂️ `/profil/booking` — Utilisateur connecté 
+├──    ├── 🤷‍♂️ `/booking` — Utilisateur connecté 
 
 └── 👑 `/admin` (Back-office) — Admin

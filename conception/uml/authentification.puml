@@ -30,4 +30,8 @@ API -> API : Génère JWT (userId + role)
 API -> Frontend : 200 - `Set-Cookie` JWT
 Frontend -> User : Page mon compte
 
+
+
+
+
 @enduml
