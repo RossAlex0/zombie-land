@@ -1,0 +1,33 @@
+@startuml authentification
+
+actor User
+participant Frontend
+participant API
+database BDD
+
+== Inscription ==
+
+User -> Frontend : Formulaire d'inscription
+Frontend -> Frontend : Validation champs
+Frontend -> API : POST /auth/register (email, mdp)
+API -> BDD : SELECT user(email)
+BDD -> API : Not found
+API -> API : Hash le mdp
+API -> BDD : INSERT email/hash
+BDD -> API : OK
+API -> API : Génère JWT (userId + role)
+API -> Frontend : 201 + Set-Cookie JWT
+Frontend -> User : Page mon compte
+
+== Connexion ==
+User -> Frontend : Formulaire de connexion
+Frontend -> Frontend : Validation champs
+Frontend -> API : POST /auth/login (email, mdp)
+API -> BDD : SELECT user (email)
+BDD -> API : User (dont hash mdp)
+API -> API : comparer hash=~=mdp
+API -> API : Génère JWT (userId + role)
+API -> Frontend : 200 - `Set-Cookie` JWT
+Frontend -> User : Page mon compte
+
+@enduml

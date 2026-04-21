@@ -1,4 +1,4 @@
-# Documentation des routes API
+# 🚗 Documentation des routes API
 
 ## Authentification
 
@@ -11,72 +11,65 @@
 | POST | /api/auth/forgot-password | Public |
 | POST | /api/auth/reset-password | Public |
 
-## Utilisateurs
+## User
 
 | Method | Route | Accès |
 |--------|-------|-------|
 | GET | /api/users | Admin |
 | GET | /api/users/:id | Admin |
 | GET | /api/users/me | Authentifié |
-| PUT | /api/users/me | Authentifié |
-| PUT | /api/users/:id | Admin |
+| PATCH | /api/users/me | Authentifié |
+| PATCH | /api/users/:id | Admin |
 | DELETE | /api/users/:id | Admin |
 
-## Billets (Ticket Types)
+## Ticket
 
 | Method | Route | Accès |
 |--------|-------|-------|
 | GET | /api/tickets | Public |
 | GET | /api/tickets/:id | Public |
-| POST | /api/tickets | Admin |
-| PUT | /api/tickets/:id | Admin |
+| GET | /api/tickets/me | Authentifié |
+| POST | /api/tickets | Authentifié |
+| PATCH | /api/tickets/:id | Admin |
 | DELETE | /api/tickets/:id | Admin |
 
-## Disponibilités (Billets par jour)
+
+## Booking
 
 | Method | Route | Accès |
 |--------|-------|-------|
-| GET | /api/availability | Public |
-| GET | /api/availability/:date | Public |
-| POST | /api/availability | Admin |
-| PUT | /api/availability/:id | Admin |
+| GET | /api/booking | Admin |
+| GET | /api/booking/me | Authentifié |
+| GET | /api/booking/:id | Authentifié |
+| POST | /api/booking | Authentifié |
+| PATCH | /api/booking/:id | Authentifié (propriétaire) |
+| DELETE | /api/booking/:id | Admin |
 
-## Réservations
-
-| Method | Route | Accès |
-|--------|-------|-------|
-| GET | /api/bookings | Admin |
-| GET | /api/bookings/me | Authentifié |
-| GET | /api/bookings/:id | Authentifié (propriétaire ou Admin) |
-| POST | /api/bookings | Authentifié |
-| PUT | /api/bookings/:id/cancel | Authentifié (propriétaire ou Admin) |
-| DELETE | /api/bookings/:id | Admin |
-
-## Activities
+## Activity
 
 | Method | Route | Accès |
 |--------|-------|-------|
 | GET | /api/activity | Public |
 | GET | /api/activity/:id | Public |
-| POST | /api/activity | Authentifié |
-| PUT | /api/activity/:id/cancel | Authentifié (propriétaire ou Admin) |
+| POST | /api/activity | Admin |
+| PATCH | /api/activity/:id | Admin |
 | DELETE | /api/activity/:id | Admin |
 
 
-## Catégories
+## Catégory
 
 | Method | Route | Accès |
 |--------|-------|-------|
 | GET | /api/category | Public |
 | GET | /api/category/:id | Public |
-| POST | /api/category | Authentifié |
-| PUT | /api/activity/:id/cancel | Authentifié (propriétaire ou Admin) |
+| POST | /api/category | Admin |
+| PATCH | /api/category/:id | Admin |
 | DELETE | /api/activity/:id | Admin |
 
-## Configuration ( singleton ) ====> A voir ??? <====
+## Configuration ( singleton ) 
 
 | Method | Route | Accès |
 |--------|-------|-------|
-| GET | /api/config | Admin |
+| GET | /api/config | Public |
 | POST | /api/config | Admin |
-| PATCH | /api/config/:id/cancel | Admin|
+| PATCH | /api/config/:id | Admin|

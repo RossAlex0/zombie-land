@@ -10,7 +10,7 @@
 |037| Visiteur | consulter la carte intéractive | visualiser les différents emplacements du parc | V3
 ||||
 |007| user | accéder à mon compte | accéder à mes infos utilisateur | MVP
-|008| user | accéder à mon compte | modifier mes infos utilisateur | MVP
+|008| user | modifier mon compte | modifier mes infos utilisateur | MVP
 |009| user | me deconnecter | pouvoir accéder aux fonctions poussées du site | MVP
 |010| user | réserver | réserver une ou plusieurs entrées à une date donnée | MVP
 |011| user | modifier une réservation | modifier une réservation | MVP
