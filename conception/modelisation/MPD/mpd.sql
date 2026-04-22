@@ -111,7 +111,7 @@ CREATE TABLE refresh_token (
     id SERIAL           PRIMARY KEY,
     token TEXT          NOT NULL,
     issued_at           TIMESTAMP   NOT NULL DEFAULT NOW(),
-    expires_at          TIMESTAMP   NOT NULL,
+    expired_at          TIMESTAMP   NOT NULL,
     user_id INTEGER     NOT NULL,
     CONSTRAINT fk_refresh_token_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
