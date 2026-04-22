@@ -29,13 +29,14 @@ visitor --> UC3
 visitor --> UC4
 visitor --> UC5
 
-user --> UC1
-user --> UC2
-user --> UC3
+user --> visitor
+
 user --> UC6
 user --> UC7
 user --> UC8
 user --> UC9
+
+admin --> user
 
 admin --> UC10
 admin --> UC11
