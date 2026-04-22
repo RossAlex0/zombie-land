@@ -6,6 +6,9 @@ actor "Visiteur" as visitor
 actor "Utilisateur" as user
 actor "Administrateur" as admin
 
+visitor <|-- user
+user <|-- admin
+
 rectangle ZombieLand {
   usecase "Consulter les attractions" as UC1
   usecase "Filtrer par catégorie" as UC2
@@ -29,7 +32,6 @@ visitor --> UC3
 visitor --> UC4
 visitor --> UC5
 
-user --> visitor
 
 user --> UC6
 user --> UC7

@@ -56,7 +56,7 @@
 | DELETE | /api/activity/:id | Admin |
 
 
-## Catégory
+## Category
 
 | Method | Route | Accès |
 |--------|-------|-------|

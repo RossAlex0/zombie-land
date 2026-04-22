@@ -3,7 +3,7 @@
 actor Membre
 participant Frontend
 participant API
-participant BDD as Database
+participant BDD
 
 Membre->>Frontend: Ouvre calendrier réservation
 Frontend->>API: Demande disponibilités (mois choisi)
@@ -25,6 +25,7 @@ alt Places suffisantes
     Frontend-->>Membre: Réservation confirmée
 else Plus de places
     API->>BDD: ROLLBACK
+    BDD-->>API: info annulation transaction
     API-->>Frontend: Refus réservation
     Frontend-->>Membre: Message "Complet"
 end

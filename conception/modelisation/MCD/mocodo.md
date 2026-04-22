@@ -1,15 +1,7 @@
-```
-MCD
 
-https://www.mocodo.net/?mcd=eNpVUcGOgyAQvfMVfACH7dWb69IuaVY3apv0RKhOWxJFM-Bu9u8XoRobQhge897MPBKSrIv4nRX5XhxOZVqLIk90yygYh8o0IG8AjDZqVI12f4xap9xkGR1GMNrc5WOY0HqFNKvFWdSXQDaq96QWbIN6dHowjI66cRPCIkCytOaHorzIz7SSC5nRt5y-XJa0NT_od-oKHdnM4Kc4VbycH28arZPPFjrl4xhCr3TH6FWje8hWOQ-NytrfAb0gDh0EBfleFMdKltzH5-AGo7sdfbn7tuZUsgFDV4s1_kQnlZtNbMPZTqhmG7YUeeA594bzStYiO_I6FFrDfFuTRDihcxkEC_gT9KSZesDV0_iXcUVGcPe7FBmXX8WH2PMytL9BxBOK-eT1hcaKwe65cDs1YYx_gAOsVA==
 
 ```
-
-```
-https://www.mocodo.net/?mcd=eNpVUstuwyAQvPMVfACH5pqb6xIHucEVJpVysoi9aVAdbAHu4-8LJk4TIZll8czuzoDWaFkI3cXZXm4plyzPJK0JfuJ4X1NB8GqFBd0IWm8bWZWUo4cTXmPdEeyHTzAEa-cm6BrlCYafUVtwIUZ5xTes2ItMsoqv4-9gvFWmheYEQHCrRtVq_0uw88pPjuBhBKPNR3MeJutQlkv2zuRhhhp1CZAOXGv16PUQqo669ZOFBY62Wep_wc2HOFZRiQNagpmtV0fo72UIQsSx4-VJW-ebVK9XtxAuSvcEH7X156ZTPqRG5dz3YAOfHXpAu6yMCgbhnquqZLy4qYmuibn2MmzYrU-amaRdN1kVR0MF5VQkPwJb8KakMoR8IUYplTwIaoP9moGNmS5g_0uMVrcwG57VNSv4TJfsDZ2J6pWi-Ek8SZMoRb7NeHF9DG-C5bTZVS9sw664VBw93uA7kthTN7Wxoz-4wbpv
-
-
-
+https://www.mocodo.net/?mcd=eNpVUctugzAQvPsr_AEcmis3Sh1i0diVcSrlZDngNlYJINu0zd_XD0gTIcF4zczOzuYgXx5wQx4XB75DhOOy4KjJ4GYDDw1iETC0ZajZCU5rRMDDCeZQdxl045caMqitnVUnpMug-p20UdZjUFKyxdWBFRxTkoff1eDMVUxGtyqDrZxkq901g9ZJN9sMjpMa9PApzuNsLChKjt8xP0bmIC-e0inbGj05Pfqmk27dbNRKB7vC238icOXFQ5iqouwIVhDVenlS_X0KPocwdbj80MY6kfr18gbVReo-gydt3Fl00vnSJK39GY3XM2OvwL6olwCfKa0xqaKBIAuWQuy9Duu_xqXIhhRdNxsZRgMVIojd1uFXUyPuIVmFQSqlFfiwlfmORDHMF2X-W8Sg476LpsEVuduud8boKwLhlXRSJiGKcleQCqUw3xgukdjTF7zFCy81B4838E4keOrmNjj6A8i2ug4=
 
 
 
@@ -35,9 +27,9 @@ https://www.mocodo.net/?mcd=eNpVUstuwyAQvPMVfACH5pqb6xIHucEVJpVysoi9aVAdbAHu4-8L
 :
 :
 
-AUTHENTICATES, 0N USER, 11 REFRESH_TOKEN
+AUTHENTICATES, 11 USER, 11 REFRESH_TOKEN
 REFRESH_TOKEN : id, token, issued_at, expires_at
-CONFIGURATION:id, entrance_fee, capacity, status, opening_hours
+CONFIGURATION:id, entry_price, capacity, status, opening_hours
 ACTIVITY:id, name, description, picture, status
 HAS, 0N ACTIVITY, 0N CATEGORY
 CATEGORY:id, label
