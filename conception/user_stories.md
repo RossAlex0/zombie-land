@@ -2,7 +2,7 @@
 |----|------|-------|-------|---|
 |001| Visiteur | m'inscrire | pouvoir accéder aux fonctions poussées du site | MVP
 |002| Visiteur | me connecter | pouvoir accéder aux fonctions poussées du site | MVP
-|003| Visiteur | voir les disponibilités | savoir quand le parc est accessible | MVP
+|003| Visiteur | voir les disponibilités | choisir une fate pour ma visite| MVP
 |004| Visiteur | consulter les attractions |---| MVP
 |005| Visiteur | accéder aux mentions légales et politique de confidentialités |--- | MVP
 |006| Visiteur | filtrer les attractions qui m'intéresse | --- | MVP
