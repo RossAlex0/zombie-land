@@ -1,6 +1,6 @@
 CREATE TABLE configuration (
     id              INTEGER         PRIMARY KEY DEFAULT 1,
-    entrance_price    DECIMAL(10, 2)  NOT NULL,
+    entry_price    DECIMAL(10, 2)  NOT NULL,
     capacity        INTEGER         NOT NULL,
     status          VARCHAR(50)     NOT NULL DEFAULT 'active',
     opening_hours   TIME            NOT NULL,

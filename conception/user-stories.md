@@ -1,8 +1,8 @@
 | N° | En tant que | je souhaite | Afin de | Version|
 |----|------|-------|-------|---|
-|001| Visiteur | m'inscrire | pouvoir accéder aux fonctions poussées du site | MVP
+|001| Visiteur / Customer | m'inscrire | pouvoir accéder aux fonctions poussées du site | MVP
 |002| Visiteur | me connecter | pouvoir accéder aux fonctions poussées du site | MVP
-|003| Visiteur | voir les disponibilités | choisir une fate pour ma visite| MVP
+|003| Visiteur | voir les disponibilités | choisir une date pour ma visite| MVP
 |004| Visiteur | consulter les attractions |---| MVP
 |005| Visiteur | accéder aux mentions légales et politique de confidentialités |--- | MVP
 |006| Visiteur | filtrer les attractions qui m'intéresse | --- | MVP
@@ -15,7 +15,6 @@
 |010| customer | réserver | réserver une ou plusieurs entrées à une date donnée | MVP
 |011| customer | modifier une réservation |---| MVP
 |012| customer | récupérer le billet correspondant à une reservation | pouvoir accéder au parc | MVP
-|013| customer | m'inscrire | pouvoir accéder aux fonctions poussées du site | MVP
 |014| customer | annuler une reservation  |---| MVP
 |029| customer | payer | payer de façon sécurisée une reservation sur le site | V1 
 |030| customer | accéder à une boutique en ligne | --- | V1 |

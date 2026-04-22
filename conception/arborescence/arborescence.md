@@ -4,22 +4,16 @@
 
 # Arborescence du site
 
-🏠 Home `/`
-
-├── 📄 `/practical-info` — Public - Pages statiques
-
-├── 📄 `/legal-notice` — Public - Pages statiques
-
-├── 📄 `/privacy-policy` — Public - Pages statiques
-
-├── 🎢 `/activity` — Public
-
-├── 🔑 `/login` — Public 
-
-├── 🎟️ `/booking` — Public / 🔒 Authentifié pour finaliser
-
-├── 🤷‍♂️ `/profil` — Utilisateur connecté 
-
-├──    ├── 🤷‍♂️ `/booking` — Utilisateur connecté 
-
-└── 👑 `/admin` (Back-office) — Admin
+```text
+🏠 Home /
+├── 📄 /pratical-info   - Public - Page statique
+├── 📄 /legal-notice    - Public - Page statique
+├── 📄 /privacy-policy  - Public - Page statique
+├── 🎢 /activity        - Public
+├── 🔑 /login           - Public
+├── 🔑 /register        - Public
+├── 📅 /booking         - Public / 🔒 Authentifié pour finaliser
+├── 👤 /profil          - Utilisateur connecté
+│   └── 👤 /booking     - Utilisateur connecté
+└── 👑 /admin           - (Back-office) — Admin
+```

@@ -41,3 +41,14 @@ https://excalidraw.com/#room=e1b0c1ea6139535e5241,xw2OuwThgT_W-gXIn_3Czw
 
 ## Programme aujourd'hui :
 - Schématisation de la BDD (Merise par ex)
+
+
+# 22/04/2026
+
+- Veille : Continuation de la conception : MCD MLD MPD
+- Diagrammes de sequence + usecase
+
+
+To do today :
+- 13h30 Point avec PY de validation
+- Wireframes + maquettes et DA
