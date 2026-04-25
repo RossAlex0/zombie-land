@@ -62,7 +62,6 @@ admin --> UC14
 
 UC2 .> UC1 : <<extend>>
 UC3 .> UC1 : <<extend>>
-UC6 .> UC15 : <<include>>
 UC8 .> UC7 : <<include>>
 UC9a .> UC9 : <<extend>>
 user --> UC9b
