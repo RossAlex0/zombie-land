@@ -2,7 +2,8 @@
 |----|------|-------|-------|---|
 |001| Visiteur / Customer | m'inscrire | pouvoir accéder aux fonctions poussées du site | MVP
 |002| Visiteur | me connecter | pouvoir accéder aux fonctions poussées du site | MVP
-|003| Visiteur | voir les disponibilités | choisir une date pour ma visite| MVP
+|003| Visiteur | consulter le calendrier des disponibilités | savoir si le parc est ouvert à une date donnée | MVP |
+|003b| Customer | choisir une date lors de ma réservation | réserver pour un jour précis | MVP |
 |004| Visiteur | consulter les attractions |---| MVP
 |005| Visiteur | accéder aux mentions légales et politique de confidentialités |--- | MVP
 |006| Visiteur | filtrer les attractions qui m'intéresse | --- | MVP

@@ -24,12 +24,18 @@ rectangle "Public"{
   usecase "Consulter les attractions" as UC1
   usecase "Filtrer par catégorie" as UC2
   usecase "Voir le détail d'une attraction" as UC3
+  usecase "Voir les disponibilités" as UC15
   usecase "S'inscrire" as UC4
   usecase "Se connecter" as UC5
+}
+
+rectangle "Espace Membre"{
   usecase "Réserver des billets" as UC6
   usecase "Voir mes réservations" as UC7
   usecase "Annuler une réservation" as UC8
   usecase "Gérer mon profil" as UC9
+  usecase "Modifier mon profil" as UC9a
+  usecase "Se déconnecter" as UC9b
 }
 
 }
@@ -37,6 +43,7 @@ rectangle "Public"{
 visitor --> UC1
 visitor --> UC2
 visitor --> UC3
+visitor --> UC15
 visitor --> UC4
 visitor --> UC5
 
@@ -53,10 +60,12 @@ admin --> UC12
 admin --> UC13
 admin --> UC14
 
-UC8 .> UC7 : <<include>>
-UC6 .> UC5 : <<include>>
 UC2 .> UC1 : <<extend>>
 UC3 .> UC1 : <<extend>>
+UC6 .> UC15 : <<include>>
+UC8 .> UC7 : <<include>>
+UC9a .> UC9 : <<extend>>
+user --> UC9b
 
 
 
