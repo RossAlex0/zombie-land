@@ -1,7 +1,9 @@
 // src/app/api/users/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { prisma } from '@prismaInstance/*';
 
 // GET /api/users
 export async function GET() {
-  return NextResponse.json([{ name: "John Doe", email: "email@gmail.com" }]);
+  const role = await prisma.role.findMany({});
+  return NextResponse.json(role);
 }

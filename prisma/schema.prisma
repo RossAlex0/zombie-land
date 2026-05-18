@@ -102,17 +102,27 @@ model ticket_price_modifier {
 }
 
 model user {
-  id                  Int       @id @default(autoincrement())
-  first_name          String    @db.VarChar(100)
-  last_name           String    @db.VarChar(100)
-  email               String    @unique @db.VarChar(255)
-  valid_email         Boolean?  @default(false)
-  birth_date          DateTime? @db.Date
-  password            String    @db.VarChar(255)
-  role_id             Int       @default(1)
-  password_changed_at DateTime? @db.Timestamp(6)
-  created_at          DateTime  @default(now()) @db.Timestamp(6)
-  updated_at          DateTime  @default(now()) @db.Timestamp(6)
+  id                  Int             @id @default(autoincrement())
+  first_name          String          @db.VarChar(100)
+  last_name           String          @db.VarChar(100)
+  email               String          @unique @db.VarChar(255)
+  valid_email         Boolean?        @default(false)
+  birth_date          DateTime?       @db.Date
+  password            String          @db.VarChar(255)
+  role_id             Int             @default(1)
+  password_changed_at DateTime?       @db.Timestamp(6)
+  created_at          DateTime        @default(now()) @db.Timestamp(6)
+  updated_at          DateTime        @default(now()) @db.Timestamp(6)
   booking             booking[]
-  role                role      @relation(fields: [role_id], references: [id], onUpdate: NoAction, map: "fk_user_role")
+  refresh_token       refresh_token[]
+  role                role            @relation(fields: [role_id], references: [id], onUpdate: NoAction, map: "fk_user_role")
+}
+
+model refresh_token {
+  id         Int      @id @default(autoincrement())
+  token      String
+  issued_at  DateTime @default(now()) @db.Timestamp(6)
+  expired_at DateTime @db.Timestamp(6)
+  user_id    Int
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_refresh_token_user")
 }

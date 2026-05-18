@@ -23,7 +23,8 @@
       "@hooks/*": ["./src/utils/hooks/*"],
       "@styles/*": ["./src/utils/styles/*"],
       "@types/*": ["./src/utils/types/*"],
-      "@middleware/*": ["./src/utils/api/middleware/*"]
+      "@middleware/*": ["./src/utils/api/middleware/*"],
+      "@prismaInstance/*": ["./src/utils/api/database/client.ts"]
     }
   },
   "include": [
