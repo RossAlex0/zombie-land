@@ -10,7 +10,7 @@ REFRESH_TOKEN ||--o{ USER : ""
 
     CONFIGURATION {
         int id PK
-        decimal entrance_fee
+        decimal entry_price
         int capacity
         string status
         string opening_hours
