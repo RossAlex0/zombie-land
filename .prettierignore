@@ -7,3 +7,5 @@ coverage
 package-lock.json
 public
 docs/**
+prisma/**
+*.sql
