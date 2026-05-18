@@ -26,10 +26,11 @@ rectangle "Public"{
   usecase "Voir le détail d'une attraction" as UC3
   usecase "Voir les disponibilités" as UC15
   usecase "S'inscrire" as UC4
-  usecase "Se connecter" as UC5
 }
 
-rectangle "Espace Membre"{
+usecase "Se connecter" as UC5
+
+rectangle "Espace Membre" as EM{
   usecase "Réserver des billets" as UC6
   usecase "Voir mes réservations" as UC7
   usecase "Annuler une réservation" as UC8
@@ -65,6 +66,7 @@ UC3 .> UC1 : <<extend>>
 UC8 .> UC7 : <<include>>
 UC9a .> UC9 : <<extend>>
 user --> UC9b
+EM .> UC5 : <<include>>
 
 
 
