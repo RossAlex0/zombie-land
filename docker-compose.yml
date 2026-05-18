@@ -1,0 +1,28 @@
+# Docker Compose pour l'environnement de développement
+# Usage: docker-compose -f docker-compose.dev.yml up
+
+services:
+  zombieland-db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      # Exposer le port pour pouvoir accéder à la DB depuis l'hôte (pour les outils de dev)
+      - 5433:5432
+    volumes:
+      - zombieland_db_dev_volume:/var/lib/postgresql/data
+      # - ./docs/conception/modelisation/MPD/mpd.sql:/docker-entrypoint-initdb.d/mpd.sql
+    # networks:
+    #   - zombieland_dev_network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  zombieland_db_dev_volume:
+  # file_db_dev_volume:

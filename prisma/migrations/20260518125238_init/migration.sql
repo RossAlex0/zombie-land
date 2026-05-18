@@ -92,7 +92,6 @@ CREATE TABLE ticket (
 CREATE TABLE price_modifier (
     id          SERIAL PRIMARY KEY,
     label       VARCHAR(100)    NOT NULL,
-    -- On vérifie que reduction n'est pas sépérieur à 100 - réduction est un pourcentage
     reduction   INT   NOT NULL DEFAULT 0 CHECK (reduction >= 0 AND reduction <= 100),
     created_at  TIMESTAMP       NOT NULL DEFAULT NOW(),
     updated_at  TIMESTAMP       NOT NULL DEFAULT NOW()
