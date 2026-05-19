@@ -24,7 +24,8 @@
       "@styles/*": ["./src/utils/styles/*"],
       "@types/*": ["./src/utils/types/*"],
       "@middleware/*": ["./src/utils/api/middleware/*"],
-      "@prismaInstance/*": ["./src/utils/api/database/client.ts"]
+      "@prismaInstance/*": ["./src/utils/api/database/client.ts"],
+      "@server/*": ["./src/server/*"]
     }
   },
   "include": [
