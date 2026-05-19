@@ -1,9 +1,18 @@
-// src/app/api/users/route.ts
 import { NextResponse } from 'next/server';
-import { prisma } from '@prismaInstance/*';
+import * as activityController from '@server/controllers/activity/activity.controller';
 
-// GET /api/users
+// GET /api/activity
 export async function GET() {
-  const role = await prisma.role.findMany({});
-  return NextResponse.json(role);
+  const data = await activityController.readAllActivities();
+
+  return NextResponse.json({ data }, { status: 200 });
+}
+
+// POST /api/activity
+export async function POST(req: NextResponse) {
+  const body = await req.json();
+
+  const data = await activityController.create(body);
+
+  return NextResponse.json({ data }, { status: 200 });
 }
