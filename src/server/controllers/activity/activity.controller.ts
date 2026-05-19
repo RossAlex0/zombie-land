@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server';
 import { activityCreateSchema } from '@server/schemas';
 import {
   createActivity,
@@ -17,8 +16,8 @@ export const readActivityById = async (id: number) => {
   return activity;
 };
 
-export const create = async (req: NextRequest) => {
-  const activityBody = activityCreateSchema.parse(req);
+export const create = async (body: unknown) => {
+  const activityBody = activityCreateSchema.parse(body);
 
   const activity = await createActivity(activityBody);
 
@@ -32,7 +31,7 @@ export const create = async (req: NextRequest) => {
       }
     }
   }
-  if (responseCategoryActivity) {
+  if (responseCategoryActivity.length) {
     return { ...activity, category_activity: responseCategoryActivity };
   }
   return activity;
