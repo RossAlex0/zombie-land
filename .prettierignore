@@ -9,3 +9,5 @@ public
 docs/**
 prisma/**
 *.sql
+prisma.config.ts
+next.config.ts
