@@ -6,7 +6,7 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 500,
 });
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   try {
     limiter.checkNext(request, 20);
   } catch {
