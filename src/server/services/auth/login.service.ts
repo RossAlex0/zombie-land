@@ -21,3 +21,7 @@ export const loginUser = async (email: string, password: string): Promise<LoginR
 
   return { ok: true, accessToken, refreshToken };
 };
+
+export const findUserByEmail = async (email: string) => {
+  return prisma.user.findUnique({ where: { email } });
+};
