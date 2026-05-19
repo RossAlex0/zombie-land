@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { COOKIE_NAMES } from '@server/utils/enum/cookies';
-import * as authService from '@server/services/auth';
+import * as refreshToken from '@server/services/refreshToken.service';
 
 export const logout = async (req: NextRequest) => {
   try {
-    const refreshToken = req.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
+    const refreshTokenId = req.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
-    if (refreshToken) {
-      await authService.logout(refreshToken);
+    if (refreshTokenId) {
+      await refreshToken.deleteMany(refreshTokenId);
     }
 
     const response = NextResponse.json({ message: 'Déconnexion réussie' }, { status: 200 });
