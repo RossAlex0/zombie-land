@@ -52,3 +52,14 @@ https://excalidraw.com/#room=e1b0c1ea6139535e5241,xw2OuwThgT_W-gXIn_3Czw
 To do today :
 - 13h30 Point avec PY de validation
 - Wireframes + maquettes et DA
+
+# 18/05/2026
+
+- Validation des élément graphiques (+ 1 modif sur les user case)
+- Initialisation du projet (base de l'architecture front & back avec next)
+  - Configuration : Prettier ESlint & Husky + CommitLint, début de pipeline Github actions, 
+- Création de la DB dockerisée avec Prisma
+
+# 19/05/2026
+
+- To do : Connexion & Inscription
