@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     if (!userData) {
       throw new Error('User data missing');
     }
-    const { password, confirmPassword, ...userToCreate } = userData;
+    const { password, confirmPassword, ...userToCreate } = signupSchema.parse(userData);
     if (password !== confirmPassword) throw new Error('Les mots de passes ne correspondent pas');
 
     const hash = await argon2.hash(password);
