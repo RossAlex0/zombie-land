@@ -1,6 +1,5 @@
-import { NextRequest } from 'next/server';
-import * as authController from '@server/controllers/auth';
+import { authController } from '@server/controllers';
+import { withErrorHandler } from '@helpers/withErorrHandler';
 
-export async function POST(req: NextRequest) {
-  return authController.login(req);
-}
+// POST /api/login
+export const POST = withErrorHandler(authController.login);

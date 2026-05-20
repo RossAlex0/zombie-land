@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { COOKIE_NAMES } from '@server/utils/enum/cookies';
+import { COOKIE_NAMES } from '@customTypes/enum/cookies';
 
 const baseOptions = {
   httpOnly: true,

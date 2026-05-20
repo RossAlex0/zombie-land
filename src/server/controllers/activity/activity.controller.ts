@@ -1,38 +1,55 @@
+import { NextContext } from '@customTypes/nextApi';
 import { activityCreateSchema } from '@server/schemas';
-import {
-  createActivity,
-  createCategoryActivity,
-  getAllActivities,
-  getActivityById,
-} from '@server/services';
+import { ActivityModel, CategoryActivityModel } from '@server/services';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const readAllActivities = async () => {
-  const activites = await getAllActivities();
-  return activites;
-};
+export const activityController = {
+  readAllActivities: async () => {
+    throw new Error('Error not found');
+    const activityService = new ActivityModel();
+    const activites = await activityService.readAll();
 
-export const readActivityById = async (id: number) => {
-  const activity = await getActivityById(id);
-  return activity;
-};
+    return NextResponse.json({ data: activites }, { status: 200 });
+  },
 
-export const create = async (body: unknown) => {
-  const activityBody = activityCreateSchema.parse(body);
+  readActivityById: async (req: NextRequest, context: NextContext<{ activityId: string }>) => {
+    const { activityId } = await context.params;
 
-  const activity = await createActivity(activityBody);
+    const activityService = new ActivityModel();
 
-  const responseCategoryActivity = [];
-  if (activityBody.category_activity) {
-    for (const categoryActivy of activityBody.category_activity) {
-      if (categoryActivy.category_id) {
-        responseCategoryActivity.push(
-          await createCategoryActivity({ ...categoryActivy, activity_id: activity.id })
-        );
+    const activity = await activityService.getActivityById(Number(activityId));
+
+    return NextResponse.json({ data: activity }, { status: 200 });
+  },
+
+  create: async (req: NextRequest) => {
+    const body = await req.json();
+
+    const { category_activity, ...activityBody } = activityCreateSchema.parse(body);
+
+    const activityService = new ActivityModel();
+
+    const activity = await activityService.create({ data: activityBody });
+
+    const responseCategoryActivity = [];
+    if (category_activity) {
+      for (const categoryActivy of category_activity) {
+        if (categoryActivy.category_id) {
+          const categoryActivityService = new CategoryActivityModel();
+          responseCategoryActivity.push(
+            await categoryActivityService.create({
+              data: { ...categoryActivy, activity_id: activity.id },
+            })
+          );
+        }
       }
     }
-  }
-  if (responseCategoryActivity.length) {
-    return { ...activity, category_activity: responseCategoryActivity };
-  }
-  return activity;
+    if (responseCategoryActivity.length) {
+      return NextResponse.json(
+        { data: { ...activity, category_activity: responseCategoryActivity } },
+        { status: 201 }
+      );
+    }
+    return NextResponse.json({ data: activity }, { status: 201 });
+  },
 };

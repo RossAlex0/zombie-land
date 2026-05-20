@@ -1,5 +1,5 @@
 import { authController } from '@server/controllers';
 import { withErrorHandler } from '@helpers/withErorrHandler';
 
-// POST /api/logout
-export const POST = withErrorHandler(authController.logout);
+// POST /api/user/reset-password
+export const POST = withErrorHandler(authController.resetPassword);
