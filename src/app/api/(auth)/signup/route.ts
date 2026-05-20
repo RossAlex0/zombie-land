@@ -6,7 +6,7 @@ import { prisma } from '@prismaInstance/*';
 
 export async function POST(req: NextRequest) {
   try {
-    const userData: IUserSignup = await req.json();
+    const userData: Partial<user> & { confirmPassword: string } = await req.json();
     if (!userData) {
       throw new Error('User data missing');
     }
