@@ -8,12 +8,7 @@ export const loginUser = async (email: string, password: string): Promise<LoginR
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return { ok: false };
 
-  let isMatch = false;
-  try {
-    isMatch = await argon2.verify(user.password, password);
-  } catch {
-    isMatch = false;
-  }
+   const isMatch = await argon2.verify(user.password, password);
   if (!isMatch) return { ok: false };
 
   const accessToken = await generateAccessToken(user.id, user.role_id);
