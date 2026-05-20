@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+export const loginSchema = z.object({
+  email: z.email().min(2),
+  //!A changer pour au moins 12 avant le passage du TP
+  password: z.string().min(6),
+});
+
 export const signupSchema = z
   .object({
     first_name: z.string().min(3),

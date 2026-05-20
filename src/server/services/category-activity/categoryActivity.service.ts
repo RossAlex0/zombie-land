@@ -1,10 +1,7 @@
-import { prisma } from '@prismaInstance/*';
-import { category_activity } from '../../../../prisma/generated/browser';
+import { AbstractModel } from '@server/services/AbstractModel';
 
-export const createCategoryActivity = async (body: Omit<category_activity, 'created_at'>) => {
-  const result = await prisma.category_activity.create({
-    data: body,
-  });
-
-  return result;
-};
+export class CategoryActivityModel extends AbstractModel<'category_activity'> {
+  constructor() {
+    super('category_activity');
+  }
+}
