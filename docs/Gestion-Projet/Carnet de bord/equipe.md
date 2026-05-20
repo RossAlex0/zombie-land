@@ -63,3 +63,31 @@ To do today :
 # 19/05/2026
 
 - To do : Connexion & Inscription
+
+
+# 20/05/2026
+
+Alex : 
+- Déconnexion :
+  - Front : hook créé
+  - Back : code créé
+
+
+Ariel : 
+- Front : à continuer
+- Back : Route crée + route pour savoir qui est connecté
+
+
+Hervé :
+- Inscription :
+- Front : formulaire créé, appel à tester et potentiellement fix
+- back : Globalement OK, quelques fixes à faire (déplacer du code dans le controller)
+
+
+Ludivine : 
+- Back : Ajouter une activité + les récupérer donce + en récupérer une seule
+- Front :  à continuer
+
+TOdo  :
+- Faire une route front + back à c faire en commun 
+- Terminer les tâches commencées
