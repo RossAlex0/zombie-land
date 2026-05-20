@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const hash = await argon2.hash(password);
 
-    const addedUser = prisma.user.create({ data: { ...userToCreate, password: hash } });
+    const addedUser = await prisma.user.create({ data: { ...userToCreate, password: hash } });
     console.log('added user to db :', addedUser);
 
     const response = NextResponse.json({ message: 'Inscription réussie' }, { status: 200 });
