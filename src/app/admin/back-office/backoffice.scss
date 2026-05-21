@@ -1,0 +1,56 @@
+@use '../../../utils/styles/variables' as *;
+
+.backoffice {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  gap: 2%;
+
+  &_sidebar {
+    height: 100%;
+    width: 21%;
+    border: 1px solid white;
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    height: 100%;
+    width: 77%;
+
+    &_header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      &_title {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+
+        &_dash {
+          min-width: 15%;
+          width: fit-content;
+          padding: 0.5rem 1rem;
+          background-color: $light-black;
+          border: 1px solid $dark-white;
+          border-radius: 8px;
+        }
+
+        &_items {
+          min-width: 15%;
+          width: fit-content;
+          padding: 0.5rem 1rem;
+          background-color: $light-black;
+          border: 1px solid $primary-yellow;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+}
