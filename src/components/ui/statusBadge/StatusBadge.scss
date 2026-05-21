@@ -1,0 +1,32 @@
+@use '../../../utils/styles/variables' as *;
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-family: $font-jetbrains-text;
+  font-size: $font-size-content-s;
+
+  &--pending {
+    background-color: $primary-yellow;
+    color: $primary-black;
+  }
+  &--validated {
+    background-color: $primary-green;
+    color: $primary-black;
+  }
+  &--open {
+    background-color: $primary-green;
+    color: $primary-black;
+  }
+  &--cancel {
+    background-color: $primary-red;
+    color: $primary-white;
+  }
+  &--close {
+    background-color: $primary-red;
+    color: $primary-white;
+  }
+}

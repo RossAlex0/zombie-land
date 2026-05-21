@@ -9,13 +9,13 @@ import './ButtonZbl.scss';
 
 export type ButtonZblProps = {
   children: ReactNode;
-  theme?: 'dark' | 'light';
+  theme?: 'dark' | 'light' | 'custom';
   navTo?: string;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
 
 export default function ButtonZbl({
   children,
-  theme = 'dark',
+  theme = 'light',
   navTo = '/',
   ...props
 }: ButtonZblProps) {

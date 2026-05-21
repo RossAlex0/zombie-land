@@ -3,9 +3,58 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 280px;
   height: 100vh;
-  background-color: $primary-grey;
-}
-.sidebar__nav {
+  background-color: $light-black;
+  border: 2px solid $primary-grey;
+  border-radius: 8px;
+  padding: 24px 16px;
+  gap: 30px;
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    &_image {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    &_title {
+      background: linear-gradient(90deg, #ffd500 0%, #a34420 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  &__nav {
+    &_container {
+      display: flex;
+      flex-direction: column;
+    }
+    &_link {
+      list-style: none;
+      color: $primary-white;
+      padding-bottom: 23px;
+      font-family: $font-jetbrains-text;
+
+      &:hover {
+        color: $primary-yellow;
+      }
+
+      &--active {
+        color: $primary-yellow;
+        text-decoration: underline;
+        text-decoration-color: $primary-yellow;
+      }
+    }
+  }
+  &__button {
+    width: 100% !important;
+  }
 }
