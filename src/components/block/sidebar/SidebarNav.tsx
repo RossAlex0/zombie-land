@@ -1,5 +1,7 @@
 'use client';
-import styles from './sidebar.module.scss';
+import './sidebar.scss';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const links = [
   { label: 'Accueil', href: '' },
@@ -15,12 +17,16 @@ const links = [
 ];
 
 export default function SidebarNav() {
+  const pathname = usePathname();
   return (
-    <nav className={styles.sidebar__nav}>
-      <ul>
+    <nav className="sidebar__nav">
+      <ul className="sidebar__nav_container">
         {links.map((link) => (
-          <li key={link.href}>
-            <a href={link.href}>{link.label}</a>
+          <li
+            key={link.label}
+            className={`sidebar__nav_link ${pathname === link.href ? 'sidebar__nav_link--active' : ''}`}
+          >
+            <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
       </ul>

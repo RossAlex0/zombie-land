@@ -1,12 +1,9 @@
-import Header from '@components/block/header/Header';
+import AdminLayout from '@components/layout/AdminLayout';
 
 export default function Home() {
   return (
-    <div>
-      <main>
-        <Header />
-        <p>Welcome to ZombieLand</p>
-      </main>
-    </div>
+    <AdminLayout>
+      <p>Contenu de test</p>
+    </AdminLayout>
   );
 }
