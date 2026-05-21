@@ -101,8 +101,8 @@ export const authController = {
 
     const user = await userService.findUserByEmail(email);
 
-    if (!user) {
-      return NextResponse.json({ error: 'Email not found' }, { status: 404 });
+    if (user) {
+      // TODO: générer token + stocker en BDD + envoyer email
     }
 
     return NextResponse.json({ message: 'Password reset link sent' }, { status: 200 });
