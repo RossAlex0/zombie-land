@@ -1,0 +1,11 @@
+@use '../../../utils/styles/variables' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 100vh;
+  background-color: $primary-grey;
+}
+.sidebar__nav {
+}
