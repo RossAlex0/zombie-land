@@ -17,7 +17,7 @@ export default function Header() {
     <header className="header">
       <div className="header_logo">
         <div className="header_logo_image">
-          <Image fill src={'/icons/logo.svg'} alt="Montagne russe zombie" loading="lazy" />
+          <Image fill src={'/icons/logo.svg'} alt="Montagne russe zombie" loading="eager" />
         </div>
         <div>
           <TextZbl tag="h1" color="none" className="header_title">

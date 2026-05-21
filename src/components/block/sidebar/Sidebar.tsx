@@ -9,7 +9,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar__logo">
         <div className="sidebar__logo_image">
-          <Image fill src={'/icons/logo.svg'} alt="Montagne russe zombie" loading="lazy" />
+          <Image fill src={'/icons/logo.svg'} alt="Montagne russe zombie" loading="eager" />
         </div>
         <TextZbl tag="h1" color="none" className="sidebar__logo_title">
           ZOMBIE LAND

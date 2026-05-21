@@ -11,8 +11,7 @@ const links = [
   { label: 'Réservations', href: '' },
   { label: 'Roles', href: '' },
   { label: 'Ticket', href: '' },
-  { label: 'Modificateur de prix', href: '' },
-  { label: 'Refresh token', href: '' },
+  { label: 'Réduction prix', href: '' },
   { label: 'Configuration', href: '' },
 ];
 
