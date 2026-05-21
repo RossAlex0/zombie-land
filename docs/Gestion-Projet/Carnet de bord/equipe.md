@@ -88,6 +88,17 @@ Ludivine :
 - Back : Ajouter une activité + les récupérer donce + en récupérer une seule
 - Front :  à continuer
 
-TOdo  :
+Todo  :
 - Faire une route front + back à c faire en commun 
 - Terminer les tâches commencées
+
+
+# 21/05/2026
+
+- Refactorisation du code en commun : 
+  - Middleware errorHandler (décorateur) + Accesstoken
+- Merge côté back des différentes fonctions créées
+
+- To do : 
+  - Inscription et connexion côté front & back
+- Elements graphiques (header / footer)...
