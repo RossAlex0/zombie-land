@@ -1,0 +1,34 @@
+$primary-yellow: #e5bf00;
+$light-yellow: #f4d610;
+$dark-yellow: #d5be25;
+
+$primary-black: #191919;
+$medium-black: #282828;
+$light-black: #3d3d3d;
+
+$primary-white: #e5e5e5;
+$dark-white: #e8e8e8;
+
+$primary-grey: #828282;
+$dark-grey: #4d4d4d;
+
+$primary-red: #ac382a;
+$secondary-red: #a34420;
+$light-red: #ac382acc;
+
+$font-bebas-title: var(--font-bebas-neue);
+$font-liter-text: var(--font-liter);
+$font-jetbrains-text: var(--font-jetbrains-mono);
+
+//Tailles - Header
+$font-size-title-m: 48px;
+$font-size-title-s: 20px;
+$font-size-content-m: 16px;
+$font-size-content-s: 12px;
+$font-size-content-xs: 10px;
+
+$breakpoints: (
+  'mobile': 480px,
+  'tablet': 768px,
+  'desktop': 1024px,
+);

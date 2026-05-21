@@ -1,0 +1,67 @@
+@use '../../../utils/styles/variables' as *;
+
+.text_h1 {
+  font-family: $font-bebas-title;
+  font-size: 28px;
+
+  &_jtb {
+    font-family: $font-jetbrains-text !important;
+    font-weight: 700;
+  }
+}
+.text_h2 {
+  font-family: $font-bebas-title;
+  font-size: 26px;
+
+  &_jtb {
+    font-family: $font-jetbrains-text !important;
+    font-weight: 700;
+  }
+}
+.text_h3 {
+  font-family: $font-bebas-title;
+  font-size: 20px;
+
+  &_jtb {
+    font-family: $font-jetbrains-text !important;
+    font-weight: 700;
+  }
+}
+.text_h4 {
+  font-family: $font-bebas-title;
+  font-size: 14px;
+
+  &_jtb {
+    font-family: $font-jetbrains-text !important;
+    font-weight: 700;
+  }
+}
+.text_p {
+  font-family: $font-liter-text;
+  font-size: 12px;
+
+  &_jtb {
+    font-family: $font-jetbrains-text !important;
+    font-weight: 400;
+  }
+}
+
+.color_dark {
+  color: $primary-black;
+}
+.color_white {
+  color: $primary-white;
+}
+.color_yellow {
+  color: $primary-yellow;
+}
+.color_red {
+  color: $primary-red;
+}
+.color_grey {
+  color: $primary-grey;
+}
+
+.prefix {
+  margin-right: 4px;
+}

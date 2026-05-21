@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "clean:next": "rm -rf .next",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -41,6 +42,7 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
     "prisma": "^7.8.0",
+    "sass": "^1.99.0",
     "typescript": "^5"
   },
   "lint-staged": {

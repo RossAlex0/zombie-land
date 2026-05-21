@@ -5,7 +5,6 @@ export default function Home() {
     <div>
       <main>
         <Header />
-        <p>Welcome to ZombieLand</p>
       </main>
     </div>
   );
