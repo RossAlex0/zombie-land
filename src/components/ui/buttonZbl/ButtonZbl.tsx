@@ -3,20 +3,18 @@
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
-import type { ReactNode, ButtonHTMLAttributes, CSSProperties } from 'react';
+import type { ReactNode, ButtonHTMLAttributes } from 'react';
 
 import './ButtonZbl.scss';
 
 export type ButtonZblProps = {
   children: ReactNode;
-  textStyle?: CSSProperties;
   theme?: 'dark' | 'light';
   navTo?: string;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
 
 export default function ButtonZbl({
   children,
-  textStyle,
   theme = 'dark',
   navTo = '/',
   ...props

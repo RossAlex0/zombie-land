@@ -1,0 +1,81 @@
+@use '../../../utils/styles/variables' as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 4rem;
+  height: 13vh;
+  width: 100%;
+  background: linear-gradient(90deg, #282828 0%, #3d3d3d 58%, #3d3d3d 100%);
+
+  &_logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 10vh;
+    min-width: 10vw;
+
+    &_image {
+      position: relative;
+      height: 10vh;
+      min-width: 6vw;
+      width: fit-content;
+      margin-right: 8px;
+    }
+  }
+
+  &_title {
+    background: linear-gradient(90deg, #ffd500 0%, #a34420 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin-left: 4px;
+  }
+  &_title_desc {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+  }
+
+  &_link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 58%;
+
+    &_nav {
+      display: flex;
+      gap: 2rem;
+
+      &_text {
+        transition: ease-in 0.5s;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -4px;
+          width: 0;
+          height: 1px;
+          background: $primary-red;
+          transition: all 0.3s ease;
+        }
+
+        &:hover::after,
+        &.active::after {
+          left: 0;
+
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.link_active {
+}
