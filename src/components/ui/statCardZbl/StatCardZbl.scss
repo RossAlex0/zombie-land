@@ -1,0 +1,47 @@
+@use '../../../utils/styles/variables' as *;
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background-color: $light-black;
+  border: 1px solid $primary-grey;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+
+  &__label {
+    color: $primary-white;
+    font-size: $font-size-content-m;
+  }
+
+  &__value {
+    font-family: $font-bebas-title;
+    font-size: $font-size-title-m;
+    white-space: nowrap;
+
+    &--green {
+      color: $primary-green;
+    }
+    &--yellow {
+      color: $primary-yellow;
+    }
+    &--red {
+      color: $primary-red;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $font-size-title-s;
+    }
+  }
+
+  &__unit {
+    font-family: $font-bebas-title;
+    font-size: $font-size-title-m;
+
+    @media (max-width: 768px) {
+      font-size: $font-size-title-s;
+    }
+  }
+}

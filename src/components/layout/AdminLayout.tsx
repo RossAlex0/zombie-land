@@ -1,5 +1,7 @@
 'use client';
 
+//Cadre commun du BO
+
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import Image from 'next/image';
