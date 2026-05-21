@@ -23,9 +23,9 @@ export default function TextZbl({
   return (
     <Tag
       {...props}
-      className={`text_${Tag}${fontText} ${colorText} ${props.className ?? ''}`.trim()}
+      className={`global_text text_${Tag}${fontText ? fontText : ''} ${colorText} ${props.className ?? ''}`.trim()}
     >
-      {redPrefix ? <span className="prefix color_red text_p_jtb">{redPrefix}</span> : undefined}
+      {redPrefix ? <span className="color_red text_p_jtb">{redPrefix}</span> : undefined}
       {children}
     </Tag>
   );

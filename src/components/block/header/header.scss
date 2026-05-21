@@ -13,6 +13,7 @@
   &_logo {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
     height: 10vh;
     min-width: 10vw;
@@ -45,7 +46,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 58%;
+    width: 65%;
+    max-width: 75%;
 
     &_nav {
       display: flex;
