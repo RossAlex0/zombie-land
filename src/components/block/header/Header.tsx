@@ -36,7 +36,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <ButtonZbl>
+        <ButtonZbl theme="dark">
           <Lock size={16} color="#e5bf00" />
           <TextZbl tag="p" color="yellow" jetbrains>
             Se connecter
