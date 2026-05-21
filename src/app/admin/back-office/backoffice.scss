@@ -1,0 +1,39 @@
+@use '../../../utils/styles/variables' as *;
+
+.backoffice_content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  height: 100%;
+  width: 100%;
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+
+      &_dash {
+        min-width: 15%;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        background-color: $light-black;
+        border: 1px solid $dark-white;
+        border-radius: 8px;
+      }
+
+      &_items {
+        min-width: 15%;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        background-color: $light-black;
+        border: 1px solid $primary-yellow;
+        border-radius: 8px;
+      }
+    }
+  }
+}
