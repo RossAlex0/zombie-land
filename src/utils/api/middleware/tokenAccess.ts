@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 import { UnauthorizedError } from '../../errors/errors';
 import { NextContext } from '@customTypes/nextApi';
-import { Controller } from '@helpers/withErorrHandler';
+import { Controller } from '@helpers/withErrorHandler';
 
 const secret = process.env.JWT_SECRET as string;
 

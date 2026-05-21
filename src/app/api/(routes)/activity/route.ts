@@ -1,4 +1,4 @@
-import { withErrorHandler } from '@helpers/withErorrHandler';
+import { withErrorHandler } from '@helpers/withErrorHandler';
 import { activityController } from '@server/controllers';
 
 // GET /api/activity
