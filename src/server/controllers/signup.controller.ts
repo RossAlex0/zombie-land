@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { IUserSignup } from '../../utils/types/User';
+// import { IUserSignup } from '../../utils/types/User';
 
 import argon2 from 'argon2';
 import { prisma } from '@prismaInstance/*';

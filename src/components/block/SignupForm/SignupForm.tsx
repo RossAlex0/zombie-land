@@ -7,7 +7,7 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import useSignup from '@hooks/auth/useSignup';
 
 export default function SignupForm() {
-  const { signup, loading, error } = useSignup();
+  const { signup } = useSignup();
   const fields = [
     {
       type: 'text',
