@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import { prisma } from '@prismaInstance/*';
 import { NextRequest } from 'next/server';
-import { AccessTokenPayload } from '@middleware/tokenAcces';
+import { AccessTokenPayload } from '@middleware/tokenAccess';
 import { COOKIE_NAMES } from '@customTypes/enum/cookies';
 
 const ACCESS_TOKEN_TTL = '15m';
