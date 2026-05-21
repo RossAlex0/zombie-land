@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import useMutation from '@hooks/api-request/useMutation';
+import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import FormInput from '@components/ui/FormInput/FormInput';
 import './loginForm.scss';
 
 type LoginBody = { email: string; password: string };
@@ -39,13 +41,10 @@ export default function LoginForm() {
         Survivez aux attractions. Fuyez les zombies. Gagnez votre ticket de sortie
       </TextZbl>
 
-      <TextZbl tag="p" jetbrains redPrefix="---">
-        Email
-      </TextZbl>
-      <input
+      <FormInput
         id="email"
+        label="Email"
         type="email"
-        className="login-form__input"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={loading}
@@ -53,13 +52,10 @@ export default function LoginForm() {
         required
       />
 
-      <TextZbl tag="p" jetbrains redPrefix="---">
-        Mot de passe
-      </TextZbl>
-      <input
+      <FormInput
         id="password"
+        label="Mot de passe"
         type="password"
-        className="login-form__input"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={loading}
@@ -73,11 +69,11 @@ export default function LoginForm() {
         </TextZbl>
       )}
 
-      <button type="submit" className="login-form__submit" disabled={loading}>
+      <ButtonZbl type="submit" className="login-form__submit" disabled={loading}>
         <TextZbl tag="p" color="yellow" jetbrains>
           {loading ? 'Connexion…' : 'Se connecter'}
         </TextZbl>
-      </button>
+      </ButtonZbl>
 
       <Link href="/reset-password" className="login-form__link">
         <TextZbl tag="p" color="grey" jetbrains>

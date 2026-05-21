@@ -11,17 +11,23 @@ export type ButtonZblProps = {
   children: ReactNode;
   theme?: 'dark' | 'light' | 'custom';
   navTo?: string;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function ButtonZbl({
   children,
   theme = 'light',
-  navTo = '/',
+  navTo,
+  onClick,
   ...props
 }: ButtonZblProps) {
   const router = useRouter();
 
-  const handleClick = useCallback(() => router.push(navTo), [navTo, router]);
+  //const handleClick = useCallback(() => router.push(navTo), [navTo, router]);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    if (navTo && !e.defaultPrevented) router.push(navTo);
+  };
 
   const buttonClass = props.disabled ? `button_custom_disabled` : `button_custom`;
 

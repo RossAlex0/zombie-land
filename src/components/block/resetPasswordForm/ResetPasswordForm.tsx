@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import useMutation from '@hooks/api-request/useMutation';
+import FormInput from '@components/ui/FormInput/FormInput';
 import './resetPasswordForm.scss';
 
 type ResetPasswordBody = { email: string };
@@ -67,13 +68,10 @@ export default function ResetPasswordForm() {
             if (result.ok) setSubmitted(true);
           }}
         >
-          <TextZbl tag="p" jetbrains redPrefix="---">
-            Email
-          </TextZbl>
-          <input
+          <FormInput
             id="email"
+            label="Email"
             type="email"
-            className="reset-password-form__input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
