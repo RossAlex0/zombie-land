@@ -32,7 +32,9 @@ export default function Header() {
         <nav className="header_link_nav">
           {navigationNames.map((nav, index) => (
             <Link key={nav.label} href={nav.href} className="header_link_nav_text">
-              <TextZbl redPrefix={`0${index + 1}`}>{nav.label}</TextZbl>
+              <TextZbl jetbrains redPrefix={`0${index + 1}`}>
+                {nav.label}
+              </TextZbl>
             </Link>
           ))}
         </nav>

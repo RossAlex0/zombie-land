@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const activityController = {
   readAllActivities: async () => {
-    throw new Error('Error not found');
     const activityService = new ActivityModel();
     const activites = await activityService.readAll();
 

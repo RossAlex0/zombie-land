@@ -1,0 +1,13 @@
+.park-map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16 / 9; // ou le ratio réel de ton image
+  margin: 0 auto;
+  filter: drop-shadow(0 0 24px rgba(72, 9, 9, 0.4)) drop-shadow(0 0 35px rgba(67, 7, 7, 0.5));
+}
+
+.park-map {
+  object-fit: contain;
+  clip-path: url(#parchment);
+}
