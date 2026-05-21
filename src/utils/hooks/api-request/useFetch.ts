@@ -1,25 +1,29 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
-export default function useFetch<T>(url: string) {
-  const [data, setData] = React.useState<T | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<Error | null>(null);
+const cache = new Map<string, unknown>();
 
-  React.useEffect(() => {
+export default function useFetch<T>(url: string, forceRefresh = false) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!forceRefresh && cache.has(url)) {
+      return;
+    }
+
     const controller = new AbortController();
 
     const fetchData = async () => {
       setLoading(true);
-
-      setData(null);
-
       setError(null);
 
       try {
         const res = await fetch(url, { signal: controller.signal });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const result: T = await res.json();
-        setData(result);
+        const result = await res.json();
+        cache.set(url, result.data);
+        setData(result.data);
       } catch (err) {
         if (err instanceof DOMException && err.name === 'AbortError') return;
         setError(err instanceof Error ? err : new Error(String(err)));
@@ -31,7 +35,11 @@ export default function useFetch<T>(url: string) {
     fetchData();
 
     return () => controller.abort();
-  }, [url]);
+  }, [forceRefresh, url]);
+
+  if (!forceRefresh && cache.has(url)) {
+    return { data: cache.get(url) as T, loading: false, error };
+  }
 
   return { data, loading, error };
 }
