@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { UserModel } from '@server/services';
-import { getTokenAcces } from '../../../utils/api/token';
+import { getTokenAccess } from '../../../utils/api/token';
 
 export const userController = {
   me: async (req: NextRequest) => {
-    const token = getTokenAcces(req);
+    const token = getTokenAccess(req);
 
     const userService = new UserModel();
 
