@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from '@components/block/header/Header';
 import LoginForm from '@components/block/loginForm/LoginForm';
 import './login.scss';
@@ -7,7 +8,9 @@ export default function LoginPage() {
     <>
       <Header />
       <main className="login">
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
       </main>
     </>
   );
