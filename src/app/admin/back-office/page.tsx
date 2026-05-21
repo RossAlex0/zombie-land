@@ -11,35 +11,30 @@ export default function Home() {
   const [period, setPeriod] = useState<string>(FilterPeriod.TODAY);
 
   return (
-    <main className="backoffice">
-      <div className="backoffice_sidebar">
-        <p>sidebar</p>
-      </div>
-      <div className="backoffice_content">
-        <div className="backoffice_content_header">
-          <div className="backoffice_content_header_title">
-            <div className="backoffice_content_header_title_dash white">
-              <TextZbl jetbrains>Dashboard globale</TextZbl>
-            </div>
-            {/* conditions if not accueil */}
-            <div className="backoffice_content_header_title_items yellow">
-              <TextZbl jetbrains color="yellow">
-                14 items
-              </TextZbl>
-            </div>
+    <div className="backoffice_content">
+      <div className="backoffice_content_header">
+        <div className="backoffice_content_header_title">
+          <div className="backoffice_content_header_title_dash white">
+            <TextZbl jetbrains>Dashboard globale</TextZbl>
           </div>
-          <DropDownZbl
-            options={[
-              { label: "Aujourd'hui", value: FilterPeriod.TODAY },
-              { label: 'Dernière semaine', value: FilterPeriod.LAST_WEEK },
-              { label: 'Mois dernier', value: FilterPeriod.LAST_MONTH },
-            ]}
-            value={period}
-            onChange={(opt) => setPeriod(opt.value)}
-          />
+          {/* conditions if not accueil and get nb items */}
+          <div className="backoffice_content_header_title_items yellow">
+            <TextZbl jetbrains color="yellow">
+              14 items
+            </TextZbl>
+          </div>
         </div>
-        <ContentBackOffice />
+        <DropDownZbl
+          options={[
+            { label: "Aujourd'hui", value: FilterPeriod.TODAY },
+            { label: 'Dernière semaine', value: FilterPeriod.LAST_WEEK },
+            { label: 'Mois dernier', value: FilterPeriod.LAST_MONTH },
+          ]}
+          value={period}
+          onChange={(opt) => setPeriod(opt.value)}
+        />
       </div>
-    </main>
+      <ContentBackOffice />
+    </div>
   );
 }
