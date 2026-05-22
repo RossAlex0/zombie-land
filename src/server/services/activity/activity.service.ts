@@ -13,4 +13,13 @@ export class ActivityModel extends AbstractModel<'activity'> {
     });
     return activity;
   }
+
+  async updateById(id: number, data: object) {
+    const activity = await this.table.update({ where: { id }, data });
+    return activity;
+  }
+
+  async deleteById(id: number) {
+    await this.table.delete({ where: { id } });
+  }
 }

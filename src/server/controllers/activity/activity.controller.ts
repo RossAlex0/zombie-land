@@ -1,5 +1,5 @@
 import { NextContext } from '@customTypes/nextApi';
-import { activityCreateSchema } from '@server/schemas';
+import { activityCreateSchema, activityUpdateSchema } from '@server/schemas';
 import { ActivityModel, CategoryActivityModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -50,5 +50,26 @@ export const activityController = {
       );
     }
     return NextResponse.json({ data: activity }, { status: 201 });
+  },
+
+  update: async (req: NextRequest, context: NextContext<{ activityId: string }>) => {
+    const { activityId } = await context.params;
+    const body = await req.json();
+
+    const activityBody = activityUpdateSchema.parse(body);
+
+    const activityService = new ActivityModel();
+    const activity = await activityService.updateById(Number(activityId), activityBody);
+
+    return NextResponse.json({ data: activity }, { status: 200 });
+  },
+
+  delete: async (_req: NextRequest, context: NextContext<{ activityId: string }>) => {
+    const { activityId } = await context.params;
+
+    const activityService = new ActivityModel();
+    await activityService.deleteById(Number(activityId));
+
+    return NextResponse.json({ data: null }, { status: 200 });
   },
 };

@@ -13,3 +13,5 @@ export const activityCreateSchema = z.object({
     )
     .optional(),
 });
+
+export const activityUpdateSchema = activityCreateSchema.partial();
