@@ -1,18 +1,18 @@
 import React from 'react';
-import TextZbl from '@components/ui/textZbl/TextZbl';
 import './FormInput.scss';
 
-export type FormInputProps = {
-  label: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
-
-export default function FormInput({ label, id, className, ...props }: FormInputProps) {
+type FormInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  children: React.ReactNode;
+  className: string;
+  props?: React.InputHTMLAttributes<HTMLInputElement>;
+};
+export default function FormInput({ children, ...props }: FormInputProps) {
   return (
-    <div className="form-input">
-      <TextZbl jetbrains redPrefix="---">
-        {label}
-      </TextZbl>
-      <input id={id} className={`form-input__field ${className ?? ''}`.trim()} {...props} />
+    <div className="formInput">
+      <label htmlFor={props.id} className="signupForm_label">
+        {children}
+      </label>
+      <input {...props} />
     </div>
   );
 }
