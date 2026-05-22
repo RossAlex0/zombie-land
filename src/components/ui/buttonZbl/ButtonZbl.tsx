@@ -28,12 +28,7 @@ export default function ButtonZbl({
     if (navTo && !e.defaultPrevented) router.push(navTo);
   };
 
-      onClick?.(e);
-    },
-    [navTo, onClick, router]
-  );
-
-  const buttonClass = disabled ? `button_custom_disabled` : `button_custom`;
+  const buttonClass = props.disabled ? `button_custom_disabled` : `button_custom`;
 
   return (
     <button
