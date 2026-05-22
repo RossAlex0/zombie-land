@@ -1,0 +1,119 @@
+@use '../../../utils/styles/variables' as *;
+
+.data-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-top: 20px;
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: $medium-black;
+    border: 1px solid $primary-grey;
+    border-radius: 8px;
+    padding: 10px 14px;
+    width: fit-content;
+    min-width: 280px;
+  }
+
+  &__search-icon {
+    color: $primary-grey;
+    flex-shrink: 0;
+  }
+
+  &__search-input {
+    background: none;
+    border: none;
+    outline: none;
+    color: $primary-white;
+    font-family: $font-jetbrains-text;
+    font-size: $font-size-content-s;
+    width: 100%;
+
+    &::placeholder {
+      color: $primary-grey;
+    }
+  }
+
+  &__wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid $primary-grey;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__th {
+    padding: 14px 16px;
+    text-align: left;
+    background-color: $medium-black;
+    border-bottom: 1px solid $primary-grey;
+    white-space: nowrap;
+
+    &--actions {
+      width: 1%;
+    }
+  }
+
+  &__th-text {
+    color: $primary-grey;
+    font-size: $font-size-content-s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__row {
+    border-bottom: 1px solid $dark-grey;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Cible les appareils qui supportent le hover pour éviter les effets sur mobile
+    @media (hover: hover) {
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: $medium-black;
+      }
+    }
+  }
+
+  &__td {
+    padding: 14px 16px;
+    background-color: $light-black;
+
+    &--actions {
+      white-space: nowrap;
+    }
+  }
+
+  @media (hover: hover) {
+    &__row:hover &__td {
+      background-color: $medium-black;
+    }
+  }
+
+  &__td-text {
+    color: $dark-white;
+    font-size: $font-size-content-m;
+  }
+
+  &__empty {
+    padding: 48px 16px;
+    text-align: center;
+    background-color: $light-black;
+  }
+
+  &__empty-text {
+    color: $primary-grey;
+    font-size: $font-size-content-m;
+  }
+}
