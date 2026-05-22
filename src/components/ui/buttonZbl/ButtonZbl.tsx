@@ -11,24 +11,36 @@ export type ButtonZblProps = {
   children: ReactNode;
   theme?: 'dark' | 'light' | 'custom';
   navTo?: string;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function ButtonZbl({
   children,
   theme = 'light',
-  navTo = '/',
+  navTo,
+  disabled,
+  onClick,
   ...props
 }: ButtonZblProps) {
   const router = useRouter();
 
-  const handleClick = useCallback(() => router.push(navTo), [navTo, router]);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (navTo) {
+        router.push(navTo);
+        return;
+      }
 
-  const buttonClass = props.disabled ? `button_custom_disabled` : `button_custom`;
+      onClick?.(e);
+    },
+    [navTo, onClick, router]
+  );
+
+  const buttonClass = disabled ? `button_custom_disabled` : `button_custom`;
 
   return (
     <button
-      type="button"
       {...props}
+      disabled={disabled}
       className={`${buttonClass} ${theme} ${props.className}`}
       onClick={handleClick}
       aria-label="button"
