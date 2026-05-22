@@ -6,7 +6,7 @@ type FormInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 export default function FormInput({ children, ...props }: FormInputProps) {
   return (
-    <div className="signupForm_div">
+    <div className="formInput_div">
       <label htmlFor={props.id} className="signupForm_label">
         {children}
       </label>

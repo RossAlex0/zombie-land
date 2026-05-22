@@ -11,9 +11,9 @@
   &_content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content:space-around;
     gap: 2rem;
-    height: 40%;
+    height: 80%;
     min-width: 40%;
     border: 1px solid $primary-grey;
     background-color: $medium-black;

@@ -14,7 +14,7 @@ export default function SignupForm() {
       id: 'signupFirstName',
       name: 'firstName',
       text: 'Prénom',
-      className: 'firstName',
+      className: 'signupFormInput',
       placeholder: 'Prénom',
       label: 'Prénom',
     },
@@ -23,7 +23,7 @@ export default function SignupForm() {
       id: 'signupLastName',
       name: 'lastName',
       text: 'Nom',
-      className: 'lastName',
+      className: 'signupFormInput',
       placeholder: 'Nom',
       label: 'Nom',
     },
@@ -32,7 +32,7 @@ export default function SignupForm() {
       id: 'signupEmail',
       name: 'email',
       text: 'email',
-      className: 'email',
+      className: 'signupFormInput',
       placeholder: 'Email',
       label: 'Email',
     },
@@ -41,7 +41,7 @@ export default function SignupForm() {
       id: 'signupPassword',
       name: 'password',
       text: 'Mot de passe',
-      className: 'password',
+      className: 'signupFormInput',
       placeholder: 'Mot de passe',
       label: 'Mot de passe',
     },
@@ -50,7 +50,7 @@ export default function SignupForm() {
       id: 'signupConfirmPassword',
       name: 'confirmPassword',
       text: 'Confirmez le mot de passe',
-      className: 'confirmPassword',
+      className: 'signupFormInput',
       placeholder: 'Confirmation du mot de passe',
       label: 'Confirmation',
     },
@@ -69,6 +69,7 @@ export default function SignupForm() {
 
   return (
     <form className="signupForm" action={handleSubmit}>
+      <TextZbl tag="h2">Se déclarer parmi les survivants</TextZbl>
       <div className="formFields">
         {fields.map((field) => (
           <FormInput
@@ -79,14 +80,16 @@ export default function SignupForm() {
             className={field.className}
             placeholder={field.placeholder}
           >
-            <TextZbl color="white">{field.text}</TextZbl>
+            <TextZbl color="white" tag="h3">
+              {field.text}
+            </TextZbl>
           </FormInput>
         ))}
       </div>
 
       <div className="submit">
-        <ButtonZbl type="submit" theme="dark">
-          S`&apos;`inscrire
+        <ButtonZbl className="formButton" type="submit" theme="light">
+          S&apos;inscrire
         </ButtonZbl>
       </div>
     </form>
