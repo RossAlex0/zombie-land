@@ -14,7 +14,7 @@ export default function SignupForm() {
       id: 'signupFirstName',
       name: 'firstName',
       text: 'Prénom',
-      className: 'signupFormInput',
+      className: 'formInput__field signupForm__input',
       placeholder: 'Prénom',
       label: 'Prénom',
     },
@@ -23,7 +23,7 @@ export default function SignupForm() {
       id: 'signupLastName',
       name: 'lastName',
       text: 'Nom',
-      className: 'signupFormInput',
+      className: 'formInput__field signupForm__input',
       placeholder: 'Nom',
       label: 'Nom',
     },
@@ -32,7 +32,7 @@ export default function SignupForm() {
       id: 'signupEmail',
       name: 'email',
       text: 'email',
-      className: 'signupFormInput',
+      className: 'formInput__field signupForm__input',
       placeholder: 'Email',
       label: 'Email',
     },
@@ -41,7 +41,7 @@ export default function SignupForm() {
       id: 'signupPassword',
       name: 'password',
       text: 'Mot de passe',
-      className: 'signupFormInput',
+      className: 'formInput__field signupForm__input',
       placeholder: 'Mot de passe',
       label: 'Mot de passe',
     },
@@ -50,7 +50,7 @@ export default function SignupForm() {
       id: 'signupConfirmPassword',
       name: 'confirmPassword',
       text: 'Confirmez le mot de passe',
-      className: 'signupFormInput',
+      className: 'formInput__field signupForm__input',
       placeholder: 'Confirmation du mot de passe',
       label: 'Confirmation',
     },
@@ -77,7 +77,7 @@ export default function SignupForm() {
             type={field.type}
             id={field.id}
             name={field.name}
-            className={field.className}
+            className={'formInput__field signupForm__input'}
             placeholder={field.placeholder}
           >
             <TextZbl color="white" tag="h3">
@@ -87,8 +87,8 @@ export default function SignupForm() {
         ))}
       </div>
 
-      <div className="submit">
-        <ButtonZbl className="formButton" type="submit" theme="light">
+      <div className="signupForm__submit">
+        <ButtonZbl className="signupForm__button" type="submit" theme="light">
           S&apos;inscrire
         </ButtonZbl>
       </div>
