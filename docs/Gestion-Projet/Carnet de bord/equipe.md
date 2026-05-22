@@ -102,3 +102,13 @@ Todo  :
 - To do : 
   - Inscription et connexion côté front & back
 - Elements graphiques (header / footer)...
+
+# 22/05/2026
+
+- Finition parcours inscirption / connexion
+- Layout front
+- Accueil back office
+
+  - To do : Merge + code revieww (objectif : parcours d'inscription connexion complet)
+  - Passage présentation : Alex (13h30)
+  - 
