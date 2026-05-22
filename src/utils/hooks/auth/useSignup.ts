@@ -23,8 +23,7 @@ export default function useSignup() {
           body: JSON.stringify(signupFormData),
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        router.push('/');
-        router.refresh();
+        router.push('/auth/login');
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));
       } finally {
