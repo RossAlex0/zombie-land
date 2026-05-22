@@ -1,47 +1,84 @@
 @use '../../../utils/styles/variables' as *;
+@use 'sass:map';
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
   width: 100%;
   max-width: 420px;
-  padding: 2rem;
-  background-color: $primary-black;
-  border: 1px solid $light-black;
-  border-radius: 6px;
+  margin-inline: auto;
 
-  &__title {
-    text-align: center;
-    margin-bottom: 1rem;
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  &__submit {
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__tagline {
+    text-align: center;
+    font-style: italic;
+  }
+
+  & &__submit {
     width: 100%;
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-    text-align: center;
-    background-color: $primary-black;
-    border: 1px solid $primary-yellow;
-    border-radius: 6px;
-    cursor: pointer;
-    transition:
-      transform 0.15s ease,
-      filter 0.2s ease;
-
-    &:hover:not(:disabled) {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    margin-top: 0.5rem;
   }
 
+  &__submit-icon {
+    flex-shrink: 0;
+    color: $primary-black;
+  }
+
+  & &__google-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: $primary-white;
+    color: $primary-black;
+    border: 1px solid $primary-white;
+  }
+
+  &__google-icon {
+    flex-shrink: 0;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__forgot,
   &__link {
     text-align: center;
-    margin-top: 0.5rem;
+  }
+
+  &__link-accent {
+    color: $primary-yellow;
+    text-decoration: underline;
+  }
+
+  @media (min-width: map.get($breakpoints, 'tablet')) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 2rem 2rem;
+    max-width: 760px;
+
+    &__fields,
+    &__actions {
+      min-width: 0;
+    }
+
+    &__footer {
+      grid-column: 1 / -1;
+    }
   }
 }

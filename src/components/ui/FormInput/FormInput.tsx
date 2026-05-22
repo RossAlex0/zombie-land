@@ -9,7 +9,7 @@ export type FormInputProps = {
 export default function FormInput({ label, id, className, ...props }: FormInputProps) {
   return (
     <div className="form-input">
-      <TextZbl tag="p" jetbrains redPrefix="---">
+      <TextZbl jetbrains redPrefix="---">
         {label}
       </TextZbl>
       <input id={id} className={`form-input__field ${className ?? ''}`.trim()} {...props} />

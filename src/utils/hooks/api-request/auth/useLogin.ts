@@ -1,18 +1,20 @@
 'use client';
 import React from 'react';
 
-type MutationResult<TData> = { ok: true; data: TData } | { ok: false; error: string };
+type LoginBody = { email: string; password: string };
+type LoginResponse = { id: number; email: string };
+type LoginResult = { ok: true; data: LoginResponse } | { ok: false; error: string };
 
-export default function useMutation<TBody, TData>(url: string) {
-  const [data, setData] = React.useState<TData | null>(null);
+export default function useLogin() {
+  const [data, setData] = React.useState<LoginResponse | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const mutate = async (body: TBody): Promise<MutationResult<TData>> => {
+  const login = async (body: LoginBody): Promise<LoginResult> => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(url, {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -35,5 +37,5 @@ export default function useMutation<TBody, TData>(url: string) {
     }
   };
 
-  return { mutate, data, loading, error };
+  return { login, data, loading, error };
 }

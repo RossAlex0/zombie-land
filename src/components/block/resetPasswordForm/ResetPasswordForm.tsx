@@ -2,12 +2,10 @@
 import React from 'react';
 import Link from 'next/link';
 import TextZbl from '@components/ui/textZbl/TextZbl';
-import useMutation from '@hooks/api-request/useMutation';
+import useResetPassword from '@hooks/api-request/auth/useResetPassword';
+import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import FormInput from '@components/ui/FormInput/FormInput';
 import './resetPasswordForm.scss';
-
-type ResetPasswordBody = { email: string };
-type ResetPasswordResponse = { message: string };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -28,75 +26,91 @@ export default function ResetPasswordForm() {
   const [email, setEmail] = React.useState('');
   const [clientError, setClientError] = React.useState<string | null>(null);
   const [submitted, setSubmitted] = React.useState(false);
-  const { mutate, loading, error } = useMutation<ResetPasswordBody, ResetPasswordResponse>(
-    '/api/user/reset-password'
-  );
+  const { requestReset, loading, error } = useResetPassword();
 
   const displayedError = clientError ?? (error && friendlyError(error));
 
-  return (
-    <div className="reset-password-form">
-      <TextZbl tag="h2" color="yellow" className="reset-password-form__title">
-        Mot de passe oublié
-      </TextZbl>
+  if (submitted) {
+    return (
+      <div className="reset-password-form" role="status">
+        <TextZbl tag="h2" color="yellow" className="reset-password-form__title">
+          Lien envoyé
+        </TextZbl>
 
-      {submitted ? (
-        <div className="reset-password-form__success" role="status">
-          <TextZbl tag="p">
-            Un lien de réinitialisation vient d’être envoyé à <strong>{email}</strong>.
-          </TextZbl>
-          <TextZbl tag="p">Vérifiez votre boîte mail (et vos spams).</TextZbl>
-          <Link href="/login" className="reset-password-form__link">
-            <TextZbl tag="p" color="grey" jetbrains>
+        <TextZbl jetbrains color="grey" className="reset-password-form__tagline">
+          Un lien de réinitialisation vient d’être envoyé à <strong>{email}</strong>.
+        </TextZbl>
+        <TextZbl jetbrains color="grey" className="reset-password-form__tagline">
+          Vérifiez votre boîte mail (et vos spams).
+        </TextZbl>
+
+        <div className="reset-password-form__footer">
+          <Link href="/auth/login" className="reset-password-form__link">
+            <TextZbl color="grey" jetbrains>
               ← Retour à la page de connexion
             </TextZbl>
           </Link>
         </div>
-      ) : (
-        <form
-          className="reset-password-form__form"
-          noValidate
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const validationError = validate(email);
-            if (validationError) {
-              setClientError(validationError);
-              return;
-            }
-            setClientError(null);
-            const result = await mutate({ email });
-            if (result.ok) setSubmitted(true);
-          }}
-        >
-          <FormInput
-            id="email"
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
-            autoComplete="email"
-          />
+      </div>
+    );
+  }
 
-          {displayedError && (
-            <TextZbl tag="p" color="red" jetbrains role="alert">
-              {displayedError}
-            </TextZbl>
-          )}
+  return (
+    <form
+      className="reset-password-form"
+      noValidate
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const validationError = validate(email);
+        if (validationError) {
+          setClientError(validationError);
+          return;
+        }
+        setClientError(null);
+        const result = await requestReset({ email });
+        if (result.ok) setSubmitted(true);
+      }}
+    >
+      <TextZbl tag="h2" color="yellow" className="reset-password-form__title">
+        Mot de passe oublié
+      </TextZbl>
 
-          <button type="submit" className="reset-password-form__submit" disabled={loading}>
-            <TextZbl tag="p" color="yellow" jetbrains>
-              {loading ? 'Envoi…' : 'Envoyer le lien'}
-            </TextZbl>
-          </button>
+      <div className="reset-password-form__fields">
+        <FormInput
+          id="email"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+          autoComplete="email"
+        />
+      </div>
 
-          <Link href="/login" className="reset-password-form__link">
-            <TextZbl tag="p" color="grey" jetbrains>
-              ← Retour à la page de connexion
-            </TextZbl>
-          </Link>
-        </form>
+      {displayedError && (
+        <TextZbl color="red" jetbrains role="alert">
+          {displayedError}
+        </TextZbl>
       )}
-    </div>
+
+      <ButtonZbl
+        type="submit"
+        theme="light"
+        className="reset-password-form__submit"
+        disabled={loading}
+      >
+        <TextZbl color="black" jetbrains>
+          {loading ? 'Envoi…' : 'Envoyer le lien'}
+        </TextZbl>
+      </ButtonZbl>
+
+      <div className="reset-password-form__footer">
+        <Link href="/auth/login" className="reset-password-form__link">
+          <TextZbl color="grey" jetbrains>
+            ← Retour à la page de connexion
+          </TextZbl>
+        </Link>
+      </div>
+    </form>
   );
 }
