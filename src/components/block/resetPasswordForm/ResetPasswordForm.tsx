@@ -78,13 +78,19 @@ export default function ResetPasswordForm() {
       <div className="reset-password-form__fields">
         <FormInput
           id="email"
-          label="Email"
+          name="email"
           type="email"
+          className="formInput__field reset-password-form__input"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={loading}
           autoComplete="email"
-        />
+        >
+          <TextZbl color="white" tag="h3">
+            Email
+          </TextZbl>
+        </FormInput>
       </div>
 
       {displayedError && (

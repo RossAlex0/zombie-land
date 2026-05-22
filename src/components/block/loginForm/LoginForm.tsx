@@ -33,25 +33,37 @@ export default function LoginForm() {
       <div className="login-form__fields">
         <FormInput
           id="email"
-          label="Email"
+          name="email"
           type="email"
+          className="formInput__field login-form__input"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={loading}
           autoComplete="email"
           required
-        />
+        >
+          <TextZbl color="white" tag="h3">
+            Email
+          </TextZbl>
+        </FormInput>
 
         <FormInput
           id="password"
-          label="Mot de passe"
+          name="password"
           type="password"
+          className="formInput__field login-form__input"
+          placeholder="Mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={loading}
           autoComplete="current-password"
           required
-        />
+        >
+          <TextZbl color="white" tag="h3">
+            Mot de passe
+          </TextZbl>
+        </FormInput>
       </div>
 
       <div className="login-form__actions">
