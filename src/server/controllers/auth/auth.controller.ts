@@ -23,9 +23,15 @@ export const authController = {
       const userService = new UserModel();
 
       const addedUser = await userService.create(data);
-      console.log(addedUser);
+      const accessToken = await generateAccessToken(addedUser.id, addedUser.role_id);
+      const refreshToken = await generateRefreshToken(addedUser.id);
 
       const response = NextResponse.json({ message: 'Inscription réussie' }, { status: 200 });
+
+      setAuthCookies(response, {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
 
       return response;
     } catch (err) {
