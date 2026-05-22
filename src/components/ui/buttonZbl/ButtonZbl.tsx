@@ -1,6 +1,5 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
@@ -16,32 +15,26 @@ export type ButtonZblProps = {
 export default function ButtonZbl({
   children,
   theme = 'light',
-  navTo,
-  disabled,
+  navTo = '/',
   onClick,
+  type = 'button',
   ...props
 }: ButtonZblProps) {
   const router = useRouter();
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (navTo) {
-        router.push(navTo);
-        return;
-      }
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    if (type === 'submit') return;
+    if (navTo && !e.defaultPrevented) router.push(navTo);
+  };
 
-      onClick?.(e);
-    },
-    [navTo, onClick, router]
-  );
-
-  const buttonClass = disabled ? `button_custom_disabled` : `button_custom`;
+  const buttonClass = props.disabled ? `button_custom_disabled` : `button_custom`;
 
   return (
     <button
       {...props}
-      disabled={disabled}
-      className={`${buttonClass} ${theme} ${props.className}`}
+      type={type}
+      className={`${buttonClass} ${theme} ${props.className ?? ''}`}
       onClick={handleClick}
       aria-label="button"
     >
