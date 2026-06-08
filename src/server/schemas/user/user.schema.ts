@@ -21,4 +21,21 @@ export const signupSchema = z
     path: ['confirmPassword'],
   });
 
+export const updateUserSchema = z.object({
+  first_name: z.string().min(3).optional(),
+  last_name: z.string().min(3).optional(),
+  birth_date: z.coerce.date().optional(),
+});
+
+export const updatePasswordSchema = z
+  .object({
+    //!A changer pour au moins 12 avant le passage du TP
+    oldPassword: z.string().min(6),
+    newPassword: z.string().min(6),
+    newConfirmPassword: z.string().min(6),
+  })
+  .refine((data) => data.newPassword === data.newConfirmPassword, {
+    message: 'Les nouveaux mots de passe ne correspondent pas',
+    path: ['newConfirmPassword'],
+  });
 export type SignupInput = z.infer<typeof signupSchema>;
