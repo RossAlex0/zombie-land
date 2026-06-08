@@ -20,7 +20,6 @@ type Activity = {
 const statusOptions = [
   { value: 'open', label: 'open' },
   { value: 'close', label: 'close' },
-  { value: 'pending', label: 'pending' },
 ];
 
 type FormProps = {
