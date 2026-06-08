@@ -1,0 +1,64 @@
+@use '../../../../utils/styles/variables' as *;
+
+.home_booking {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem 4rem 7rem 4rem;
+  border-bottom: 1px solid $dark-white;
+
+  &_text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 40%;
+    max-width: 50%;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &_content {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &_planning {
+      height: 100%;
+      width: 60%;
+      border: 1px solid $dark-white;
+      border-radius: 6px;
+      padding: 1rem;
+
+      &_title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $dark-white;
+      }
+
+      &_picker {
+        height: 100%;
+        width: 100%;
+        padding-block: 1rem;
+      }
+    }
+
+    &_ticket {
+      height: 100%;
+      width: 30%;
+      border: 1px solid $dark-white;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+  }
+}

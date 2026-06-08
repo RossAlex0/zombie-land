@@ -1,0 +1,120 @@
+@use '../../../utils/styles/variables' as *;
+
+.zombie_dp {
+  --rdp-accent-color: #{$primary-red};
+  --rdp-accent-background-color: #{$light-red};
+  --rdp-today-color: #{$primary-yellow};
+  --rdp-day_button-border-radius: 4px;
+  --rdp-range_start-color: #{$primary-black};
+  --rdp-range_end-color: #{$primary-black};
+  --rdp-range_middle-background-color: #{$light-red};
+  --rdp-outside-opacity: 0.25;
+  --rdp-disabled-opacity: 0.2;
+
+  width: 100%;
+  color: $primary-white;
+  font-family: $font-liter-text;
+  margin: 0;
+
+  // Layout — étire le calendrier sur toute la largeur du parent
+  .rdp-months {
+    width: 100%;
+    max-width: none;
+  }
+
+  .rdp-month {
+    width: 100%;
+  }
+
+  .rdp-month_grid {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .rdp-weekday,
+  .rdp-day {
+    width: calc(100% / 7);
+    max-width: none;
+  }
+
+  // Titre du mois — look "terminal"
+  .rdp-month_caption {
+    font-family: $font-jetbrains-text;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: $font-size-content-s;
+    color: $primary-red;
+  }
+
+  .rdp-weekday {
+    font-family: $font-jetbrains-text;
+    font-size: $font-size-content-xs;
+    text-transform: uppercase;
+    color: $primary-grey;
+    font-weight: 400;
+  }
+
+  // Boutons de navigation
+  .rdp-button_previous,
+  .rdp-button_next {
+    background: transparent;
+    border: 1px solid $light-black;
+    border-radius: 4px;
+    color: $primary-white;
+    transition: all 0.15s ease;
+
+    &:hover {
+      border-color: $primary-red;
+      color: $primary-red;
+      background: transparent;
+    }
+  }
+
+  .rdp-chevron {
+    fill: currentColor;
+  }
+
+  // Jours — remplissent leur cellule
+  .rdp-day_button {
+    width: 100%;
+    max-width: none;
+    height: 3rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: $primary-white;
+    transition: all 0.15s ease;
+    font-size: $font-size-content-m;
+
+    &:hover {
+      border-color: $primary-red;
+      background: $light-red;
+    }
+  }
+
+  // Aujourd'hui
+  .rdp-today .rdp-day_button {
+    color: var(--rdp-today-color);
+    font-weight: 700;
+  }
+
+  // Extrémités de la plage sélectionnée
+  .rdp-range_start .rdp-day_button,
+  .rdp-range_end .rdp-day_button {
+    background: $primary-red;
+    color: $primary-black;
+    font-weight: 700;
+    border-color: $primary-red;
+  }
+
+  // Plage intermédiaire
+  .rdp-range_middle .rdp-day_button {
+    background: var(--rdp-range_middle-background-color);
+    color: $primary-white;
+    border-radius: 0;
+  }
+
+  // Désactivés (dates passées)
+  .rdp-disabled {
+    opacity: var(--rdp-disabled-opacity);
+  }
+}

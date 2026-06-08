@@ -3,6 +3,7 @@ import useFetch from '@hooks/api-request/useFetch';
 import Hero from './hero/Hero';
 import { activity } from '@prismaInstance/*';
 import HomeActivites from './activities/Activities';
+import HomeBookings from './booking/Booking';
 
 export default function HomePage() {
   const { data, loading, error } = useFetch<Partial<activity[]>>('/api/activity');
@@ -21,6 +22,7 @@ export default function HomePage() {
     <>
       <Hero activities={data} />
       <HomeActivites activities={data} />
+      <HomeBookings />
     </>
   );
 }
