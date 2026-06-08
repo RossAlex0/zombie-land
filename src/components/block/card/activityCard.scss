@@ -1,0 +1,41 @@
+@use '../../../utils/styles/variables' as *;
+
+.card {
+  position: relative;
+  height: 35vh;
+  width: 20vw;
+  min-width: 200px;
+  border: 1px solid $dark-white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-inline: auto;
+  &_image {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    z-index: 1;
+  }
+
+  &_header {
+    position: relative;
+    z-index: 2;
+    padding: 0.5rem;
+
+    &_span {
+      padding: 0.3rem;
+      background-color: #28282885;
+      border: 1px solid $primary-yellow;
+      width: fit-content;
+    }
+  }
+
+  &_title {
+    padding: 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+}

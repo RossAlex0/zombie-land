@@ -1,0 +1,95 @@
+@use '../../../utils/styles/variables' as *;
+
+.attractions-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  padding: 2rem 100px 4rem;
+  @media (max-width: 768px) {
+    padding: 2rem 20px 4rem;
+  }
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: $primary-black;
+  border: 1px solid $dark-white;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $primary-yellow;
+    color: $primary-yellow;
+  }
+
+  &--prev {
+    left: -68px;
+  }
+
+  &--next {
+    right: -68px;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &::before {
+    display: none;
+  }
+}
+
+.attractions-carousel .slick-dots {
+  bottom: -2.5rem;
+  display: flex !important;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    width: auto;
+    height: auto;
+    margin: 0;
+
+    button {
+      width: 32px;
+      height: 6px;
+      border-radius: 2px;
+      background: $dark-white;
+      opacity: 0.4;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    &.slick-active button {
+      width: 48px;
+      background: $primary-yellow;
+      opacity: 1;
+    }
+  }
+}
