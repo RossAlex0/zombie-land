@@ -1,0 +1,19 @@
+@use './variables' as *;
+
+.zbl_404 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $primary-black;
+  padding: 2rem;
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    max-width: 520px;
+  }
+}
