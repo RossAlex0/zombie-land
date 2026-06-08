@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 
 const cache = new Map<string, unknown>();
 
+export function clearCache(url: string) {
+  cache.delete(url);
+}
+
 export default function useFetch<T>(url: string, forceRefresh = false) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
