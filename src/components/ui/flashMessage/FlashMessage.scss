@@ -1,0 +1,20 @@
+@use '../../../utils/styles/variables' as *;
+
+.flash-message {
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-family: $font-jetbrains-text;
+  font-size: $font-size-content-m;
+
+  &--success {
+    background-color: rgba(46, 213, 37, 0.1);
+    border: 1px solid $primary-green;
+    color: $primary-green;
+  }
+
+  &--error {
+    background-color: rgba(172, 56, 42, 0.1);
+    border: 1px solid $primary-red;
+    color: $primary-red;
+  }
+}

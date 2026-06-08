@@ -51,7 +51,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
       const res = await patchActivity(payload);
       if ('ok' in res && res.ok) {
         clearCache('/api/activity');
-        router.push('/admin/back-office/activities');
+        router.push('/admin/back-office/activities?success=updated&entity=Activité');
       }
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur inconnue');

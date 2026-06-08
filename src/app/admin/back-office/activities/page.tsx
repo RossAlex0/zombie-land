@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { PencilLine, Trash2, Plus } from 'lucide-react';
 import DataTable, { Column } from '@components/block/dataTable/DataTable';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import StatusBadge, { BadgeStatus } from '@components/ui/statusBadge/StatusBadge';
+import FlashMessage from '@components/ui/flashMessage/FlashMessage';
+import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
 import useFetch from '@hooks/api-request/useFetch';
 import useDeleteActivity from '@hooks/api-request/activity/useDeleteActivity';
 import '../backoffice.scss';
@@ -30,17 +33,21 @@ const columns: Column<Activity>[] = [
 ];
 
 export default function ActivitiesPage() {
+  const router = useRouter();
   const { data, loading, error } = useFetch<Activity[]>('/api/activity');
   const { deleteActivity, error: deleteError } = useDeleteActivity();
   const [deletedIds, setDeletedIds] = useState<Set<number>>(new Set());
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
 
   const activities = (data ?? []).filter((a) => !deletedIds.has(a.id));
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Supprimer cette activité ?')) return;
-    const result = await deleteActivity(id);
+  const handleDeleteConfirm = async () => {
+    if (pendingDeleteId === null) return;
+    const result = await deleteActivity(pendingDeleteId);
+    setPendingDeleteId(null);
     if ('ok' in result && result.ok) {
-      setDeletedIds((prev) => new Set([...prev, id]));
+      setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
+      router.replace('/admin/back-office/activities?success=deleted&entity=Activité');
     }
   };
 
@@ -63,6 +70,16 @@ export default function ActivitiesPage() {
         </ButtonZbl>
       </div>
 
+      <FlashMessage />
+      <ConfirmModal
+        isOpen={pendingDeleteId !== null}
+        title="Supprimer l'activité"
+        message="Cette action est irréversible. Confirmer la suppression ?"
+        confirmLabel="Supprimer"
+        danger
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setPendingDeleteId(null)}
+      />
       {loading && <TextZbl jetbrains>Chargement...</TextZbl>}
       {error && (
         <TextZbl jetbrains color="yellow">
@@ -94,7 +111,7 @@ export default function ActivitiesPage() {
                 navTo=""
                 onClick={(e) => {
                   e.preventDefault();
-                  handleDelete(row.id);
+                  setPendingDeleteId(row.id);
                 }}
               >
                 <Trash2 size={16} />

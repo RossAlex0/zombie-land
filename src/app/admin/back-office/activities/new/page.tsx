@@ -36,7 +36,7 @@ export default function ActivityCreatePage() {
     });
     if ('ok' in res && res.ok) {
       clearCache('/api/activity');
-      router.push('/admin/back-office/activities');
+      router.push('/admin/back-office/activities?success=created&entity=Activité');
     } else if ('error' in res) {
       setSubmitError(res.error);
     }
