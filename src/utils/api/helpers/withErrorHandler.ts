@@ -9,7 +9,7 @@ export function withErrorHandler<T>(controller: Controller<T>) {
     try {
       return await controller(req, context);
     } catch (error) {
-      console.log(`controller returned an error`);
+      console.error(`Controller returned an error`, error);
 
       if (!(error instanceof HttpError) || (error.code && error.statusCode === 500)) {
         return NextResponse.json(

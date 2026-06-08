@@ -28,8 +28,7 @@ export const generateRefreshToken = async (userId: number): Promise<string> => {
   return token;
 };
 
-export const getTokenAcces = (req: NextRequest) => {
-  // The middleware already checks for the token
+export const getTokenAccess = (req: NextRequest) => {
   const token = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value as string;
 
   return jwt.verify(token, secret) as AccessTokenPayload;

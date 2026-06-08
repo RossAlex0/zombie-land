@@ -18,15 +18,11 @@ export function verifyAccessToken<T>(controller: Controller<T>) {
     }
 
     try {
-      const isAuthorized = jwt.verify(token, secret) as AccessTokenPayload;
-
-      if (!isAuthorized) {
-        throw new UnauthorizedError('Token access is expired');
-      }
-
-      return await controller(req, context);
+      jwt.verify(token, secret) as AccessTokenPayload;
     } catch {
       throw new UnauthorizedError('Token access is expired');
     }
+
+    return await controller(req, context);
   };
 }
