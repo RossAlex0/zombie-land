@@ -4,18 +4,17 @@ import Hero from './hero/Hero';
 import { activity } from '@prismaInstance/*';
 import HomeActivites from './activities/Activities';
 import HomeBookings from './booking/Booking';
+import Loading from '../../../app/loading';
 
 export default function HomePage() {
   const { data, loading, error } = useFetch<Partial<activity[]>>('/api/activity');
 
   if (loading) {
-    //TODO: Create a loading component
-    return <p>Loading</p>;
+    return <Loading />;
   }
 
-  if (error || !data || !data.length) {
-    console.info(error);
-    return;
+  if (error || !data) {
+    throw new Error('Erreur durant la récupération des données "activity"');
   }
 
   return (

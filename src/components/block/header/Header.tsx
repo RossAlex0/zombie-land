@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import './header.scss';
+import InfectLogo from '@components/ui/infectLogo/InfectLogo';
 
 export default function Header() {
   const navigationNames = [
@@ -15,19 +16,7 @@ export default function Header() {
   ];
   return (
     <header className="header">
-      <div className="header_logo">
-        <div className="header_logo_image">
-          <Image fill src={'/icons/logo.svg'} alt="Montagne russe zombie" loading="eager" />
-        </div>
-        <div>
-          <TextZbl tag="h1" color="none" className="header_title">
-            ZOMBIE LAND
-          </TextZbl>
-          <TextZbl jetbrains redPrefix="//">
-            Zone_infecté_001
-          </TextZbl>
-        </div>
-      </div>
+      <InfectLogo />
       <div className="header_link">
         <nav className="header_link_nav">
           {navigationNames.map((nav, index) => (

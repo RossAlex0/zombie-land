@@ -10,23 +10,6 @@
   width: 100%;
   background: linear-gradient(90deg, #282828 0%, #3d3d3d 58%, #3d3d3d 100%);
 
-  &_logo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
-    min-width: 10vw;
-
-    &_image {
-      position: relative;
-      height: 10vh;
-      min-width: 6vw;
-      width: fit-content;
-      margin-right: 8px;
-    }
-  }
-
   &_title {
     background: linear-gradient(90deg, #ffd500 0%, #a34420 100%);
     background-clip: text;
