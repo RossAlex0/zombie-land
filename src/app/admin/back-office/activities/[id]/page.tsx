@@ -8,6 +8,7 @@ import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import '../../backoffice.scss';
 import './activity-edit.scss';
+import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 
 type Activity = {
   id: number;
@@ -36,6 +37,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
     status: activity.status ?? 'open',
   });
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { activity: patchActivity } = usePatchActivity(Number(id));
 
   const handleSubmit = async () => {
     setSubmitError(null);
@@ -46,17 +48,11 @@ function ActivityEditForm({ activity, id }: FormProps) {
         picture: form.picture || undefined,
         status: form.status,
       };
-      const res = await fetch(`/api/activity/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const json = await res.json();
-        throw new Error(json.message ?? `Erreur ${res.status}`);
+      const res = await patchActivity(payload);
+      if ('ok' in res && res.ok) {
+        clearCache('/api/activity');
+        router.push('/admin/back-office/activities');
       }
-      clearCache('/api/activity');
-      router.push('/admin/back-office/activities');
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur inconnue');
     }

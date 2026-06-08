@@ -3,23 +3,23 @@ import React from 'react';
 
 type ActivityResult = { ok: boolean } | { error: string };
 
-export default function useLogin(id: number) {
+export default function useDeleteActivity() {
   const [data, setData] = React.useState<boolean | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const activity = async (): Promise<ActivityResult> => {
+  const deleteActivity = async (id: number): Promise<ActivityResult> => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/activity/${id}`, {
+      const res = await fetch(`/api/activity/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       });
       const json = await res.json();
       if (!res.ok) {
-        const message = json?.error || `Erreur ${res.status}`;
+        const message = json?.message || json?.error || `Erreur ${res.status}`;
         setError(message);
         return { ok: false, error: message };
       }
@@ -34,5 +34,5 @@ export default function useLogin(id: number) {
     }
   };
 
-  return { activity, data, loading, error };
+  return { deleteActivity, data, loading, error };
 }
