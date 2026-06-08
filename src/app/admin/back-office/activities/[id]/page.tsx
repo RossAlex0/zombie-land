@@ -66,7 +66,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
     <div className="activity-edit">
       <div className="activity-edit__grid">
         <div className="activity-edit__field">
-          <TextZbl jetbrains>name</TextZbl>
+          <TextZbl jetbrains>Name</TextZbl>
           <input
             className="activity-edit__input"
             type="text"
@@ -76,17 +76,16 @@ function ActivityEditForm({ activity, id }: FormProps) {
         </div>
 
         <div className="activity-edit__field">
-          <TextZbl jetbrains>description</TextZbl>
-          <input
-            className="activity-edit__input"
-            type="text"
-            value={form.description}
-            onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+          <TextZbl jetbrains>Status</TextZbl>
+          <DropDownZbl
+            options={statusOptions}
+            value={form.status}
+            onChange={(opt) => setForm((prev) => ({ ...prev, status: opt.value }))}
           />
         </div>
 
         <div className="activity-edit__field">
-          <TextZbl jetbrains>picture</TextZbl>
+          <TextZbl jetbrains>Picture</TextZbl>
           <input
             className="activity-edit__input"
             type="text"
@@ -95,12 +94,12 @@ function ActivityEditForm({ activity, id }: FormProps) {
           />
         </div>
 
-        <div className="activity-edit__field">
-          <TextZbl jetbrains>status</TextZbl>
-          <DropDownZbl
-            options={statusOptions}
-            value={form.status}
-            onChange={(opt) => setForm((prev) => ({ ...prev, status: opt.value }))}
+        <div className="activity-edit__field activity-edit__field--full">
+          <TextZbl jetbrains>Description</TextZbl>
+          <textarea
+            className="activity-edit__input activity-edit__textarea"
+            value={form.description}
+            onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
           />
         </div>
       </div>
@@ -112,7 +111,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
       )}
 
       <div className="activity-edit__footer">
-        <ButtonZbl theme="dark" navTo="/admin/back-office/activities">
+        <ButtonZbl theme="light" navTo="/admin/back-office/activities">
           Annuler
         </ButtonZbl>
         <ButtonZbl

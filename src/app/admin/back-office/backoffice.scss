@@ -42,3 +42,9 @@
   background-color: $primary-red;
   border: none;
 }
+
+@media (max-width: 480px) {
+  .btn-label {
+    display: none;
+  }
+}

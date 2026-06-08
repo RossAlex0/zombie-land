@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { PencilLine, Trash2, Plus } from 'lucide-react';
 import DataTable, { Column } from '@components/block/dataTable/DataTable';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
@@ -63,7 +64,8 @@ export default function ActivitiesPage() {
           </div>
         </div>
         <ButtonZbl theme="light" navTo="" onClick={(e) => e.preventDefault()}>
-          + Créer un item
+          <Plus size={16} />
+          <span className="btn-label">Créer un item</span>
         </ButtonZbl>
       </div>
 
@@ -89,7 +91,8 @@ export default function ActivitiesPage() {
           renderActions={(row) => (
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <ButtonZbl theme="light" navTo={`/admin/back-office/activities/${row.id}`}>
-                Modifier
+                <PencilLine size={16} />
+                <span className="btn-label">Modifier</span>
               </ButtonZbl>
               <ButtonZbl
                 theme="custom"
@@ -100,7 +103,8 @@ export default function ActivitiesPage() {
                   handleDelete(row.id);
                 }}
               >
-                Supprimer
+                <Trash2 size={16} />
+                <span className="btn-label">Supprimer</span>
               </ButtonZbl>
             </div>
           )}
