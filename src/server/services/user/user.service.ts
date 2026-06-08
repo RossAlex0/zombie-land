@@ -1,5 +1,6 @@
-import { userFindUniqueArgs } from '../../../../prisma/generated/models';
+import { userFindUniqueArgs, userWhereInput } from '../../../../prisma/generated/models';
 import { AbstractModel } from '@server/services/AbstractModel';
+import type { UserSearchParams } from '@server/schemas/user/admin/user.schema';
 
 export class UserModel extends AbstractModel<'user'> {
   constructor() {
@@ -14,5 +15,59 @@ export class UserModel extends AbstractModel<'user'> {
     const args: userFindUniqueArgs = { where: { id }, select: fields ?? {} };
 
     return await this.table.findUnique(args);
+  }
+
+  async findUserWithRole(id: number) {
+    return await this.table.findUnique({
+      where: { id },
+      select: { id: true, role: true },
+    });
+  }
+
+  async countByRole(role: string) {
+    return await this.table.count({ where: { role: { name: role } } });
+  }
+
+  async searchAndCount(params: UserSearchParams) {
+    const where: userWhereInput = {};
+
+    if (params.search) {
+      where.OR = [
+        { email: { contains: params.search, mode: 'insensitive' } },
+        { first_name: { contains: params.search, mode: 'insensitive' } },
+        { last_name: { contains: params.search, mode: 'insensitive' } },
+      ];
+    }
+
+    if (params.role) {
+      where.role = { name: params.role };
+    }
+
+    if (params.valid_email !== undefined) {
+      where.valid_email = params.valid_email;
+    }
+
+    const [data, total] = await Promise.all([
+      this.table.findMany({
+        where,
+        select: {
+          id: true,
+          email: true,
+          first_name: true,
+          last_name: true,
+          role_id: true,
+          role: true,
+          birth_date: true,
+          valid_email: true,
+          created_at: true,
+        },
+        orderBy: { [params.sortBy]: params.sortOrder },
+        skip: (params.page - 1) * params.limit,
+        take: params.limit,
+      }),
+      this.table.count({ where }),
+    ]);
+
+    return { data, total, page: params.page, limit: params.limit };
   }
 }
