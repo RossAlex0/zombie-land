@@ -1,5 +1,5 @@
-export default function Home() {
-  throw new Error('💀 Contamination critique - test error.tsx');
+import HomePage from '@components/layout/home/HomePage';
 
-  return <p>hello</p>;
+export default function Home() {
+  return <HomePage />;
 }

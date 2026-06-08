@@ -1,26 +1,12 @@
-'use client';
-
 import ParkMap from '@components/block/park-map/ParkMap';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import { NotepadText, Radiation, RollerCoaster, ArrowRight } from 'lucide-react';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import useFetch from '@hooks/api-request/useFetch';
 import type { activity } from '@prismaInstance/*';
 
 import './hero.scss';
 
-export default function Hero() {
-  const { data, loading, error } = useFetch<Partial<activity[]>>('/api/activity');
-
-  if (loading) {
-    //TODO: Create a loading component
-    return <p>Loading</p>;
-  }
-
-  if (error && !data) {
-    console.info(error);
-  }
-
+export default function Hero({ activities }: { activities: Partial<activity[]> }) {
   return (
     <section className="hero">
       <div className="hero_text">
@@ -57,7 +43,7 @@ export default function Hero() {
         <span className="hero_text_title">
           <TextZbl color="yellow" jetbrains>
             <RollerCoaster size={20} />
-            {data?.length ?? 0}
+            {activities?.length ?? 0}
           </TextZbl>
           <TextZbl jetbrains>&nbsp;attractions térrifiantes</TextZbl>
         </span>
