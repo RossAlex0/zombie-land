@@ -1,34 +1,28 @@
-import { prisma } from '@prismaInstance/*';
 import { Controller } from '@helpers/withErrorHandler';
 import { ROLE_NAMES } from '@customTypes/enum/roles';
 import { ForbiddenError } from '../../errors/errors';
 import { getTokenAccess } from '../token';
 import { verifyAccessToken } from './tokenAccess';
+import { RoleModel } from '@server/services/role/role.service';
 
-let adminRoleIdPromise: Promise<number> | null = null;
+const isAdmin = async (roleId: number) => {
+  const roleService = new RoleModel();
 
-const getAdminRoleId = () => {
-  if (!adminRoleIdPromise) {
-    adminRoleIdPromise = prisma.role
-      .findUnique({ where: { name: ROLE_NAMES.ADMIN }, select: { id: true } })
-      .then((r) => {
-        if (!r) throw new Error('Admin role not seeded');
-        return r.id;
-      })
-      .catch((err) => {
-        adminRoleIdPromise = null;
-        throw err;
-      });
+  const role = await roleService.findRoleById(roleId);
+
+  if (role && role.name === ROLE_NAMES.ADMIN) {
+    return true;
   }
-  return adminRoleIdPromise;
+
+  return false;
 };
 
 export function verifyAdmin<T>(controller: Controller<T>) {
   return verifyAccessToken<T>(async (req, context) => {
     const payload = getTokenAccess(req);
-    const adminRoleId = await getAdminRoleId();
+    const userIsAdmin = await isAdmin(payload.role);
 
-    if (payload.role !== adminRoleId) {
+    if (!userIsAdmin) {
       throw new ForbiddenError('Admin access required');
     }
 
