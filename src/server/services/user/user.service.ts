@@ -86,4 +86,24 @@ export class UserModel extends AbstractModel<'user'> {
 
     return { data, total, page: params.page, limit: params.limit };
   }
+
+  async anonymizeUser(id: number) {
+    // Anonymisation RGPD : on écrase les données perso mais on concerve l'historique des actions.
+    await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id },
+        data: {
+          first_name: 'Utilisateur',
+          last_name: 'supprimé',
+          email: `deleted-${id}@anonymized.local`,
+          birth_date: null,
+          password: '', // bloque le login (aucun hash ne match une chaîne vide)
+          valid_email: false,
+          deleted_at: new Date(),
+        },
+      }),
+
+      this.prisma.refresh_token.deleteMany({ where: { user_id: id } }),
+    ]);
+  }
 }

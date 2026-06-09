@@ -86,4 +86,11 @@ export const userController = {
 
     return NextResponse.json({ message: 'Mot de passe mis à jour avec succès' });
   },
+
+  deleteMe: async (req: NextRequest) => {
+    const token = getTokenAccess(req);
+    const userService = new UserModel();
+    await userService.anonymizeUser(token.userId);
+    return NextResponse.json({ message: 'Compte anonymisé avec succès' });
+  },
 };
