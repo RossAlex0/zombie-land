@@ -3,6 +3,7 @@ import { UserModel } from '@server/services';
 import { getTokenAccess } from '../../../utils/api/token';
 import argon2 from 'argon2';
 import { updatePasswordSchema, updateUserSchema } from '@server/schemas/user/user.schema';
+import { COOKIE_NAMES } from '@customTypes/enum/cookies';
 
 export const userController = {
   me: async (req: NextRequest) => {
@@ -19,9 +20,10 @@ export const userController = {
       role: true,
       birth_date: true,
       created_at: true,
+      deleted_at: true,
     });
 
-    if (!user) {
+    if (!user || user.deleted_at) {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
     }
 
@@ -91,6 +93,11 @@ export const userController = {
     const token = getTokenAccess(req);
     const userService = new UserModel();
     await userService.anonymizeUser(token.userId);
-    return NextResponse.json({ message: 'Compte anonymisé avec succès' });
+
+    const response = NextResponse.json({ message: 'Compte anonymisé avec succès' });
+    // Déconnexion immédiate : l'access token (JWT) reste valide sinon jusqu'à expiration
+    response.cookies.delete(COOKIE_NAMES.ACCESS_TOKEN);
+    response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
+    return response;
   },
 };

@@ -48,6 +48,7 @@ export type UserMinAggregateOutputType = {
   password_changed_at: Date | null
   created_at: Date | null
   updated_at: Date | null
+  deleted_at: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type UserMaxAggregateOutputType = {
   password_changed_at: Date | null
   created_at: Date | null
   updated_at: Date | null
+  deleted_at: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   password_changed_at: number
   created_at: number
   updated_at: number
+  deleted_at: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type UserMinAggregateInputType = {
   password_changed_at?: true
   created_at?: true
   updated_at?: true
+  deleted_at?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -116,6 +120,7 @@ export type UserMaxAggregateInputType = {
   password_changed_at?: true
   created_at?: true
   updated_at?: true
+  deleted_at?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -130,6 +135,7 @@ export type UserCountAggregateInputType = {
   password_changed_at?: true
   created_at?: true
   updated_at?: true
+  deleted_at?: true
   _all?: true
 }
 
@@ -231,6 +237,7 @@ export type UserGroupByOutputType = {
   password_changed_at: Date | null
   created_at: Date
   updated_at: Date
+  deleted_at: Date | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -268,6 +275,7 @@ export type userWhereInput = {
   password_changed_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"user"> | Date | string
+  deleted_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   booking?: Prisma.BookingListRelationFilter
   refresh_token?: Prisma.Refresh_tokenListRelationFilter
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.roleWhereInput>
@@ -285,6 +293,7 @@ export type userOrderByWithRelationInput = {
   password_changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   booking?: Prisma.bookingOrderByRelationAggregateInput
   refresh_token?: Prisma.refresh_tokenOrderByRelationAggregateInput
   role?: Prisma.roleOrderByWithRelationInput
@@ -305,6 +314,7 @@ export type userWhereUniqueInput = Prisma.AtLeast<{
   password_changed_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"user"> | Date | string
+  deleted_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   booking?: Prisma.BookingListRelationFilter
   refresh_token?: Prisma.Refresh_tokenListRelationFilter
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.roleWhereInput>
@@ -322,6 +332,7 @@ export type userOrderByWithAggregationInput = {
   password_changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.userCountOrderByAggregateInput
   _avg?: Prisma.userAvgOrderByAggregateInput
   _max?: Prisma.userMaxOrderByAggregateInput
@@ -344,6 +355,7 @@ export type userScalarWhereWithAggregatesInput = {
   password_changed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"user"> | Date | string
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
 }
 
 export type userCreateInput = {
@@ -356,6 +368,7 @@ export type userCreateInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
@@ -373,6 +386,7 @@ export type userUncheckedCreateInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
@@ -387,6 +401,7 @@ export type userUpdateInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
@@ -404,6 +419,7 @@ export type userUncheckedUpdateInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -420,6 +436,7 @@ export type userCreateManyInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
 }
 
 export type userUpdateManyMutationInput = {
@@ -432,6 +449,7 @@ export type userUpdateManyMutationInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type userUncheckedUpdateManyInput = {
@@ -446,6 +464,7 @@ export type userUncheckedUpdateManyInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserScalarRelationFilter = {
@@ -475,6 +494,7 @@ export type userCountOrderByAggregateInput = {
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
 }
 
 export type userAvgOrderByAggregateInput = {
@@ -494,6 +514,7 @@ export type userMaxOrderByAggregateInput = {
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
 }
 
 export type userMinOrderByAggregateInput = {
@@ -508,6 +529,7 @@ export type userMinOrderByAggregateInput = {
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
 }
 
 export type userSumOrderByAggregateInput = {
@@ -603,6 +625,7 @@ export type userCreateWithoutBookingInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
 }
@@ -619,6 +642,7 @@ export type userUncheckedCreateWithoutBookingInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -648,6 +672,7 @@ export type userUpdateWithoutBookingInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
 }
@@ -664,6 +689,7 @@ export type userUncheckedUpdateWithoutBookingInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -677,6 +703,7 @@ export type userCreateWithoutRoleInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
 }
@@ -692,6 +719,7 @@ export type userUncheckedCreateWithoutRoleInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
@@ -737,6 +765,7 @@ export type userScalarWhereInput = {
   password_changed_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"user"> | Date | string
+  deleted_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
 }
 
 export type userCreateWithoutRefresh_tokenInput = {
@@ -749,6 +778,7 @@ export type userCreateWithoutRefresh_tokenInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
 }
@@ -765,6 +795,7 @@ export type userUncheckedCreateWithoutRefresh_tokenInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -794,6 +825,7 @@ export type userUpdateWithoutRefresh_tokenInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
 }
@@ -810,6 +842,7 @@ export type userUncheckedUpdateWithoutRefresh_tokenInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -824,6 +857,7 @@ export type userCreateManyRoleInput = {
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  deleted_at?: Date | string | null
 }
 
 export type userUpdateWithoutRoleInput = {
@@ -836,6 +870,7 @@ export type userUpdateWithoutRoleInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
 }
@@ -851,6 +886,7 @@ export type userUncheckedUpdateWithoutRoleInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -866,6 +902,7 @@ export type userUncheckedUpdateManyWithoutRoleInput = {
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -920,6 +957,7 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  deleted_at?: boolean
   booking?: boolean | Prisma.user$bookingArgs<ExtArgs>
   refresh_token?: boolean | Prisma.user$refresh_tokenArgs<ExtArgs>
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
@@ -938,6 +976,7 @@ export type userSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  deleted_at?: boolean
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -953,6 +992,7 @@ export type userSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  deleted_at?: boolean
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -968,9 +1008,10 @@ export type userSelectScalar = {
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  deleted_at?: boolean
 }
 
-export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "valid_email" | "birth_date" | "password" | "role_id" | "password_changed_at" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "valid_email" | "birth_date" | "password" | "role_id" | "password_changed_at" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["user"]>
 export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   booking?: boolean | Prisma.user$bookingArgs<ExtArgs>
   refresh_token?: boolean | Prisma.user$refresh_tokenArgs<ExtArgs>
@@ -1003,6 +1044,7 @@ export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password_changed_at: Date | null
     created_at: Date
     updated_at: Date
+    deleted_at: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1440,6 +1482,7 @@ export interface userFieldRefs {
   readonly password_changed_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"user", 'DateTime'>
+  readonly deleted_at: Prisma.FieldRef<"user", 'DateTime'>
 }
     
 
