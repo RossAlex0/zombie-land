@@ -7,7 +7,19 @@ export class UserModel extends AbstractModel<'user'> {
   }
 
   async findUserByEmail(email: string) {
-    return await this.table.findUnique({ where: { email } });
+    return await this.table.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        password: true,
+        role: true,
+        booking: true,
+        birth_date: true,
+      },
+    });
   }
 
   async findUserById(id: number, fields?: userFindUniqueArgs['select']) {

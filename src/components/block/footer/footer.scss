@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .footer {
@@ -47,7 +48,7 @@
   user-select: none;
 }
 
-@media (max-width: map-get($breakpoints, 'desktop')) {
+@media (max-width: map.get($breakpoints, 'desktop')) {
   .footer {
     padding: 2rem 1.5rem 0 1.5rem;
 
@@ -73,7 +74,7 @@
   }
 }
 
-@media (max-width: map-get($breakpoints, 'mobile')) {
+@media (max-width: map.get($breakpoints, 'mobile')) {
   .footer {
     padding: 2rem 1.5rem 0 1.5rem;
 

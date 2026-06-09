@@ -5,10 +5,11 @@ import HomeActivites from './activities/Activities';
 import HomeBookings from './booking/Booking';
 import Loading from '../../../app/loading';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
+import { useAuth } from '@context/authProvider';
 
 export default function HomePage() {
   const { data, loading, error } = useFetch<ActivityWithCategory[]>('/api/activity');
-
+  const { user } = useAuth();
   if (loading) {
     return <Loading />;
   }

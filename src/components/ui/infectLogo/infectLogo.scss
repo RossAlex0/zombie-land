@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .infect_logo {
@@ -25,7 +26,7 @@
   }
 }
 
-@media (max-width: map-get($breakpoints, 'mobile')) {
+@media (max-width: map.get($breakpoints, 'mobile')) {
   .footer {
     padding: 2rem 1.5rem 0 1.5rem;
 
