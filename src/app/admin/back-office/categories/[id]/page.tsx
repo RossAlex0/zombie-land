@@ -25,14 +25,28 @@ function CategoryEditForm({ category, id }: FormProps) {
   const { category: updateCategory, loading, error: hookError } = useUpdateCategory(id);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const validate = (): string | null => {
+    if (!label.trim()) return 'Le nom de la catégorie est obligatoire.';
+    if (label.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
+    return null;
+  };
+
   const handleSubmit = async () => {
     setSubmitError(null);
-    const result = await updateCategory({ label });
+    const validationError = validate();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
+    const result = await updateCategory({ label: label.trim() });
     if ('ok' in result && result.ok) {
       clearCache('/api/category');
       router.push('/admin/back-office/categories?success=updated&entity=Catégorie');
     } else if ('error' in result) {
-      setSubmitError(result.error);
+      const isDuplicate =
+        result.error.toLowerCase().includes('unique') ||
+        result.error.toLowerCase().includes('already');
+      setSubmitError(isDuplicate ? 'Ce nom de catégorie est déjà utilisé.' : result.error);
     }
   };
 

@@ -35,8 +35,27 @@ export default function ActivityCreatePage() {
     setCategoryIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
   };
 
+  const validate = (): string | null => {
+    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
+    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
+    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
+    if (form.picture) {
+      try {
+        new URL(form.picture);
+      } catch {
+        return "L'URL de l'image n'est pas valide.";
+      }
+    }
+    return null;
+  };
+
   const handleSubmit = async () => {
     setSubmitError(null);
+    const validationError = validate();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
     const res = await createActivity({
       name: form.name,
       description: form.description || undefined,

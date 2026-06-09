@@ -52,8 +52,27 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
     );
   };
 
+  const validate = (): string | null => {
+    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
+    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
+    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
+    if (form.picture) {
+      try {
+        new URL(form.picture);
+      } catch {
+        return "L'URL de l'image n'est pas valide.";
+      }
+    }
+    return null;
+  };
+
   const handleSubmit = async () => {
     setSubmitError(null);
+    const validationError = validate();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
     try {
       const res = await patchActivity({
         name: form.name || undefined,
