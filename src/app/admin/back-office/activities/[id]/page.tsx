@@ -6,9 +6,11 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import '../../backoffice.scss';
 import './activity-edit.scss';
-import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
+
+type Category = { id: number; label: string };
 
 type Activity = {
   id: number;
@@ -16,6 +18,7 @@ type Activity = {
   description: string | null;
   picture: string | null;
   status: string;
+  category_activity: { category_id: number }[];
 };
 
 const statusOptions = [
@@ -26,9 +29,10 @@ const statusOptions = [
 type FormProps = {
   activity: Activity;
   id: string;
+  categories: Category[];
 };
 
-function ActivityEditForm({ activity, id }: FormProps) {
+function ActivityEditForm({ activity, id, categories }: FormProps) {
   const router = useRouter();
   const [form, setForm] = useState({
     name: activity.name ?? '',
@@ -36,19 +40,28 @@ function ActivityEditForm({ activity, id }: FormProps) {
     picture: activity.picture ?? '',
     status: activity.status ?? 'open',
   });
+  const [categoryIds, setCategoryIds] = useState<number[]>(
+    activity.category_activity?.map((ca) => ca.category_id) ?? []
+  );
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { activity: patchActivity } = usePatchActivity(Number(id));
+
+  const toggleCategory = (catId: number) => {
+    setCategoryIds((prev) =>
+      prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]
+    );
+  };
 
   const handleSubmit = async () => {
     setSubmitError(null);
     try {
-      const payload = {
+      const res = await patchActivity({
         name: form.name || undefined,
         description: form.description || undefined,
         picture: form.picture || undefined,
         status: form.status,
-      };
-      const res = await patchActivity(payload);
+        category_activity: categoryIds.map((id) => ({ category_id: id })),
+      });
       if ('ok' in res && res.ok) {
         clearCache('/api/activity');
         router.push('/admin/back-office/activities?success=updated&entity=Activité');
@@ -80,7 +93,23 @@ function ActivityEditForm({ activity, id }: FormProps) {
           />
         </div>
 
-        <div className="activity-edit__field">
+        <div className="activity-edit__field activity-edit__field--full">
+          <TextZbl jetbrains>Catégories</TextZbl>
+          <div className="activity-edit__categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                className={`activity-edit__category-chip ${categoryIds.includes(cat.id) ? 'activity-edit__category-chip--selected' : ''}`}
+                onClick={() => toggleCategory(cat.id)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="activity-edit__field activity-edit__field--full">
           <TextZbl jetbrains>Picture</TextZbl>
           <input
             className="activity-edit__input"
@@ -128,6 +157,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
 export default function ActivityEditPage() {
   const { id } = useParams<{ id: string }>();
   const { data: activity, loading, error } = useFetch<Activity>(`/api/activity/${id}`);
+  const { data: categories } = useFetch<Category[]>('/api/category');
 
   return (
     <div className="backoffice_content">
@@ -145,7 +175,9 @@ export default function ActivityEditPage() {
           Erreur : {error.message}
         </TextZbl>
       )}
-      {activity && <ActivityEditForm activity={activity} id={id} />}
+      {activity && categories && (
+        <ActivityEditForm activity={activity} id={id} categories={categories} />
+      )}
     </div>
   );
 }

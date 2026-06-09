@@ -6,9 +6,11 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
-import { clearCache } from '@hooks/api-request/useFetch';
+import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import '../../backoffice.scss';
 import '../[id]/activity-edit.scss';
+
+type Category = { id: number; label: string };
 
 const statusOptions = [
   { value: 'open', label: 'open' },
@@ -18,13 +20,20 @@ const statusOptions = [
 export default function ActivityCreatePage() {
   const router = useRouter();
   const { activity: createActivity } = useCreateActivity();
+  const { data: categories } = useFetch<Category[]>('/api/category');
+
   const [form, setForm] = useState({
     name: '',
     description: '',
     picture: '',
     status: 'open',
   });
+  const [categoryIds, setCategoryIds] = useState<number[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const toggleCategory = (id: number) => {
+    setCategoryIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
+  };
 
   const handleSubmit = async () => {
     setSubmitError(null);
@@ -33,6 +42,7 @@ export default function ActivityCreatePage() {
       description: form.description || undefined,
       picture: form.picture || undefined,
       status: form.status,
+      category_activity: categoryIds.map((id) => ({ category_id: id })),
     });
     if ('ok' in res && res.ok) {
       clearCache('/api/activity');
@@ -73,7 +83,23 @@ export default function ActivityCreatePage() {
             />
           </div>
 
-          <div className="activity-edit__field">
+          <div className="activity-edit__field activity-edit__field--full">
+            <TextZbl jetbrains>Catégories</TextZbl>
+            <div className="activity-edit__categories">
+              {categories?.map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`activity-edit__category-chip ${categoryIds.includes(cat.id) ? 'activity-edit__category-chip--selected' : ''}`}
+                  onClick={() => toggleCategory(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="activity-edit__field activity-edit__field--full">
             <TextZbl jetbrains>Picture</TextZbl>
             <input
               className="activity-edit__input"
