@@ -1,12 +1,11 @@
 import Footer from '@components/block/footer/Footer';
 import Header from '@components/block/header/Header';
-import HomePage from '@components/layout/home/HomePage';
 
-export default function Home() {
+export default function UserRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <HomePage />
+      {children}
       <Footer />
     </>
   );

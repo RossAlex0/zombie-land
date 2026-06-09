@@ -1,11 +1,11 @@
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import { NotepadText } from 'lucide-react';
-import type { activity } from '@prismaInstance/*';
 import AttractionsCarousel from '@components/block/carousel/CarouselZbl';
 
 import './homeActivities.scss';
+import { ActivityWithCategory } from '@customTypes/collections/activity';
 
-export default function HomeActivites({ activities }: { activities: Partial<activity[]> }) {
+export default function HomeActivites({ activities }: { activities: ActivityWithCategory[] }) {
   return (
     <section className="home_activities">
       <div className="home_activities_text">

@@ -43,6 +43,7 @@
   font-size: 10rem;
   text-align: center;
   margin-top: -16px;
+  user-select: none;
 }
 
 @media (max-width: map-get($breakpoints, 'desktop')) {

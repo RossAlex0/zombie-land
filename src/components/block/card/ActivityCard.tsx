@@ -1,13 +1,14 @@
 import TextZbl from '@components/ui/textZbl/TextZbl';
-import { activity } from '@prismaInstance/*';
-
-import './activityCard.scss';
 import Image from 'next/image';
+import type { ActivityWithCategory } from '@customTypes/collections/activity';
+import './activityCard.scss';
 
 export default function ActivityCard({
   activity,
+  index,
 }: {
-  activity: activity & { category_id?: { name: string } };
+  activity: ActivityWithCategory;
+  index: number;
 }) {
   return (
     <div className="card">
@@ -21,13 +22,13 @@ export default function ActivityCard({
       </div>
       <div className="card_header">
         <div className="card_header_span">
-          <TextZbl jetbrains color="yellow">{`ATTR-0${activity.id}`}</TextZbl>
+          <TextZbl jetbrains color="yellow">{`ATTR-0${index + 1}`}</TextZbl>
         </div>
       </div>
       <div className="card_title">
-        {activity.category_id?.name ? (
+        {activity.category_activity[0]?.category?.label ? (
           <TextZbl color="grey" redPrefix="//">
-            {activity.category_id.name}
+            {activity.category_activity[0].category.label}
           </TextZbl>
         ) : undefined}
         <TextZbl tag="h2">{activity.name}</TextZbl>

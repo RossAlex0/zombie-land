@@ -6,7 +6,30 @@ import { NextRequest, NextResponse } from 'next/server';
 export const activityController = {
   readAllActivities: async () => {
     const activityService = new ActivityModel();
-    const activites = await activityService.readAll({ orderBy: { created_at: 'desc' } });
+    const activites = await activityService.readAll({
+      select: {
+        id: true,
+        updated_at: true,
+        created_at: true,
+        name: true,
+        status: true,
+        picture: true,
+        description: true,
+        category_activity: {
+          select: {
+            category_id: true,
+            activity_id: true,
+            category: {
+              select: {
+                id: true,
+                label: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { created_at: 'desc' },
+    });
 
     return NextResponse.json({ data: activites }, { status: 200 });
   },
