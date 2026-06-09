@@ -3,12 +3,10 @@
 .signupForm {
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
   gap: 0.75rem;
   width: 100%;
-  padding: 2rem;
-  background-color: $medium-black;
-  border-radius: 6px;
+  max-width: 420px;
+  margin-inline: auto;
 
   &__title {
     text-align: center;
@@ -33,14 +31,17 @@
   }
 
   &__input {
-    border-radius: 5px;
-    height: 2rem;
-    font-size: 1rem;
     margin-bottom: 0.5rem;
   }
 
   &__link {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-top: 0.5rem;
+  }
+
+  &__link-accent {
+    color: $primary-yellow;
+    text-decoration: underline;
   }
 }

@@ -4,6 +4,7 @@ import { COOKIE_NAMES } from '@customTypes/enum/cookies';
 import { RefreshTokenModel, UserModel } from '@server/services';
 import { loginSchema, signupSchema } from '@server/schemas/user/user.schema';
 import argon2 from 'argon2';
+import { ZodError } from 'zod';
 import { generateAccessToken, generateRefreshToken } from '../../../utils/api/token';
 import { user } from '../../../../prisma/generated/client';
 
@@ -35,18 +36,21 @@ export const authController = {
 
       return response;
     } catch (err) {
+      // Validation : on laisse withErrorHandler renvoyer le détail par champ
+      if (err instanceof ZodError) throw err;
+
       console.error(err);
-      const response = NextResponse.json(
-        { message: "Problème lors de l'inscription" },
-        { status: 400 }
-      );
-      return response;
+
+      // On ne révèle pas qu'un email est déjà pris (évite l'énumération de comptes)
+      // ni le message brut de Prisma : message générique.
+      return NextResponse.json({ message: "Problème lors de l'inscription" }, { status: 400 });
     }
   },
 
   login: async (request: NextRequest) => {
     const body = await request.json();
 
+    // Validation Zod : une ZodError remonte à withErrorHandler -> 400 lisible
     const { email, password } = loginSchema.parse(body);
     //   const result = await authService.loginUser(email, password);
 

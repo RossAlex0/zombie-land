@@ -144,7 +144,7 @@ export default function LoginForm() {
           </TextZbl>
         </Link>
 
-        <Link href="/sign-up" className="login-form__link">
+        <Link href="/auth/sign-up" className="login-form__link">
           <TextZbl color="grey" jetbrains>
             Pas de compte ? <span className="login-form__link-accent">Créez un compte</span>
           </TextZbl>
