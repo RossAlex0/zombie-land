@@ -60,7 +60,7 @@ export default function ActivitiesPage() {
           </div>
           <div className="backoffice_content_header_title_items yellow">
             <TextZbl jetbrains color="yellow">
-              {activities.length} items
+              {activities.length} activités
             </TextZbl>
           </div>
         </div>

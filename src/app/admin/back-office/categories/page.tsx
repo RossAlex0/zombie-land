@@ -8,7 +8,7 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import FlashMessage from '@components/ui/flashMessage/FlashMessage';
 import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
-import useFetch from '@hooks/api-request/useFetch';
+import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useDeleteCategory from '@hooks/api-request/category/useDeleteCategory';
 import '../backoffice.scss';
 
@@ -35,6 +35,7 @@ export default function CategoriesPage() {
     const result = await deleteCategory(pendingDeleteId);
     setPendingDeleteId(null);
     if ('ok' in result && result.ok) {
+      clearCache('/api/category');
       setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
       router.replace('/admin/back-office/categories?success=deleted&entity=Catégorie');
     }
@@ -49,7 +50,7 @@ export default function CategoriesPage() {
           </div>
           <div className="backoffice_content_header_title_items yellow">
             <TextZbl jetbrains color="yellow">
-              {categories.length} items
+              {categories.length} catégories
             </TextZbl>
           </div>
         </div>
