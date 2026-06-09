@@ -90,8 +90,11 @@ export default function CategoryEditPage() {
       <div className="backoffice_content_header">
         <div className="backoffice_content_header_title">
           <div className="backoffice_content_header_title_dash white">
-            <TextZbl jetbrains>
-              {category ? `${category.label} - ID : ${id}` : `ID : ${id}`}
+            <TextZbl jetbrains>Modifier la catégorie</TextZbl>
+          </div>
+          <div className="backoffice_content_header_title_items yellow">
+            <TextZbl jetbrains color="yellow">
+              {category ? category.label : `ID : ${id}`}
             </TextZbl>
           </div>
         </div>

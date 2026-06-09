@@ -46,7 +46,7 @@ export default function CategoryCreatePage() {
 
       <div className="category-edit">
         <div className="category-edit__field">
-          <TextZbl jetbrains>Label</TextZbl>
+          <TextZbl jetbrains>Nom de la catégorie</TextZbl>
           <input
             className="category-edit__input"
             type="text"
