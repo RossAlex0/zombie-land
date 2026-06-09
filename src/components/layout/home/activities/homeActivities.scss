@@ -1,0 +1,26 @@
+@use '../../../../utils/styles/variables' as *;
+
+.home_activities {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem 4rem 7rem 4rem;
+  border-bottom: 1px solid $dark-white;
+
+  &_text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 40%;
+    max-width: 50%;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './carouselZbl.scss';
+import { activity } from '@prismaInstance/*';
 const attractions = [
   {
     id: 1,
@@ -81,7 +82,7 @@ function NextArrow({ onClick }: { onClick?: () => void }) {
   );
 }
 
-export default function AttractionsCarousel() {
+export default function AttractionsCarousel({ activities }: { activities: Partial<activity[]> }) {
   const settings = {
     dots: true,
     infinite: true,
@@ -105,9 +106,9 @@ export default function AttractionsCarousel() {
   return (
     <div className="attractions-carousel">
       <Slider {...settings}>
-        {attractions.map((attr) => (
-          <ActivityCard key={attr.id} activity={attr} />
-        ))}
+        {activities.map((attr) =>
+          attr ? <ActivityCard key={attr.id} activity={attr} /> : undefined
+        )}
       </Slider>
     </div>
   );
