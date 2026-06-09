@@ -7,12 +7,10 @@ const links = [
   { label: 'Accueil', href: '/admin/back-office' },
   { label: 'Activitées', href: '/admin/back-office/activities' },
   { label: 'Catégories', href: '/admin/back-office/categories' },
-  { label: 'Utilisateurs', href: '' },
+  { label: 'Utilisateurs', href: '/admin/back-office/users' },
   { label: 'Réservations', href: '' },
-  { label: 'Roles', href: '' },
   { label: 'Ticket', href: '' },
   { label: 'Réduction prix', href: '' },
-  { label: 'Configuration', href: '' },
 ];
 
 export default function SidebarNav() {
