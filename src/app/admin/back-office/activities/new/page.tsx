@@ -19,7 +19,7 @@ const statusOptions = [
 
 export default function ActivityCreatePage() {
   const router = useRouter();
-  const { activity: createActivity } = useCreateActivity();
+  const { activity: createActivity, loading } = useCreateActivity();
   const { data: categories } = useFetch<Category[]>('/api/category');
 
   const [form, setForm] = useState({
@@ -156,7 +156,7 @@ export default function ActivityCreatePage() {
               handleSubmit();
             }}
           >
-            Créer
+            {loading ? 'Création...' : 'Créer'}
           </ButtonZbl>
         </div>
       </div>

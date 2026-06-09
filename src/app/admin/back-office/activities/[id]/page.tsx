@@ -44,7 +44,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
     activity.category_activity?.map((ca) => ca.category_id) ?? []
   );
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const { activity: patchActivity } = usePatchActivity(Number(id));
+  const { activity: patchActivity, loading } = usePatchActivity(Number(id));
 
   const toggleCategory = (catId: number) => {
     setCategoryIds((prev) =>
@@ -169,7 +169,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
             handleSubmit();
           }}
         >
-          Valider
+          {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
     </div>
