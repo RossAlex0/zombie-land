@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 const links = [
   { label: 'Accueil', href: '/admin/back-office' },
   { label: 'Activitées', href: '/admin/back-office/activities' },
-  { label: 'Catégories', href: '' },
+  { label: 'Catégories', href: '/admin/back-office/categories' },
   { label: 'Utilisateurs', href: '' },
   { label: 'Réservations', href: '' },
   { label: 'Roles', href: '' },
