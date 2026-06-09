@@ -105,10 +105,22 @@ Todo  :
 
 # 22/05/2026
 
-- Finition parcours inscirption / connexion
+- Finition parcours inscription / connexion
 - Layout front
 - Accueil back office
 
   - To do : Merge + code revieww (objectif : parcours d'inscription connexion complet)
   - Passage présentation : Alex (13h30)
-  - 
+
+# 08/06/2026
+
+- Merge des formulaires d'inscription et de connexion (+ JWT rempli après inscirption)
+- Composant tableau des activités (PR à voir)
+
+- To do : 
+  - Merge des PR en cours
+  - Git Project màj avec reste du mvp + répartition par tâches (front : Alex / Ludivine, back : Ariel, Hervé)
+
+# 09/06/2026
+
+- Pages not found, error, loading crées
