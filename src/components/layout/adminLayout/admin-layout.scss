@@ -21,7 +21,17 @@
     overflow-y: auto;
   }
 
-  @media (max-width: 1024px) {
+  @media (min-width: 769px) and (max-width: 1023px) {
+    grid-template-columns: 200px 1fr;
+    padding: 20px;
+    gap: 12px;
+
+    &__content {
+      padding: 0 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
     align-content: start;
     padding: 0;

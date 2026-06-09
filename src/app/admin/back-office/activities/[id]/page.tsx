@@ -64,7 +64,10 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
       });
       if ('ok' in res && res.ok) {
         clearCache('/api/activity');
+        clearCache(`/api/activity/${id}`);
         router.push('/admin/back-office/activities?success=updated&entity=Activité');
+      } else if ('error' in res) {
+        setSubmitError(res.error);
       }
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur inconnue');

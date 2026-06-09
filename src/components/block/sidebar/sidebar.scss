@@ -74,4 +74,31 @@
   &__button {
     width: 100% !important;
   }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    min-width: 200px;
+    padding: 1rem;
+
+    &__logo {
+      &_image {
+        width: 54px;
+        height: 54px;
+      }
+
+      &_title {
+        font-size: 25px !important;
+      }
+    }
+
+    &__nav {
+      &_link {
+        padding-bottom: 14px;
+        font-size: 14px;
+
+        a {
+          gap: 8px;
+        }
+      }
+    }
+  }
 }
