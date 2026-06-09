@@ -28,6 +28,22 @@ export class UserModel extends AbstractModel<'user'> {
     return await this.table.count({ where: { role: { name: role } } });
   }
 
+  async findBookings(userId: number) {
+    return await this.prisma.booking.findMany({
+      where: { user_id: userId },
+      select: {
+        id: true,
+        status: true,
+        start_at: true,
+        end_at: true,
+        duration: true,
+        created_at: true,
+        _count: { select: { ticket: true } },
+      },
+      orderBy: { start_at: 'desc' },
+    });
+  }
+
   async searchAndCount(params: UserSearchParams) {
     const where: userWhereInput = {};
 
