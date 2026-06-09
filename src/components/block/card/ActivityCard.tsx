@@ -1,14 +1,9 @@
 import TextZbl from '@components/ui/textZbl/TextZbl';
-import { activity } from '@prismaInstance/*';
-
-import './activityCard.scss';
 import Image from 'next/image';
+import type { ActivityWithCategory } from '@customTypes/collections/activity';
+import './activityCard.scss';
 
-export default function ActivityCard({
-  activity,
-}: {
-  activity: activity & { category_id?: { name: string } };
-}) {
+export default function ActivityCard({ activity }: { activity: ActivityWithCategory }) {
   return (
     <div className="card">
       <div className="card_image">
@@ -25,9 +20,9 @@ export default function ActivityCard({
         </div>
       </div>
       <div className="card_title">
-        {activity.category_id?.name ? (
+        {activity.category_activity[0]?.category?.label ? (
           <TextZbl color="grey" redPrefix="//">
-            {activity.category_id.name}
+            {activity.category_activity[0].category.label}
           </TextZbl>
         ) : undefined}
         <TextZbl tag="h2">{activity.name}</TextZbl>

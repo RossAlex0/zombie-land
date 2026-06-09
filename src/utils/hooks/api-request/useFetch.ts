@@ -8,13 +8,13 @@ export function clearCache(url: string) {
   cache.delete(url);
 }
 
-export default function useFetch<T>(url: string, forceRefresh = false) {
+export default function useFetch<T>(url: string | null, forceRefresh = false) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (!forceRefresh && cache.has(url)) {
+    if (!url || (!forceRefresh && cache.has(url))) {
       return;
     }
 
@@ -43,7 +43,7 @@ export default function useFetch<T>(url: string, forceRefresh = false) {
     return () => controller.abort();
   }, [forceRefresh, url]);
 
-  if (!forceRefresh && cache.has(url)) {
+  if (!forceRefresh && url && cache.has(url)) {
     return { data: cache.get(url) as T, loading: false, error };
   }
 

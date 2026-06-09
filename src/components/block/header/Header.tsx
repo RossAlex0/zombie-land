@@ -2,7 +2,6 @@ import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import { Lock } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import './header.scss';
 import InfectLogo from '@components/ui/infectLogo/InfectLogo';
@@ -10,7 +9,7 @@ import InfectLogo from '@components/ui/infectLogo/InfectLogo';
 export default function Header() {
   const navigationNames = [
     { label: 'Accueil', href: '/' },
-    { label: 'Activités', href: '/' },
+    { label: 'Activités', href: '/activity' },
     { label: 'Reservations', href: '/' },
     { label: 'Manuel de survie', href: '/' },
   ];

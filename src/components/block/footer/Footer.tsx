@@ -18,7 +18,7 @@ export default function Footer() {
           <FooterNav
             title="Parc"
             links={[
-              { label: 'Attractions', href: '/activities' },
+              { label: 'Attractions', href: '/activity' },
               { label: 'Reservation', href: '/booking' },
               { label: 'Infos Pratiques', href: '/infos' },
             ]}
