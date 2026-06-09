@@ -42,6 +42,15 @@ export const userController = {
     return NextResponse.json({ message: 'Profil mis à jour avec succès' }, { status: 200 });
   },
 
+  listBookings: async (req: NextRequest) => {
+    const token = getTokenAccess(req);
+    const userService = new UserModel();
+
+    const bookings = await userService.findBookings(token.userId);
+
+    return NextResponse.json(bookings);
+  },
+
   updatePassword: async (req: NextRequest) => {
     const token = getTokenAccess(req);
     const body = await req.json();
