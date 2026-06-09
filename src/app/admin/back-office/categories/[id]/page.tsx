@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import useUpdateCategory from '@hooks/api-request/category/useUpdateCategory';
 import '../../backoffice.scss';
 import './category-edit.scss';
 
@@ -15,32 +16,23 @@ type Category = {
 
 type FormProps = {
   category: Category;
-  id: string;
+  id: number;
 };
 
 function CategoryEditForm({ category, id }: FormProps) {
   const router = useRouter();
   const [label, setLabel] = useState(category.label ?? '');
+  const { category: updateCategory, loading, error: hookError } = useUpdateCategory(id);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     setSubmitError(null);
-    try {
-      const res = await fetch(`/api/category/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ label }),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      const json = await res.json();
-      if (res.ok) {
-        clearCache('/api/category');
-        router.push('/admin/back-office/categories?success=updated&entity=Catégorie');
-      } else {
-        setSubmitError(json?.error || `Erreur ${res.status}`);
-      }
-    } catch {
-      setSubmitError('Erreur réseau');
+    const result = await updateCategory({ label });
+    if ('ok' in result && result.ok) {
+      clearCache('/api/category');
+      router.push('/admin/back-office/categories?success=updated&entity=Catégorie');
+    } else if ('error' in result) {
+      setSubmitError(result.error);
     }
   };
 
@@ -56,9 +48,9 @@ function CategoryEditForm({ category, id }: FormProps) {
         />
       </div>
 
-      {submitError && (
+      {(submitError || hookError) && (
         <TextZbl jetbrains color="yellow">
-          Erreur : {submitError}
+          Erreur : {submitError ?? hookError}
         </TextZbl>
       )}
 
@@ -74,7 +66,7 @@ function CategoryEditForm({ category, id }: FormProps) {
             handleSubmit();
           }}
         >
-          Valider
+          {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
     </div>
@@ -106,7 +98,7 @@ export default function CategoryEditPage() {
           Erreur : {error.message}
         </TextZbl>
       )}
-      {category && <CategoryEditForm category={category} id={id} />}
+      {category && <CategoryEditForm category={category} id={Number(id)} />}
     </div>
   );
 }

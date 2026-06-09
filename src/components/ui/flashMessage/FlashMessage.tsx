@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import './FlashMessage.scss';
 
@@ -30,18 +30,16 @@ function FlashMessageInner() {
   const error = searchParams.get('error');
   const entity = searchParams.get('entity');
   const active = success ?? error;
-  const [visible, setVisible] = useState(!!active);
 
   useEffect(() => {
     if (!active) return;
     const timer = setTimeout(() => {
-      setVisible(false);
       router.replace(pathname);
     }, 3000);
     return () => clearTimeout(timer);
   }, [active, router, pathname]);
 
-  if (!visible || !active) return null;
+  if (!active) return null;
 
   if (success && successLabels[success]) {
     return (

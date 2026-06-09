@@ -9,6 +9,7 @@ import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import FlashMessage from '@components/ui/flashMessage/FlashMessage';
 import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
 import useFetch from '@hooks/api-request/useFetch';
+import useDeleteCategory from '@hooks/api-request/category/useDeleteCategory';
 import '../backoffice.scss';
 
 type Category = {
@@ -23,32 +24,19 @@ const columns: Column<Category>[] = [{ key: 'label', label: 'Nom de la catégori
 export default function CategoriesPage() {
   const router = useRouter();
   const { data, loading, error } = useFetch<Category[]>('/api/category');
+  const { deleteCategory, error: deleteError } = useDeleteCategory();
   const [deletedIds, setDeletedIds] = useState<Set<number>>(new Set());
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const categories = (data ?? []).filter((c) => !deletedIds.has(c.id));
 
   const handleDeleteConfirm = async () => {
     if (pendingDeleteId === null) return;
-    setDeleteError(null);
-    try {
-      const res = await fetch(`/api/category/${pendingDeleteId}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      setPendingDeleteId(null);
-      if (res.ok) {
-        setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
-        router.replace('/admin/back-office/categories?success=deleted&entity=Catégorie');
-      } else {
-        const json = await res.json();
-        setDeleteError(json?.error || `Erreur ${res.status}`);
-      }
-    } catch {
-      setDeleteError('Erreur réseau');
-      setPendingDeleteId(null);
+    const result = await deleteCategory(pendingDeleteId);
+    setPendingDeleteId(null);
+    if ('ok' in result && result.ok) {
+      setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
+      router.replace('/admin/back-office/categories?success=deleted&entity=Catégorie');
     }
   };
 

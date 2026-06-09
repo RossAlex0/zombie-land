@@ -1,36 +1,28 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import { clearCache } from '@hooks/api-request/useFetch';
+import useCreateCategory from '@hooks/api-request/category/useCreateCategory';
+import { useState } from 'react';
 import '../../backoffice.scss';
 import '../[id]/category-edit.scss';
 
 export default function CategoryCreatePage() {
   const router = useRouter();
   const [label, setLabel] = useState('');
+  const { category: createCategory, loading, error: hookError } = useCreateCategory();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     setSubmitError(null);
-    try {
-      const res = await fetch('/api/category', {
-        method: 'POST',
-        body: JSON.stringify({ label }),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      const json = await res.json();
-      if (res.ok) {
-        clearCache('/api/category');
-        router.push('/admin/back-office/categories?success=created&entity=Catégorie');
-      } else {
-        setSubmitError(json?.error || `Erreur ${res.status}`);
-      }
-    } catch {
-      setSubmitError('Erreur réseau');
+    const result = await createCategory({ label });
+    if ('ok' in result && result.ok) {
+      clearCache('/api/category');
+      router.push('/admin/back-office/categories?success=created&entity=Catégorie');
+    } else if ('error' in result) {
+      setSubmitError(result.error);
     }
   };
 
@@ -55,9 +47,9 @@ export default function CategoryCreatePage() {
           />
         </div>
 
-        {submitError && (
+        {(submitError || hookError) && (
           <TextZbl jetbrains color="yellow">
-            Erreur : {submitError}
+            Erreur : {submitError ?? hookError}
           </TextZbl>
         )}
 
@@ -73,7 +65,7 @@ export default function CategoryCreatePage() {
               handleSubmit();
             }}
           >
-            Créer
+            {loading ? 'Création...' : 'Créer'}
           </ButtonZbl>
         </div>
       </div>
