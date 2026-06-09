@@ -31,18 +31,29 @@
       -webkit-text-fill-color: transparent;
     }
   }
+
   &__nav {
     align-self: flex-start;
+    width: 100%;
 
     &_container {
       display: flex;
       flex-direction: column;
     }
+
     &_link {
       list-style: none;
       color: $primary-white;
       padding-bottom: 23px;
       font-family: $font-jetbrains-text;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: inherit;
+        text-decoration: none;
+      }
 
       &:hover {
         color: $primary-yellow;
@@ -54,7 +65,12 @@
         text-decoration-color: $primary-yellow;
       }
     }
+
+    &_icon {
+      flex-shrink: 0;
+    }
   }
+
   &__button {
     width: 100% !important;
   }
