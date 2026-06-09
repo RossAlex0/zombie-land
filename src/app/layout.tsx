@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, Liter, JetBrains_Mono } from 'next/font/google';
+import { AuthProvider } from '@context/authProvider';
+
 import '../utils/styles/globals.scss';
 
 const bebasNeue = Bebas_Neue({
@@ -35,7 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${bebasNeue.variable} ${liter.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

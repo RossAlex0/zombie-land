@@ -13,7 +13,7 @@ export const userController = {
       email: true,
       first_name: true,
       last_name: true,
-      role_id: true,
+      birth_date: true,
       role: true,
     });
 

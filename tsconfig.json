@@ -27,7 +27,8 @@
       "@prismaInstance/*": ["./src/utils/api/database/client.ts"],
       "@server/*": ["./src/server/*"],
       "@helpers/*": ["./src/utils/api/helpers/*"],
-      "@shared/*": ["./src/utils/shared/*"]
+      "@shared/*": ["./src/utils/shared/*"],
+      "@context/*": ["./src/utils/context/*"]
     }
   },
   "include": [

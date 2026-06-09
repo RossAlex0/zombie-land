@@ -58,16 +58,21 @@ export const authController = {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    const isMatch = await argon2.verify(user.password, password);
+    const { password: userPassword, ...userWithoutPassword } = user;
+
+    const isMatch = await argon2.verify(userPassword, password);
 
     if (!isMatch) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    const accessToken = await generateAccessToken(user.id, user.role_id);
+    const accessToken = await generateAccessToken(user.id, user.role.id);
     const refreshToken = await generateRefreshToken(user.id);
 
-    const response = NextResponse.json({ message: 'Logged in successfully' }, { status: 200 });
+    const response = NextResponse.json(
+      { message: 'Logged in successfully', user: userWithoutPassword },
+      { status: 200 }
+    );
 
     setAuthCookies(response, {
       accessToken: accessToken,

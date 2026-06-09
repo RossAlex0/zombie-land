@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .activity {
@@ -85,7 +86,7 @@
   gap: 3rem;
 }
 
-@media (max-width: map-get($breakpoints, 'tablet')) {
+@media (max-width: map.get($breakpoints, 'tablet')) {
   .activity {
     &_header {
       flex-direction: column;
@@ -98,7 +99,7 @@
     }
   }
 }
-@media (max-width: map-get($breakpoints, 'mobile')) {
+@media (max-width: map.get($breakpoints, 'mobile')) {
   .activity {
     &_content {
       justify-content: center;
