@@ -13,4 +13,13 @@ export class CategoryModel extends AbstractModel<'category'> {
     });
     return category;
   }
+
+  async updateById(id: number, data: object) {
+    const category = await this.table.update({ where: { id }, data });
+    return category;
+  }
+
+  async deleteById(id: number) {
+    await this.table.delete({ where: { id } });
+  }
 }
