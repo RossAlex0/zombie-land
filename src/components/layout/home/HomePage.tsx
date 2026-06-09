@@ -13,14 +13,18 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  if (error || !data) {
+  if (error) {
     throw new Error('Erreur durant la récupération des données "activity"');
   }
 
   return (
     <>
-      <Hero activities={data} />
-      <HomeActivites activities={data} />
+      {data ? (
+        <>
+          <Hero activities={data} />
+          <HomeActivites activities={data} />
+        </>
+      ) : undefined}
       <HomeBookings />
     </>
   );

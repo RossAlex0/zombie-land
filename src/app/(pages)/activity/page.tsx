@@ -9,8 +9,8 @@ import { useCallback, useMemo, useState } from 'react';
 import ActivityCard from '@components/block/card/ActivityCard';
 import Link from 'next/link';
 import Chips from '@components/ui/chips/Chips';
-import './activity.scss';
 import SearchInput from '@components/ui/searchInput/SearchInput';
+import './activity.scss';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 
 export default function ActivitiesPage() {
@@ -60,7 +60,12 @@ export default function ActivitiesPage() {
   }
 
   if (!activities || activities.length === 0) {
-    return <p>popo</p>;
+    return (
+      <div className="activity_no_data">
+        <TextZbl tag="h1">Aucune activités trouvées</TextZbl>
+        <ButtonZbl navTo="/">Retour à la page d&apos;accueil</ButtonZbl>
+      </div>
+    );
   }
 
   return (
@@ -100,9 +105,9 @@ export default function ActivitiesPage() {
         </div>
       </div>
       <div className="activity_content">
-        {filteredActivities.map((act, index) => (
+        {filteredActivities.map((act) => (
           <Link key={act.id} href={`/activity/${act.id}`} className="activity_content_card">
-            <ActivityCard activity={act} index={index} />
+            <ActivityCard activity={act} />
           </Link>
         ))}
       </div>

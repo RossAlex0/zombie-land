@@ -3,43 +3,68 @@ import { activityCreateSchema, activityUpdateSchema } from '@server/schemas';
 import { ActivityModel, CategoryActivityModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const activityController = {
-  readAllActivities: async () => {
-    const activityService = new ActivityModel();
-    const activites = await activityService.readAll({
+const selectActivityWithCategory = {
+  select: {
+    id: true,
+    updated_at: true,
+    created_at: true,
+    name: true,
+    status: true,
+    picture: true,
+    description: true,
+    category_activity: {
       select: {
-        id: true,
-        updated_at: true,
-        created_at: true,
-        name: true,
-        status: true,
-        picture: true,
-        description: true,
-        category_activity: {
+        category_id: true,
+        activity_id: true,
+        category: {
           select: {
-            category_id: true,
-            activity_id: true,
-            category: {
-              select: {
-                id: true,
-                label: true,
-              },
-            },
+            id: true,
+            label: true,
           },
         },
       },
+    },
+  },
+};
+
+export const activityController = {
+  readAllActivities: async (req: NextRequest) => {
+    const { searchParams } = new URL(req.url);
+    const category = searchParams.get('category');
+
+    let args;
+
+    if (category) {
+      args = {
+        ...selectActivityWithCategory,
+        where: {
+          category_activity: {
+            some: { category_id: Number(category) },
+          },
+        },
+      };
+    } else {
+      args = selectActivityWithCategory;
+    }
+
+    const activityService = new ActivityModel();
+    const activites = await activityService.readAll({
+      ...args,
       orderBy: { created_at: 'desc' },
     });
 
     return NextResponse.json({ data: activites }, { status: 200 });
   },
 
-  readActivityById: async (req: NextRequest, context: NextContext<{ activityId: string }>) => {
+  readActivityById: async (_req: NextRequest, context: NextContext<{ activityId: string }>) => {
     const { activityId } = await context.params;
 
     const activityService = new ActivityModel();
 
-    const activity = await activityService.getActivityById(Number(activityId));
+    const activity = await activityService.getActivityById(
+      Number(activityId),
+      selectActivityWithCategory
+    );
 
     return NextResponse.json({ data: activity }, { status: 200 });
   },

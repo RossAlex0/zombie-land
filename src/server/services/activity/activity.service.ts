@@ -1,15 +1,14 @@
 import { AbstractModel } from '@server/services/AbstractModel';
+import { activityFindUniqueArgs } from '../../../../prisma/generated/models';
 export class ActivityModel extends AbstractModel<'activity'> {
   constructor() {
     super('activity');
   }
 
-  async getActivityById(id: number) {
+  async getActivityById(id: number, args?: Partial<activityFindUniqueArgs>) {
     const activity = await this.table.findUnique({
       where: { id },
-      include: {
-        category_activity: true,
-      },
+      ...args,
     });
     return activity;
   }

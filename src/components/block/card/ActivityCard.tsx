@@ -3,13 +3,7 @@ import Image from 'next/image';
 import type { ActivityWithCategory } from '@customTypes/collections/activity';
 import './activityCard.scss';
 
-export default function ActivityCard({
-  activity,
-  index,
-}: {
-  activity: ActivityWithCategory;
-  index: number;
-}) {
+export default function ActivityCard({ activity }: { activity: ActivityWithCategory }) {
   return (
     <div className="card">
       <div className="card_image">
@@ -22,7 +16,7 @@ export default function ActivityCard({
       </div>
       <div className="card_header">
         <div className="card_header_span">
-          <TextZbl jetbrains color="yellow">{`ATTR-0${index + 1}`}</TextZbl>
+          <TextZbl jetbrains color="yellow">{`ATTR-0${activity.id}`}</TextZbl>
         </div>
       </div>
       <div className="card_title">

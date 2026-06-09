@@ -7,6 +7,7 @@ import { ActivityWithCategory } from '@customTypes/collections/activity';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './carouselZbl.scss';
+import Link from 'next/link';
 
 function PrevArrow({ onClick }: { onClick?: () => void }) {
   return (
@@ -61,7 +62,11 @@ export default function AttractionsCarousel({
     <div className="attractions-carousel">
       <Slider {...settings}>
         {activities.map((attr) =>
-          attr ? <ActivityCard key={attr.id} activity={attr} /> : undefined
+          attr ? (
+            <Link key={attr.id} href={`/activity/${attr.id}`}>
+              <ActivityCard key={attr.id} activity={attr} />
+            </Link>
+          ) : undefined
         )}
       </Slider>
     </div>

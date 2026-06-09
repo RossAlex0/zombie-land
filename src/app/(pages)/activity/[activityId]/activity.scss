@@ -1,0 +1,54 @@
+@use '../../../../utils/styles/variables' as *;
+
+.activity_details {
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 4rem 7rem;
+
+  &_desc {
+    height: fit-content;
+    max-height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &_text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 40%;
+
+      &_cat {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &_img {
+      position: relative;
+      height: 50vh;
+      min-width: 40%;
+      max-width: 50%;
+
+      &_picture {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.details_separtor {
+  height: 0.5px;
+  background-color: $dark-white;
+  margin-inline: auto;
+  margin-block: 2rem;
+  width: 60%;
+}
