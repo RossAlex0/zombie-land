@@ -81,4 +81,22 @@ export const adminUserController = {
 
     return NextResponse.json(updatedUser);
   },
+  deleteUser: async (req: NextRequest, context: NextContext<{ userId: string }>) => {
+    const { userId } = await context.params;
+    const token = getTokenAccess(req);
+    const userService = new UserModel();
+    const targetUser = await userService.findUserWithRole(Number(userId));
+
+    if (!targetUser) {
+      return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
+    }
+    if (targetUser.id === token.userId) {
+      return NextResponse.json(
+        { error: 'Vous ne pouvez pas supprimer votre propre compte administrateur' },
+        { status: 400 }
+      );
+    }
+    await userService.anonymizeUser(Number(userId));
+    return NextResponse.json({ message: 'Utilisateur anonymisé avec succès' });
+  },
 };

@@ -4,3 +4,4 @@ import { adminUserController } from '@server/controllers/user/admin/user.control
 
 export const GET = withErrorHandler(verifyAdmin(adminUserController.getUserById));
 export const PATCH = withErrorHandler(verifyAdmin(adminUserController.updateRole));
+export const DELETE = withErrorHandler(verifyAdmin(adminUserController.deleteUser));
