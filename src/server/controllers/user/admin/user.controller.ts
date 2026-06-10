@@ -34,7 +34,7 @@ export const adminUserController = {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({ data: user });
   },
 
   updateRole: async (req: NextRequest, context: NextContext<{ userId: string }>) => {

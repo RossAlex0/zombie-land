@@ -17,6 +17,13 @@
     gap: 0.5rem;
   }
 
+  &__value {
+    padding: 0.6rem 0.8rem;
+    background-color: $medium-black;
+    border: 1px solid $dark-grey;
+    border-radius: 4px;
+  }
+
   &__footer {
     display: flex;
     justify-content: space-between;

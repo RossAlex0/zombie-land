@@ -8,35 +8,8 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import FlashMessage from '@components/ui/flashMessage/FlashMessage';
 import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
+import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import '../backoffice.scss';
-
-// TODO: remplacer par useFetch('/api/user') quand la route backend existe
-const MOCK_USERS = [
-  {
-    id: 1,
-    first_name: 'Jean',
-    last_name: 'Dupont',
-    email: 'jean@test.com',
-    role_id: 1,
-    valid_email: true,
-  },
-  {
-    id: 2,
-    first_name: 'Marie',
-    last_name: 'Martin',
-    email: 'marie@test.com',
-    role_id: 1,
-    valid_email: false,
-  },
-  {
-    id: 3,
-    first_name: 'Admin',
-    last_name: 'User',
-    email: 'admin@test.com',
-    role_id: 2,
-    valid_email: true,
-  },
-];
 
 type User = {
   [key: string]: unknown;
@@ -44,8 +17,9 @@ type User = {
   first_name: string;
   last_name: string;
   email: string;
-  role_id: number;
+  role: { name: string };
   valid_email: boolean | null;
+  created_at: string;
 };
 
 const columns: Column<User>[] = [
@@ -56,11 +30,11 @@ const columns: Column<User>[] = [
   },
   { key: 'email', label: 'Email' },
   {
-    key: 'role_id',
+    key: 'role',
     label: 'Rôle',
-    render: (value) => (
-      <TextZbl jetbrains color={value === 2 ? 'yellow' : 'white'}>
-        {value === 2 ? 'admin' : 'customer'}
+    render: (_, row) => (
+      <TextZbl jetbrains color={row.role?.name === 'admin' ? 'yellow' : 'white'}>
+        {row.role?.name ?? '-'}
       </TextZbl>
     ),
   },
@@ -68,11 +42,12 @@ const columns: Column<User>[] = [
 
 export default function UsersPage() {
   const router = useRouter();
+  const { data: fetchData, loading, error } = useFetch<User[]>('/api/user');
   const [deletedIds, setDeletedIds] = useState<Set<number>>(new Set());
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const users = MOCK_USERS.filter((u) => !deletedIds.has(u.id));
+  const users = (fetchData ?? []).filter((u) => !deletedIds.has(u.id));
 
   const handleDeleteConfirm = async () => {
     if (pendingDeleteId === null) return;
@@ -85,6 +60,7 @@ export default function UsersPage() {
       });
       setPendingDeleteId(null);
       if (res.ok) {
+        clearCache('/api/user');
         setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
         router.replace('/admin/back-office/users?success=deleted&entity=Utilisateur');
       } else {
@@ -123,39 +99,47 @@ export default function UsersPage() {
         onCancel={() => setPendingDeleteId(null)}
       />
 
+      {loading && <TextZbl jetbrains>Chargement...</TextZbl>}
+      {error && (
+        <TextZbl jetbrains color="yellow">
+          Erreur : {error.message}
+        </TextZbl>
+      )}
       {deleteError && (
         <TextZbl jetbrains color="yellow">
           Suppression impossible : {deleteError}
         </TextZbl>
       )}
 
-      <DataTable<User>
-        columns={columns}
-        data={users}
-        searchable
-        searchKeys={['first_name', 'last_name', 'email']}
-        emptyMessage="Aucun utilisateur trouvé"
-        renderActions={(row) => (
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <ButtonZbl theme="light" navTo={`/admin/back-office/users/${row.id}`}>
-              <PencilLine size={16} />
-              <span className="btn-label">Modifier</span>
-            </ButtonZbl>
-            <ButtonZbl
-              theme="custom"
-              className="btn-danger"
-              navTo=""
-              onClick={(e) => {
-                e.preventDefault();
-                setPendingDeleteId(row.id);
-              }}
-            >
-              <Trash2 size={16} />
-              <span className="btn-label">Supprimer</span>
-            </ButtonZbl>
-          </div>
-        )}
-      />
+      {!loading && !error && (
+        <DataTable<User>
+          columns={columns}
+          data={users}
+          searchable
+          searchKeys={['first_name', 'last_name', 'email']}
+          emptyMessage="Aucun utilisateur trouvé"
+          renderActions={(row) => (
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <ButtonZbl theme="light" navTo={`/admin/back-office/users/${row.id}`}>
+                <PencilLine size={16} />
+                <span className="btn-label">Modifier</span>
+              </ButtonZbl>
+              <ButtonZbl
+                theme="custom"
+                className="btn-danger"
+                navTo=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPendingDeleteId(row.id);
+                }}
+              >
+                <Trash2 size={16} />
+                <span className="btn-label">Supprimer</span>
+              </ButtonZbl>
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 }
