@@ -28,7 +28,7 @@ model booking {
   user_id    Int
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @default(now()) @db.Timestamp(6)
-  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_booking_user")
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: NoAction, map: "fk_booking_user")
   ticket     ticket[]
 }
 
@@ -113,9 +113,13 @@ model user {
   password_changed_at DateTime?       @db.Timestamp(6)
   created_at          DateTime        @default(now()) @db.Timestamp(6)
   updated_at          DateTime        @default(now()) @db.Timestamp(6)
+  deleted_at          DateTime?        @db.Timestamp(6)
+  deleted             Boolean         @default(false)
   booking             booking[]
   refresh_token       refresh_token[]
   role                role            @relation(fields: [role_id], references: [id], onUpdate: NoAction, map: "fk_user_role")
+
+  @@index([deleted_at])
 }
 
 model refresh_token {

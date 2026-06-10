@@ -4,10 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { UnauthorizedError } from '../../errors/errors';
 import { NextContext } from '@customTypes/nextApi';
 import { Controller } from '@helpers/withErrorHandler';
+import { UserModel } from '@server/services';
 
 const secret = process.env.JWT_SECRET as string;
 
-export type AccessTokenPayload = { userId: number; role: number };
+export type AccessTokenPayload = { userId: number; role: number; iat: number; exp: number };
 
 export function verifyAccessToken<T>(controller: Controller<T>) {
   return async (req: NextRequest, context: NextContext<T>): Promise<NextResponse> => {
@@ -18,7 +19,15 @@ export function verifyAccessToken<T>(controller: Controller<T>) {
     }
 
     try {
-      jwt.verify(token, secret) as AccessTokenPayload;
+      const payload = jwt.verify(token, secret) as AccessTokenPayload;
+
+      const userService = new UserModel();
+
+      const user = await userService.findUserById(payload.userId, { password_changed_at: true });
+
+      if (user?.password_changed_at && payload.iat * 1000 < user.password_changed_at.getTime()) {
+        throw new UnauthorizedError('Token invalidé par changement de mot de passe');
+      }
     } catch {
       throw new UnauthorizedError('Token access is expired');
     }
