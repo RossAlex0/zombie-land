@@ -89,13 +89,19 @@ export default function DataTable<T extends Record<string, unknown>>({
                 <tr key={rowIndex} className="data-table__row">
                   {columns.map((col) => (
                     <td key={String(col.key)} className="data-table__td">
-                      {col.render ? (
-                        col.render(row[col.key], row)
-                      ) : (
-                        <TextZbl jetbrains className="data-table__td-text">
-                          {String(row[col.key] ?? '-')}
-                        </TextZbl>
-                      )}
+                      {(() => {
+                        const content = col.render
+                          ? col.render(row[col.key], row)
+                          : String(row[col.key] ?? '-');
+                        if (typeof content === 'string' || typeof content === 'number') {
+                          return (
+                            <TextZbl jetbrains className="data-table__td-text">
+                              {content}
+                            </TextZbl>
+                          );
+                        }
+                        return content;
+                      })()}
                     </td>
                   ))}
                   {renderActions && (
