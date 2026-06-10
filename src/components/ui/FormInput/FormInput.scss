@@ -1,18 +1,24 @@
 @use '../../../utils/styles/variables' as *;
 
-.form-input {
+.formInput {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 
   &__field {
+    width: 100%;
+    box-sizing: border-box;
     padding: 0.6rem 0.8rem;
     font-family: $font-liter-text;
     font-size: $font-size-content-m;
     color: $primary-white;
-    background-color: $medium-black;
+    background-color: transparent;
     border: 1px solid $dark-grey;
     border-radius: 4px;
+
+    &::placeholder {
+      color: $primary-grey;
+    }
 
     &:focus {
       outline: none;
@@ -22,5 +28,11 @@
     &:disabled {
       opacity: 0.6;
     }
+  }
+
+  &__error {
+    font-family: $font-liter-text;
+    font-size: $font-size-content-s;
+    color: $primary-red;
   }
 }
