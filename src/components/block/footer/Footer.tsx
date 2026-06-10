@@ -20,7 +20,7 @@ export default function Footer() {
             links={[
               { label: 'Attractions', href: '/activity' },
               { label: 'Reservation', href: '/booking' },
-              { label: 'Infos Pratiques', href: '/infos' },
+              { label: 'Infos Pratiques', href: '/info' },
             ]}
           />
         </div>
@@ -28,8 +28,8 @@ export default function Footer() {
           <FooterNav
             title="Informations Legales"
             links={[
-              { label: 'Politique de confidentialités', href: '/' },
-              { label: 'Notice légale', href: '/' },
+              { label: 'Politique de confidentialités', href: '/privacy-policy' },
+              { label: 'Notice légale', href: '/legal-notice' },
             ]}
           />
         </div>

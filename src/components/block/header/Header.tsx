@@ -15,10 +15,11 @@ export default function Header() {
     { label: 'Accueil', href: '/' },
     { label: 'Activités', href: '/activity' },
     { label: 'Reservations', href: '/' },
-    { label: 'Manuel de survie', href: '/' },
+    { label: 'Manuel de survie', href: '/info' },
   ];
-  console.info(user);
+
   if (user) navigationNames.push({ label: 'Profile', href: '/profile' });
+
   return (
     <header className="header">
       <InfectLogo />
