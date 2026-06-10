@@ -5,9 +5,7 @@ export class RefreshTokenModel extends AbstractModel<'refresh_token'> {
     super('refresh_token');
   }
 
-  async deleteMany(refreshToken: string) {
-    await this.table.deleteMany({
-      where: { token: refreshToken },
-    });
+  async readOneByToken(refreshToken: string) {
+    return await this.table.findUnique({ where: { token: refreshToken } });
   }
 }

@@ -6,7 +6,8 @@ import { loginSchema, signupSchema } from '@server/schemas/user/user.schema';
 import argon2 from 'argon2';
 import { ZodError } from 'zod';
 import { generateAccessToken, generateRefreshToken } from '../../../utils/api/token';
-import { user } from '../../../../prisma/generated/client';
+import { booking, role, user } from '@prismaInstance/*';
+import { NotFoundError, UnauthorizedError } from '../../../utils/errors/errors';
 
 export const authController = {
   signup: async (req: NextRequest) => {
@@ -47,8 +48,8 @@ export const authController = {
     }
   },
 
-  login: async (request: NextRequest) => {
-    const body = await request.json();
+  login: async (req: NextRequest) => {
+    const body = await req.json();
 
     // Validation Zod : une ZodError remonte à withErrorHandler -> 400 lisible
     const { email, password } = loginSchema.parse(body);
@@ -92,7 +93,7 @@ export const authController = {
 
       if (refreshTokenId) {
         const refreshTokenService = new RefreshTokenModel();
-        await refreshTokenService.deleteMany(refreshTokenId);
+        await refreshTokenService.delete({ where: { token: refreshTokenId } });
       }
 
       const response = NextResponse.json({ message: 'Déconnexion réussie' }, { status: 200 });
@@ -110,9 +111,9 @@ export const authController = {
     }
   },
 
-  resetPassword: async (request: NextRequest) => {
+  resetPassword: async (req: NextRequest) => {
     const userService = new UserModel();
-    const { email } = await request.json();
+    const { email } = await req.json();
 
     const user = await userService.findUserByEmail(email);
 
@@ -121,5 +122,61 @@ export const authController = {
     }
 
     return NextResponse.json({ message: 'Password reset link sent' }, { status: 200 });
+  },
+
+  refresh: async (req: NextRequest) => {
+    const refreshTokenId = req.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
+
+    if (!refreshTokenId) {
+      throw new UnauthorizedError('No Refresh token access');
+    }
+
+    const refreshTokenService = new RefreshTokenModel();
+
+    const refreshToken = await refreshTokenService.readOneByToken(refreshTokenId);
+
+    if (!refreshToken || !refreshToken?.user_id) {
+      throw new UnauthorizedError('Refresh token invalide.');
+    }
+
+    if (refreshToken.expired_at < new Date()) {
+      await refreshTokenService.delete({ where: { token: refreshTokenId } });
+      throw new UnauthorizedError('Refresh token expiré');
+    }
+
+    const userService = new UserModel();
+
+    const user = await userService.findUserById(refreshToken.user_id, {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      role: true,
+      booking: true,
+      birth_date: true,
+    });
+
+    if (!user) {
+      throw new NotFoundError('User associated with the refresh token was not found.');
+    }
+
+    const userTyped = user as user & { role: role; booking: booking };
+
+    await refreshTokenService.delete({ where: { token: refreshTokenId } });
+
+    const accessToken = await generateAccessToken(userTyped.id, userTyped.role.id);
+    const newRefreshToken = await generateRefreshToken(userTyped.id);
+
+    const response = NextResponse.json(
+      { message: 'Token refreshed.', user: userTyped },
+      { status: 200 }
+    );
+
+    setAuthCookies(response, {
+      accessToken: accessToken,
+      refreshToken: newRefreshToken,
+    });
+
+    return response;
   },
 };
