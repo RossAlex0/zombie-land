@@ -14,7 +14,7 @@ export default function FormInput({ children, error, ...props }: FormInputProps)
       <label htmlFor={props.id} className="signupForm_label">
         {children}
       </label>
-      <input {...props} aria-invalid={error ? true : undefined} aria-describedby={errorId} />
+      <input aria-invalid={error ? true : undefined} aria-describedby={errorId} {...props} />
       {error && (
         <span id={errorId} className="formInput__error" role="alert">
           {error}

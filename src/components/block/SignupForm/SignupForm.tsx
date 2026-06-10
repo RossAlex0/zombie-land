@@ -12,16 +12,7 @@ import useSignup from '@hooks/auth/useSignup';
 
 type FieldName = 'firstName' | 'lastName' | 'email' | 'password' | 'confirmPassword';
 
-const fields: {
-  type: string;
-  id: string;
-  name: FieldName;
-  // clé renvoyée par le back (schéma Zod en snake_case)
-  errorKey: string;
-  text: string;
-  placeholder: string;
-  autoComplete: string;
-}[] = [
+const fields = [
   {
     type: 'text',
     id: 'signupFirstName',
@@ -67,7 +58,7 @@ const fields: {
     placeholder: 'Confirmation du mot de passe',
     autoComplete: 'new-password',
   },
-];
+] as const;
 
 export default function SignupForm() {
   const { signup, loading, error, fieldErrors } = useSignup();
@@ -85,27 +76,26 @@ export default function SignupForm() {
     if (name === 'password' || name === 'confirmPassword') setMismatch(false);
   };
 
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (values.password !== values.confirmPassword) {
+      setMismatch(true);
+      return;
+    }
+    await signup({
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    });
+  };
+
   // message global affiché seulement s'il n'y a pas d'erreur ciblée par champ
   const hasFieldErrors = Object.keys(fieldErrors).length > 0;
 
   return (
-    <form
-      className="signupForm"
-      onSubmit={async (e) => {
-        e.preventDefault();
-        if (values.password !== values.confirmPassword) {
-          setMismatch(true);
-          return;
-        }
-        await signup({
-          first_name: values.firstName,
-          last_name: values.lastName,
-          email: values.email,
-          password: values.password,
-          confirmPassword: values.confirmPassword,
-        });
-      }}
-    >
+    <form className="signupForm" onSubmit={handleSubmit}>
       <TextZbl tag="h2" className="signupForm__title">
         Se déclarer parmi les survivants
       </TextZbl>
