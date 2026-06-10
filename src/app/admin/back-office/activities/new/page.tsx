@@ -85,11 +85,11 @@ export default function ActivityCreatePage() {
 
       <form className="activity-edit" action={handleSubmit}>
         <div className="activity-edit__grid">
-          <BackOfficeField label="Name">
+          <BackOfficeField label="Nom">
             <input className="backoffice-field__input" type="text" name="name" />
           </BackOfficeField>
 
-          <BackOfficeField label="Status">
+          <BackOfficeField label="Statut">
             <DropDownZbl
               options={statusOptions}
               value={status}
@@ -110,7 +110,7 @@ export default function ActivityCreatePage() {
             </div>
           </BackOfficeField>
 
-          <BackOfficeField label="Picture" fullWidth>
+          <BackOfficeField label="Image" fullWidth>
             <input className="backoffice-field__input" type="text" name="picture" />
           </BackOfficeField>
 

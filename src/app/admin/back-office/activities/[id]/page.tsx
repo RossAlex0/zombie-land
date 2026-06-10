@@ -114,7 +114,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
   return (
     <form className="activity-edit" action={handleSubmit}>
       <div className="activity-edit__grid">
-        <BackOfficeField label="Name">
+        <BackOfficeField label="Nom">
           <input
             className="backoffice-field__input"
             type="text"
@@ -123,7 +123,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
           />
         </BackOfficeField>
 
-        <BackOfficeField label="Status">
+        <BackOfficeField label="Statut">
           <DropDownZbl
             options={statusOptions}
             value={status}
@@ -144,7 +144,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
           </div>
         </BackOfficeField>
 
-        <BackOfficeField label="Picture" fullWidth>
+        <BackOfficeField label="Image" fullWidth>
           <input
             className="backoffice-field__input"
             type="text"
