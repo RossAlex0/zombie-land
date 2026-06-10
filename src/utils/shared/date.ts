@@ -39,3 +39,15 @@ export const getNbDays = (from: Date, to: Date) => differenceInCalendarDays(to, 
  * parseDateWithoutTime(new Date('2026-06-09T10:01:31.110Z')); // "2026-06-09"
  */
 export const parseDateWithoutTime = (date: Date) => format(new Date(date), 'yyyy-MM-dd');
+
+/** Minuit UTC du jour donné (début de journée). */
+export const startOfUtcDay = (date: Date) =>
+  new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+
+/** 23:59:59.999 UTC du jour donné (fin de journée). */
+export const endOfUtcDay = (date: Date) =>
+  new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
+
+/** Ajoute n jours en UTC (renvoie le minuit UTC du jour résultant). */
+export const addUtcDays = (date: Date, days: number) =>
+  new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + days));
