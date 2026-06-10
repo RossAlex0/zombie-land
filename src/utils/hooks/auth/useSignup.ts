@@ -21,7 +21,7 @@ export default function useSignup() {
       setFieldErrors({});
 
       try {
-        const res = await fetch('/api/signup', {
+        const res = await fetch('/api/auth/signup', {
           headers: {
             'Content-Type': 'application/json',
           },
