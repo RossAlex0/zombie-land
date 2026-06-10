@@ -16,7 +16,6 @@ export const userController = {
       email: true,
       first_name: true,
       last_name: true,
-      birth_date: true,
       role: true,
       birth_date: true,
       created_at: true,
@@ -42,15 +41,6 @@ export const userController = {
       data: { first_name, last_name, birth_date },
     });
     return NextResponse.json({ message: 'Profil mis à jour avec succès' }, { status: 200 });
-  },
-
-  listBookings: async (req: NextRequest) => {
-    const token = getTokenAccess(req);
-    const userService = new UserModel();
-
-    const bookings = await userService.findBookings(token.userId);
-
-    return NextResponse.json(bookings);
   },
 
   updatePassword: async (req: NextRequest) => {

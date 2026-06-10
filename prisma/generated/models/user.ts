@@ -623,10 +623,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type userCreateNestedOneWithoutRefresh_tokenInput = {
   create?: Prisma.XOR<Prisma.userCreateWithoutRefresh_tokenInput, Prisma.userUncheckedCreateWithoutRefresh_tokenInput>
   connectOrCreate?: Prisma.userCreateOrConnectWithoutRefresh_tokenInput
