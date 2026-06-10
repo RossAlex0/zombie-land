@@ -12,6 +12,7 @@ export default function Chips({ category, isActive = false, onClick }: ChipsProp
   const labelColor = isActive ? 'yellow' : 'white';
   return (
     <button
+      type="button"
       className={isActive ? 'chips chips_active' : 'chips'}
       onClick={() => onClick(category.id)}
     >

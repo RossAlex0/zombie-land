@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .data-table {
@@ -108,5 +109,19 @@
   &__empty-text {
     color: $primary-grey;
     font-size: $font-size-content-m;
+  }
+
+  @media (max-width: map.get($breakpoints, 'tablet')) {
+    &__td--truncate {
+      max-width: 0;
+      overflow: hidden;
+
+      .data-table__td-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    }
   }
 }

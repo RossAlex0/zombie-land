@@ -9,6 +9,7 @@ export type Column<T> = {
   key: keyof T;
   label: string;
   render?: (value: T[keyof T], row: T) => React.ReactNode;
+  truncate?: boolean;
 };
 
 type DataTableProps<T extends Record<string, unknown>> = {
@@ -88,7 +89,10 @@ export default function DataTable<T extends Record<string, unknown>>({
               filtered.map((row, rowIndex) => (
                 <tr key={rowIndex} className="data-table__row">
                   {columns.map((col) => (
-                    <td key={String(col.key)} className="data-table__td">
+                    <td
+                      key={String(col.key)}
+                      className={`data-table__td${col.truncate ? ' data-table__td--truncate' : ''}`}
+                    >
                       {(() => {
                         const content = col.render
                           ? col.render(row[col.key], row)
