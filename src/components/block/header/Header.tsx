@@ -18,7 +18,7 @@ export default function Header() {
     { label: 'Manuel de survie', href: '/info' },
   ];
 
-  if (user) navigationNames.push({ label: 'Profile', href: '/profile' });
+  if (user) navigationNames.push({ label: 'Profile', href: '/account' });
 
   return (
     <header className="header">

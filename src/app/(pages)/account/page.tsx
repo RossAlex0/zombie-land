@@ -1,0 +1,112 @@
+'use client';
+
+import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import TextZbl from '@components/ui/textZbl/TextZbl';
+import { useAuth } from '@context/authProvider';
+import { Home } from 'lucide-react';
+import Loading from '../../loading';
+import FormInput from '@components/ui/FormInput/FormInput';
+import { useCallback, useMemo, useState } from 'react';
+import { useUpdateProfile } from '@hooks/api-request/user/useUpdateProfile';
+import { useUpdatePassword } from '@hooks/api-request/user/useUpdatePassword';
+import FlashMessage from '@components/ui/flashMessage/FlashMessage';
+import { usePathname, useRouter } from 'next/navigation';
+import ModalZbl from '@components/block/modal-zbl/ModalZbl';
+import './account.scss';
+import ModalPassword from '@components/block/modal-zbl/modal-password/ModalPassword';
+import ProfileForm from '@components/block/form/profile/ProfileForm';
+
+export default function Account() {
+  const { user, loading, setUser } = useAuth();
+  const updateProfile = useUpdateProfile();
+  const updatePassword = useUpdatePassword();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [pendingPasswords, setPendingPasswords] = useState({ password: '', confirmPassword: '' });
+  const [openModalPassword, setOpenModalPassword] = useState(false);
+  const [hasApiMessage, setHasApiMessage] = useState(false);
+
+  const flash = (query: string) => {
+    setHasApiMessage(true);
+    router.replace(`${pathname}?${query}`);
+    setTimeout(() => setHasApiMessage(false), 3000);
+  };
+
+  const handleSubmitProfile = async (fields: Record<string, string>) => {
+    const response = await updateProfile(fields);
+    if (response.data) setUser(response.data);
+    if (response.message) flash('success=updated&entity=Profile');
+    if (response.error) flash('error=update_failed&entity=Profile');
+  };
+
+  const handleRequestPasswordChange = (password: string, confirmPassword: string) => {
+    setPendingPasswords({ password, confirmPassword });
+    setOpenModalPassword(true);
+  };
+
+  const handleValidatePassword = async (oldPassword: string) => {
+    const response = await updatePassword({
+      password: pendingPasswords.password,
+      confirmPassword: pendingPasswords.confirmPassword,
+      oldPassword,
+    });
+
+    if (response.message) flash('success=updated&entity=Mot de passe');
+    if (response.error) flash('error=update_failed&entity=Mot de passe');
+
+    setOpenModalPassword(false);
+    setPendingPasswords({ password: '', confirmPassword: '' });
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <>
+      {user ? (
+        <section className="account">
+          {hasApiMessage ? (
+            <div className="account_flash">
+              <FlashMessage />
+            </div>
+          ) : undefined}
+          <div className="account_container">
+            <TextZbl redPrefix="//" color="grey">
+              Mon profil
+            </TextZbl>
+            <ProfileForm
+              user={user}
+              loading={loading}
+              onSubmitProfile={handleSubmitProfile}
+              onRequestPasswordChange={handleRequestPasswordChange}
+            />
+          </div>
+          <div className="account_container">
+            <TextZbl redPrefix="//" color="grey">
+              Mes réservations
+            </TextZbl>
+          </div>
+        </section>
+      ) : (
+        <section className="account_disconnect">
+          <TextZbl tag="h1" color="red">
+            Pour accéder à cette page vous devez vous connectez !
+          </TextZbl>
+          <ButtonZbl theme="dark" navTo="/">
+            <Home color="#e5bf00" size={20} />
+            <TextZbl color="yellow">Retour vers la page d&apos;accueil</TextZbl>
+          </ButtonZbl>
+        </section>
+      )}
+      {openModalPassword ? (
+        <ModalZbl onClose={() => setOpenModalPassword(false)}>
+          <ModalPassword
+            onClose={() => setOpenModalPassword(false)}
+            onValidate={handleValidatePassword}
+          />
+        </ModalZbl>
+      ) : undefined}
+    </>
+  );
+}

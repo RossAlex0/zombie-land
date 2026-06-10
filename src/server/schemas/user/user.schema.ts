@@ -31,11 +31,11 @@ export const updatePasswordSchema = z
   .object({
     //!A changer pour au moins 12 avant le passage du TP
     oldPassword: z.string().min(6),
-    newPassword: z.string().min(6),
-    newConfirmPassword: z.string().min(6),
+    password: z.string().min(6),
+    confirmPassword: z.string().min(6),
   })
-  .refine((data) => data.newPassword === data.newConfirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Les nouveaux mots de passe ne correspondent pas',
-    path: ['newConfirmPassword'],
+    path: ['confirmPassword'],
   });
 export type SignupInput = z.infer<typeof signupSchema>;
