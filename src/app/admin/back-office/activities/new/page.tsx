@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import Chips from '@components/ui/chips/Chips';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import '../[id]/activity-edit.scss';
-
-type Category = { id: number; label: string };
 
 const statusOptions = [
   { value: 'open', label: 'open' },
@@ -20,7 +20,7 @@ const statusOptions = [
 export default function ActivityCreatePage() {
   const router = useRouter();
   const { activity: createActivity, loading } = useCreateActivity();
-  const { data: categories } = useFetch<Category[]>('/api/category');
+  const { data: categories } = useFetch<category[]>('/api/category');
 
   const [form, setForm] = useState({
     name: '',
@@ -106,14 +106,12 @@ export default function ActivityCreatePage() {
             <TextZbl jetbrains>Catégories</TextZbl>
             <div className="activity-edit__categories">
               {categories?.map((cat) => (
-                <button
+                <Chips
                   key={cat.id}
-                  type="button"
-                  className={`activity-edit__category-chip ${categoryIds.includes(cat.id) ? 'activity-edit__category-chip--selected' : ''}`}
-                  onClick={() => toggleCategory(cat.id)}
-                >
-                  {cat.label}
-                </button>
+                  category={cat}
+                  isActive={categoryIds.includes(cat.id)}
+                  onClick={toggleCategory}
+                />
               ))}
             </div>
           </div>

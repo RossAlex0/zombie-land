@@ -5,12 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import Chips from '@components/ui/chips/Chips';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
+import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import './activity-edit.scss';
-
-type Category = { id: number; label: string };
 
 type Activity = {
   id: number;
@@ -29,7 +29,7 @@ const statusOptions = [
 type FormProps = {
   activity: Activity;
   id: string;
-  categories: Category[];
+  categories: category[];
 };
 
 function ActivityEditForm({ activity, id, categories }: FormProps) {
@@ -119,14 +119,12 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
           <TextZbl jetbrains>Catégories</TextZbl>
           <div className="activity-edit__categories">
             {categories.map((cat) => (
-              <button
+              <Chips
                 key={cat.id}
-                type="button"
-                className={`activity-edit__category-chip ${categoryIds.includes(cat.id) ? 'activity-edit__category-chip--selected' : ''}`}
-                onClick={() => toggleCategory(cat.id)}
-              >
-                {cat.label}
-              </button>
+                category={cat}
+                isActive={categoryIds.includes(cat.id)}
+                onClick={toggleCategory}
+              />
             ))}
           </div>
         </div>
@@ -179,7 +177,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
 export default function ActivityEditPage() {
   const { id } = useParams<{ id: string }>();
   const { data: activity, loading, error } = useFetch<Activity>(`/api/activity/${id}`);
-  const { data: categories } = useFetch<Category[]>('/api/category');
+  const { data: categories } = useFetch<category[]>('/api/category');
 
   return (
     <div className="backoffice_content">
