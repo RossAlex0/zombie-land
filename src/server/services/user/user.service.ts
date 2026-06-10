@@ -111,6 +111,7 @@ export class UserModel extends AbstractModel<'user'> {
           birth_date: null,
           password: '', // bloque le login (aucun hash ne match une chaîne vide)
           valid_email: false,
+          deleted: true,
           deleted_at: new Date(),
         },
       }),
