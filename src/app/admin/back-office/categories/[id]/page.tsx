@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateCategory from '@hooks/api-request/category/useUpdateCategory';
 import '../../backoffice.scss';
@@ -21,24 +22,25 @@ type FormProps = {
 
 function CategoryEditForm({ category, id }: FormProps) {
   const router = useRouter();
-  const [label, setLabel] = useState(category.label ?? '');
   const { category: updateCategory, loading, error: hookError } = useUpdateCategory(id);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const validate = (): string | null => {
-    if (!label.trim()) return 'Le nom de la catégorie est obligatoire.';
-    if (label.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
-    return null;
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
-    const validationError = validate();
-    if (validationError) {
-      setSubmitError(validationError);
+    const label = (formData.get('label') as string)?.trim() ?? '';
+    if (!label) {
+      setSubmitError('Le nom de la catégorie est obligatoire.');
       return;
     }
-    const result = await updateCategory({ label: label.trim() });
+    if (label.length < 2) {
+      setSubmitError('Le nom doit contenir au moins 2 caractères.');
+      return;
+    }
+    if (label === category.label) {
+      router.push('/admin/back-office/categories');
+      return;
+    }
+    const result = await updateCategory({ label });
     if ('ok' in result && result.ok) {
       clearCache('/api/category');
       router.push('/admin/back-office/categories?success=updated&entity=Catégorie');
@@ -51,16 +53,15 @@ function CategoryEditForm({ category, id }: FormProps) {
   };
 
   return (
-    <div className="category-edit">
-      <div className="category-edit__field">
-        <TextZbl jetbrains>Nom de la catégorie</TextZbl>
+    <form className="category-edit" action={handleSubmit}>
+      <BackOfficeField label="Nom de la catégorie">
         <input
-          className="category-edit__input"
+          className="backoffice-field__input"
           type="text"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
+          name="label"
+          defaultValue={category.label}
         />
-      </div>
+      </BackOfficeField>
 
       {(submitError || hookError) && (
         <TextZbl jetbrains color="yellow">
@@ -72,18 +73,11 @@ function CategoryEditForm({ category, id }: FormProps) {
         <ButtonZbl theme="light" navTo="/admin/back-office/categories">
           Annuler
         </ButtonZbl>
-        <ButtonZbl
-          theme="light"
-          navTo=""
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
+        <ButtonZbl type="submit" theme="light">
           {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
-    </div>
+    </form>
   );
 }
 
