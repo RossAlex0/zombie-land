@@ -5,28 +5,39 @@ import HomeActivites from './activities/Activities';
 import HomeBookings from './booking/Booking';
 import Loading from '../../../app/loading';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
-import { useAuth } from '@context/authProvider';
+import { configuration } from '@prismaInstance/*';
 
 export default function HomePage() {
-  const { data, loading, error } = useFetch<ActivityWithCategory[]>('/api/activity');
-  const { user } = useAuth();
-  if (loading) {
+  const {
+    data: activities,
+    loading: loadingActivities,
+    error: errorActivities,
+  } = useFetch<ActivityWithCategory[]>('/api/activity');
+  const {
+    data: config,
+    loading: loadingConfig,
+    error: errorConfig,
+  } = useFetch<configuration>('/api/configuration');
+
+  if (loadingActivities || loadingConfig) {
     return <Loading />;
   }
 
-  if (error) {
+  if (errorActivities || errorConfig) {
     throw new Error('Erreur durant la récupération des données "activity"');
   }
 
   return (
     <>
-      {data ? (
+      {activities && config ? (
         <>
-          <Hero activities={data} />
-          <HomeActivites activities={data} />
+          <Hero activities={activities} config={config} />
+          <HomeActivites activities={activities} />
+          <HomeBookings config={config} />
         </>
-      ) : undefined}
-      <HomeBookings />
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }

@@ -1,12 +1,21 @@
+'use client';
 import ParkMap from '@components/block/park-map/ParkMap';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import { NotepadText, Radiation, RollerCoaster, ArrowRight } from 'lucide-react';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import type { activity } from '@prismaInstance/*';
+import type { activity, configuration } from '@prismaInstance/*';
+import { getNbDays } from '@shared/date';
+import { useMemo } from 'react';
 
 import './hero.scss';
 
-export default function Hero({ activities }: { activities: Partial<activity[]> }) {
+type HeroProps = {
+  activities: Partial<activity[]>;
+  config: configuration;
+};
+
+export default function Hero({ activities, config }: HeroProps) {
+  const daysOpen = useMemo(() => getNbDays(config.created_at, new Date()), [config.created_at]);
   return (
     <section className="hero">
       <div className="hero_text">
@@ -36,7 +45,7 @@ export default function Hero({ activities }: { activities: Partial<activity[]> }
         <span className="hero_text_title">
           <TextZbl color="yellow" jetbrains>
             <Radiation size={20} />
-            126
+            {daysOpen}
           </TextZbl>
           <TextZbl jetbrains>&nbsp;jours depuis le découverte du patient 0</TextZbl>
         </span>
