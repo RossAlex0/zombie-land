@@ -9,18 +9,10 @@ import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import FlashMessage from '@components/ui/flashMessage/FlashMessage';
 import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import type { IUserBO } from '@customTypes/User';
 import '../backoffice.scss';
 
-type User = {
-  [key: string]: unknown;
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: { name: string };
-  valid_email: boolean | null;
-  created_at: string;
-};
+type User = IUserBO & { [key: string]: unknown };
 
 const columns: Column<User>[] = [
   {
@@ -28,7 +20,7 @@ const columns: Column<User>[] = [
     label: 'Nom',
     render: (_, row) => `${row.first_name} ${row.last_name}`,
   },
-  { key: 'email', label: 'Email' },
+  { key: 'email', label: 'Email', truncate: true },
   {
     key: 'role',
     label: 'Rôle',

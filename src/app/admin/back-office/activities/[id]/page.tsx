@@ -6,6 +6,7 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
+import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import { category } from '@prismaInstance/*';
@@ -34,12 +35,7 @@ type FormProps = {
 
 function ActivityEditForm({ activity, id, categories }: FormProps) {
   const router = useRouter();
-  const [form, setForm] = useState({
-    name: activity.name ?? '',
-    description: activity.description ?? '',
-    picture: activity.picture ?? '',
-    status: activity.status ?? 'open',
-  });
+  const [status, setStatus] = useState(activity.status ?? 'open');
   const [categoryIds, setCategoryIds] = useState<number[]>(
     activity.category_activity?.map((ca) => ca.category_id) ?? []
   );
@@ -52,34 +48,56 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
     );
   };
 
-  const validate = (): string | null => {
-    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
-    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
-    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
-    if (form.picture) {
-      try {
-        new URL(form.picture);
-      } catch {
-        return "L'URL de l'image n'est pas valide.";
-      }
-    }
-    return null;
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
-    const validationError = validate();
-    if (validationError) {
-      setSubmitError(validationError);
+    const name = (formData.get('name') as string)?.trim() ?? '';
+    const picture = (formData.get('picture') as string)?.trim() ?? '';
+    const description = (formData.get('description') as string)?.trim() ?? '';
+
+    if (!name) {
+      setSubmitError("Le nom de l'activité est obligatoire.");
       return;
     }
+    if (name.length < 2) {
+      setSubmitError('Le nom doit contenir au moins 2 caractères.');
+      return;
+    }
+    if (name.length > 100) {
+      setSubmitError('Le nom ne peut pas dépasser 100 caractères.');
+      return;
+    }
+    if (picture) {
+      try {
+        new URL(picture);
+      } catch {
+        setSubmitError("L'URL de l'image n'est pas valide.");
+        return;
+      }
+    }
+
+    const originalCategoryIds = (activity.category_activity?.map((ca) => ca.category_id) ?? [])
+      .slice()
+      .sort();
+    const currentCategoryIds = [...categoryIds].sort();
+    const hasChanged =
+      name !== activity.name ||
+      picture !== (activity.picture ?? '') ||
+      description !== (activity.description ?? '') ||
+      status !== activity.status ||
+      JSON.stringify(currentCategoryIds) !== JSON.stringify(originalCategoryIds);
+
+    if (!hasChanged) {
+      router.push('/admin/back-office/activities');
+      return;
+    }
+
     try {
       const res = await patchActivity({
-        name: form.name || undefined,
-        description: form.description || undefined,
-        picture: form.picture || undefined,
-        status: form.status,
-        category_activity: categoryIds.map((id) => ({ category_id: id })),
+        name: name || undefined,
+        description: description || undefined,
+        picture: picture || undefined,
+        status,
+        category_activity: categoryIds.map((catId) => ({ category_id: catId })),
       });
       if ('ok' in res && res.ok) {
         clearCache('/api/activity');
@@ -94,29 +112,26 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
   };
 
   return (
-    <div className="activity-edit">
+    <form className="activity-edit" action={handleSubmit}>
       <div className="activity-edit__grid">
-        <div className="activity-edit__field">
-          <TextZbl jetbrains>Name</TextZbl>
+        <BackOfficeField label="Name">
           <input
-            className="activity-edit__input"
+            className="backoffice-field__input"
             type="text"
-            value={form.name}
-            onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+            name="name"
+            defaultValue={activity.name}
           />
-        </div>
+        </BackOfficeField>
 
-        <div className="activity-edit__field">
-          <TextZbl jetbrains>Status</TextZbl>
+        <BackOfficeField label="Status">
           <DropDownZbl
             options={statusOptions}
-            value={form.status}
-            onChange={(opt) => setForm((prev) => ({ ...prev, status: opt.value }))}
+            value={status}
+            onChange={(opt) => setStatus(opt.value)}
           />
-        </div>
+        </BackOfficeField>
 
-        <div className="activity-edit__field activity-edit__field--full">
-          <TextZbl jetbrains>Catégories</TextZbl>
+        <BackOfficeField label="Catégories" fullWidth>
           <div className="activity-edit__categories">
             {categories.map((cat) => (
               <Chips
@@ -127,26 +142,24 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
               />
             ))}
           </div>
-        </div>
+        </BackOfficeField>
 
-        <div className="activity-edit__field activity-edit__field--full">
-          <TextZbl jetbrains>Picture</TextZbl>
+        <BackOfficeField label="Picture" fullWidth>
           <input
-            className="activity-edit__input"
+            className="backoffice-field__input"
             type="text"
-            value={form.picture}
-            onChange={(e) => setForm((prev) => ({ ...prev, picture: e.target.value }))}
+            name="picture"
+            defaultValue={activity.picture ?? ''}
           />
-        </div>
+        </BackOfficeField>
 
-        <div className="activity-edit__field activity-edit__field--full">
-          <TextZbl jetbrains>Description</TextZbl>
+        <BackOfficeField label="Description" fullWidth>
           <textarea
-            className="activity-edit__input activity-edit__textarea"
-            value={form.description}
-            onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+            className="backoffice-field__input backoffice-field__textarea"
+            name="description"
+            defaultValue={activity.description ?? ''}
           />
-        </div>
+        </BackOfficeField>
       </div>
 
       {submitError && (
@@ -159,18 +172,11 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
         <ButtonZbl theme="light" navTo="/admin/back-office/activities">
           Annuler
         </ButtonZbl>
-        <ButtonZbl
-          theme="light"
-          navTo=""
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
+        <ButtonZbl type="submit" theme="light">
           {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
-    </div>
+    </form>
   );
 }
 

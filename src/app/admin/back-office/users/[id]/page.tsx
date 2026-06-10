@@ -5,22 +5,16 @@ import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
+import BackOfficeValue from '@components/ui/backOfficeValue/BackOfficeValue';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateUserRole from '@hooks/api-request/user/useUpdateUserRole';
 import { RoleName } from '@customTypes/enum/roles';
+import type { IUserBO } from '@customTypes/User';
 import '../../backoffice.scss';
 import './user-edit.scss';
 
-type User = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: { name: string };
-  valid_email: boolean | null;
-  birth_date: string | null;
-  created_at: string;
-};
+type User = IUserBO;
 
 const roleOptions = [
   { value: 'customer', label: 'customer' },
@@ -34,13 +28,17 @@ type FormProps = {
 
 function UserEditForm({ user, id }: FormProps) {
   const router = useRouter();
-  const [form, setForm] = useState({ role: user.role?.name ?? 'customer' });
+  const [role, setRole] = useState(user.role?.name ?? 'customer');
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { updateUserRole, loading } = useUpdateUserRole();
 
   const handleSubmit = async () => {
     setSubmitError(null);
-    const result = await updateUserRole(Number(id), { role: form.role as RoleName });
+    if (role === (user.role?.name ?? 'customer')) {
+      router.push('/admin/back-office/users');
+      return;
+    }
+    const result = await updateUserRole(Number(id), { role: role as RoleName });
     if (result.ok) {
       clearCache('/api/user');
       clearCache(`/api/user/${id}`);
@@ -51,50 +49,21 @@ function UserEditForm({ user, id }: FormProps) {
   };
 
   return (
-    <div className="user-edit">
+    <form className="user-edit" action={handleSubmit}>
       <div className="user-edit__grid">
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Prénom</TextZbl>
-          <TextZbl jetbrains color="white" className="user-edit__value">
-            {user.first_name}
-          </TextZbl>
-        </div>
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Nom</TextZbl>
-          <TextZbl jetbrains color="white" className="user-edit__value">
-            {user.last_name}
-          </TextZbl>
-        </div>
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Email</TextZbl>
-          <TextZbl jetbrains color="white" className="user-edit__value">
-            {user.email}
-          </TextZbl>
-        </div>
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Email vérifié</TextZbl>
-          <TextZbl
-            jetbrains
-            color={user.valid_email ? 'white' : 'yellow'}
-            className="user-edit__value"
-          >
-            {user.valid_email ? 'Oui' : 'Non'}
-          </TextZbl>
-        </div>
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Date de naissance</TextZbl>
-          <TextZbl jetbrains color="white" className="user-edit__value">
-            {user.birth_date ? new Date(user.birth_date).toLocaleDateString('fr-FR') : '—'}
-          </TextZbl>
-        </div>
-        <div className="user-edit__field">
-          <TextZbl jetbrains>Rôle</TextZbl>
-          <DropDownZbl
-            options={roleOptions}
-            value={form.role}
-            onChange={(opt) => setForm((prev) => ({ ...prev, role: opt.value }))}
-          />
-        </div>
+        <BackOfficeValue label="Prénom">{user.first_name}</BackOfficeValue>
+        <BackOfficeValue label="Nom">{user.last_name}</BackOfficeValue>
+        <BackOfficeValue label="Email">{user.email}</BackOfficeValue>
+        <BackOfficeValue label="Email vérifié" color={user.valid_email ? 'white' : 'yellow'}>
+          {user.valid_email ? 'Oui' : 'Non'}
+        </BackOfficeValue>
+        <BackOfficeValue label="Date de naissance">
+          {user.birth_date ? user.birth_date.split('T')[0].split('-').reverse().join('/') : '—'}
+        </BackOfficeValue>
+
+        <BackOfficeField label="Rôle">
+          <DropDownZbl options={roleOptions} value={role} onChange={(opt) => setRole(opt.value)} />
+        </BackOfficeField>
       </div>
 
       {submitError && (
@@ -107,18 +76,11 @@ function UserEditForm({ user, id }: FormProps) {
         <ButtonZbl theme="light" navTo="/admin/back-office/users">
           Annuler
         </ButtonZbl>
-        <ButtonZbl
-          theme="light"
-          navTo=""
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
+        <ButtonZbl type="submit" theme="light">
           {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
-    </div>
+    </form>
   );
 }
 
