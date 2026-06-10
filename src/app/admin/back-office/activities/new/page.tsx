@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import Chips from '@components/ui/chips/Chips';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
-import { clearCache } from '@hooks/api-request/useFetch';
+import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import '../[id]/activity-edit.scss';
 
@@ -17,22 +19,49 @@ const statusOptions = [
 
 export default function ActivityCreatePage() {
   const router = useRouter();
-  const { activity: createActivity } = useCreateActivity();
+  const { activity: createActivity, loading } = useCreateActivity();
+  const { data: categories } = useFetch<category[]>('/api/category');
+
   const [form, setForm] = useState({
     name: '',
     description: '',
     picture: '',
     status: 'open',
   });
+  const [categoryIds, setCategoryIds] = useState<number[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const toggleCategory = (id: number) => {
+    setCategoryIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
+  };
+
+  const validate = (): string | null => {
+    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
+    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
+    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
+    if (form.picture) {
+      try {
+        new URL(form.picture);
+      } catch {
+        return "L'URL de l'image n'est pas valide.";
+      }
+    }
+    return null;
+  };
 
   const handleSubmit = async () => {
     setSubmitError(null);
+    const validationError = validate();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
     const res = await createActivity({
       name: form.name,
       description: form.description || undefined,
       picture: form.picture || undefined,
       status: form.status,
+      category_activity: categoryIds.map((id) => ({ category_id: id })),
     });
     if ('ok' in res && res.ok) {
       clearCache('/api/activity');
@@ -73,7 +102,21 @@ export default function ActivityCreatePage() {
             />
           </div>
 
-          <div className="activity-edit__field">
+          <div className="activity-edit__field activity-edit__field--full">
+            <TextZbl jetbrains>Catégories</TextZbl>
+            <div className="activity-edit__categories">
+              {categories?.map((cat) => (
+                <Chips
+                  key={cat.id}
+                  category={cat}
+                  isActive={categoryIds.includes(cat.id)}
+                  onClick={toggleCategory}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="activity-edit__field activity-edit__field--full">
             <TextZbl jetbrains>Picture</TextZbl>
             <input
               className="activity-edit__input"
@@ -111,7 +154,7 @@ export default function ActivityCreatePage() {
               handleSubmit();
             }}
           >
-            Créer
+            {loading ? 'Création...' : 'Créer'}
           </ButtonZbl>
         </div>
       </div>

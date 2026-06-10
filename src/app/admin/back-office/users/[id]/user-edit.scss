@@ -1,0 +1,32 @@
+@use '../../../../../utils/styles/variables' as *;
+
+.user-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__value {
+    padding: 0.6rem 0.8rem;
+    background-color: $medium-black;
+    border: 1px solid $dark-grey;
+    border-radius: 4px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+}

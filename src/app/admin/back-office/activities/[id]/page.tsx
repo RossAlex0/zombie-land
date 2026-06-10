@@ -5,10 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import Chips from '@components/ui/chips/Chips';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
+import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import './activity-edit.scss';
-import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 
 type Activity = {
   id: number;
@@ -16,6 +18,7 @@ type Activity = {
   description: string | null;
   picture: string | null;
   status: string;
+  category_activity: { category_id: number }[];
 };
 
 const statusOptions = [
@@ -26,9 +29,10 @@ const statusOptions = [
 type FormProps = {
   activity: Activity;
   id: string;
+  categories: category[];
 };
 
-function ActivityEditForm({ activity, id }: FormProps) {
+function ActivityEditForm({ activity, id, categories }: FormProps) {
   const router = useRouter();
   const [form, setForm] = useState({
     name: activity.name ?? '',
@@ -36,22 +40,53 @@ function ActivityEditForm({ activity, id }: FormProps) {
     picture: activity.picture ?? '',
     status: activity.status ?? 'open',
   });
+  const [categoryIds, setCategoryIds] = useState<number[]>(
+    activity.category_activity?.map((ca) => ca.category_id) ?? []
+  );
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const { activity: patchActivity } = usePatchActivity(Number(id));
+  const { activity: patchActivity, loading } = usePatchActivity(Number(id));
+
+  const toggleCategory = (catId: number) => {
+    setCategoryIds((prev) =>
+      prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]
+    );
+  };
+
+  const validate = (): string | null => {
+    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
+    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
+    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
+    if (form.picture) {
+      try {
+        new URL(form.picture);
+      } catch {
+        return "L'URL de l'image n'est pas valide.";
+      }
+    }
+    return null;
+  };
 
   const handleSubmit = async () => {
     setSubmitError(null);
+    const validationError = validate();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
     try {
-      const payload = {
+      const res = await patchActivity({
         name: form.name || undefined,
         description: form.description || undefined,
         picture: form.picture || undefined,
         status: form.status,
-      };
-      const res = await patchActivity(payload);
+        category_activity: categoryIds.map((id) => ({ category_id: id })),
+      });
       if ('ok' in res && res.ok) {
         clearCache('/api/activity');
+        clearCache(`/api/activity/${id}`);
         router.push('/admin/back-office/activities?success=updated&entity=Activité');
+      } else if ('error' in res) {
+        setSubmitError(res.error);
       }
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur inconnue');
@@ -80,7 +115,21 @@ function ActivityEditForm({ activity, id }: FormProps) {
           />
         </div>
 
-        <div className="activity-edit__field">
+        <div className="activity-edit__field activity-edit__field--full">
+          <TextZbl jetbrains>Catégories</TextZbl>
+          <div className="activity-edit__categories">
+            {categories.map((cat) => (
+              <Chips
+                key={cat.id}
+                category={cat}
+                isActive={categoryIds.includes(cat.id)}
+                onClick={toggleCategory}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="activity-edit__field activity-edit__field--full">
           <TextZbl jetbrains>Picture</TextZbl>
           <input
             className="activity-edit__input"
@@ -118,7 +167,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
             handleSubmit();
           }}
         >
-          Valider
+          {loading ? 'Enregistrement...' : 'Valider'}
         </ButtonZbl>
       </div>
     </div>
@@ -128,6 +177,7 @@ function ActivityEditForm({ activity, id }: FormProps) {
 export default function ActivityEditPage() {
   const { id } = useParams<{ id: string }>();
   const { data: activity, loading, error } = useFetch<Activity>(`/api/activity/${id}`);
+  const { data: categories } = useFetch<category[]>('/api/category');
 
   return (
     <div className="backoffice_content">
@@ -145,7 +195,9 @@ export default function ActivityEditPage() {
           Erreur : {error.message}
         </TextZbl>
       )}
-      {activity && <ActivityEditForm activity={activity} id={id} />}
+      {activity && categories && (
+        <ActivityEditForm activity={activity} id={id} categories={categories} />
+      )}
     </div>
   );
 }

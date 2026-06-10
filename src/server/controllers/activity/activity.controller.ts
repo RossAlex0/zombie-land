@@ -104,10 +104,18 @@ export const activityController = {
     const { activityId } = await context.params;
     const body = await req.json();
 
-    const activityBody = activityUpdateSchema.parse(body);
+    const { category_activity, ...activityFields } = activityUpdateSchema.parse(body);
 
     const activityService = new ActivityModel();
-    const activity = await activityService.updateById(Number(activityId), activityBody);
+    const activity = await activityService.updateById(Number(activityId), activityFields);
+
+    if (category_activity !== undefined) {
+      const categoryActivityService = new CategoryActivityModel();
+      await categoryActivityService.deleteByActivityId(Number(activityId));
+      for (const ca of category_activity) {
+        await categoryActivityService.create({ data: { ...ca, activity_id: Number(activityId) } });
+      }
+    }
 
     return NextResponse.json({ data: activity }, { status: 200 });
   },

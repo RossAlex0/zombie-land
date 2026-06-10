@@ -65,9 +65,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             <tr>
               {columns.map((col) => (
                 <th key={String(col.key)} className="data-table__th">
-                  <TextZbl jetbrains className="data-table__th-text">
-                    {col.label}
-                  </TextZbl>
+                  {col.label}
                 </th>
               ))}
               {renderActions && <th className="data-table__th data-table__th--actions" />}

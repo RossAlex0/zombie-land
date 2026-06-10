@@ -17,7 +17,7 @@ export default function useCreateCategory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/activity`, {
+      const res = await fetch(`/api/category`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },

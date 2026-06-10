@@ -8,11 +8,11 @@ export default function useDeleteCategory() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const category = async (id: number): Promise<CategoryResult> => {
+  const deleteCategory = async (id: number): Promise<CategoryResult> => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/category/${id}`, {
+      const res = await fetch(`/api/category/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -34,5 +34,5 @@ export default function useDeleteCategory() {
     }
   };
 
-  return { category, data, loading, error };
+  return { deleteCategory, data, loading, error };
 }

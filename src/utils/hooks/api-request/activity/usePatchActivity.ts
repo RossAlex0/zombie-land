@@ -1,19 +1,23 @@
 'use client';
 import React from 'react';
-import {
-  ActivityMinAggregateInputType,
-  activityUpdateInput,
-} from '../../../../../prisma/generated/models';
 
-type ActivityResponse = { id: number; email: string };
-type ActivityResult = { ok: boolean; data: ActivityResponse[] } | { error: string };
+type ActivityUpdatePayload = {
+  name?: string;
+  description?: string;
+  status?: string;
+  picture?: string;
+  category_activity?: { category_id: number }[];
+};
+
+type ActivityResponse = { id: number };
+type ActivityResult = { ok: boolean; data: ActivityResponse } | { error: string };
 
 export default function usePatchActivity(id: number) {
-  const [data, setData] = React.useState<ActivityMinAggregateInputType | null>(null);
+  const [data, setData] = React.useState<ActivityResponse | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const activity = async (body: activityUpdateInput): Promise<ActivityResult> => {
+  const activity = async (body: ActivityUpdatePayload): Promise<ActivityResult> => {
     setLoading(true);
     setError(null);
     try {

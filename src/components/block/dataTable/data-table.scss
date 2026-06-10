@@ -56,17 +56,10 @@
     background-color: $medium-black;
     border-bottom: 1px solid $primary-grey;
     white-space: nowrap;
-
+    color: $dark-white;
     &--actions {
       width: 1%;
     }
-  }
-
-  &__th-text {
-    color: $primary-grey;
-    font-size: $font-size-content-s;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 
   &__row {

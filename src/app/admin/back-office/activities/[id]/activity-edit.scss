@@ -41,6 +41,35 @@
     }
   }
 
+  &__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .chips {
+      padding: 0.35rem 0.8rem;
+      border-color: $dark-grey;
+      border-radius: 20px;
+      background: none;
+      opacity: 1;
+
+      &:hover {
+        border-color: $primary-yellow;
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    .chips_active {
+      border-color: $primary-yellow;
+      background-color: $primary-yellow;
+
+      .color_yellow {
+        color: $primary-black;
+      }
+    }
+  }
+
   &__footer {
     display: flex;
     justify-content: space-between;

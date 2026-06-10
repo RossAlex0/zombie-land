@@ -22,6 +22,12 @@ export const categoryController = {
     const { label } = categoryCreateSchema.parse(body);
 
     const categoryService = new CategoryModel();
+    const existing = await categoryService.readAll({
+      where: { label: { equals: label, mode: 'insensitive' } },
+    });
+    if (existing.length > 0) {
+      return NextResponse.json({ error: 'Ce nom de catégorie est déjà utilisé.' }, { status: 409 });
+    }
     const category = await categoryService.create({ data: { label } });
     return NextResponse.json({ data: category }, { status: 201 });
   },
@@ -31,8 +37,14 @@ export const categoryController = {
     const body = await req.json();
     const { label } = categoryUpdateSchema.parse(body);
     const categoryService = new CategoryModel();
+    const existing = await categoryService.readAll({
+      where: { label: { equals: label, mode: 'insensitive' }, NOT: { id: Number(categoryId) } },
+    });
+    if (existing.length > 0) {
+      return NextResponse.json({ error: 'Ce nom de catégorie est déjà utilisé.' }, { status: 409 });
+    }
     const category = await categoryService.updateById(Number(categoryId), { label });
-    return NextResponse.json({ data: category }, { status: 201 });
+    return NextResponse.json({ data: category }, { status: 200 });
   },
 
   delete: async (_req: NextRequest, context: NextContext<{ categoryId: string }>) => {

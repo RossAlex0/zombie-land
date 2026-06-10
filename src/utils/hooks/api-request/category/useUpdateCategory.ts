@@ -8,7 +8,7 @@ import {
 type CategoryResponse = { id: number; email: string };
 type CategoryResult = { ok: boolean; data: CategoryResponse[] } | { error: string };
 
-export default function useUpdateCategory() {
+export default function useUpdateCategory(id: number) {
   const [data, setData] = React.useState<CategoryMinAggregateInputType | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -17,7 +17,7 @@ export default function useUpdateCategory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/activity`, {
+      const res = await fetch(`/api/category/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
