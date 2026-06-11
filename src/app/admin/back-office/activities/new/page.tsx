@@ -83,7 +83,13 @@ export default function ActivityCreatePage() {
         </div>
       </div>
 
-      <form className="activity-edit" action={handleSubmit}>
+      <form
+        className="activity-edit"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(new FormData(e.currentTarget));
+        }}
+      >
         <div className="activity-edit__grid">
           <BackOfficeField label="Nom">
             <input className="backoffice-field__input" type="text" name="name" />

@@ -112,7 +112,13 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
   };
 
   return (
-    <form className="activity-edit" action={handleSubmit}>
+    <form
+      className="activity-edit"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(new FormData(e.currentTarget));
+      }}
+    >
       <div className="activity-edit__grid">
         <BackOfficeField label="Nom">
           <input

@@ -49,7 +49,13 @@ function UserEditForm({ user, id }: FormProps) {
   };
 
   return (
-    <form className="user-edit" action={handleSubmit}>
+    <form
+      className="user-edit"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <div className="user-edit__grid">
         <BackOfficeValue label="Prénom">{user.first_name}</BackOfficeValue>
         <BackOfficeValue label="Nom">{user.last_name}</BackOfficeValue>
