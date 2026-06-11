@@ -9,9 +9,9 @@ type BackOfficeFieldProps = {
 
 export default function BackOfficeField({ label, children, fullWidth }: BackOfficeFieldProps) {
   return (
-    <div className={`backoffice-field${fullWidth ? ' backoffice-field--full' : ''}`}>
+    <label className={`backoffice-field${fullWidth ? ' backoffice-field--full' : ''}`}>
       <TextZbl jetbrains>{label}</TextZbl>
       {children}
-    </div>
+    </label>
   );
 }
