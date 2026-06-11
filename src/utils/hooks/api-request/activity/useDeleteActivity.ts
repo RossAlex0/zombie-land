@@ -1,4 +1,5 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React from 'react';
 
 type ActivityResult = { ok: boolean } | { error: string };
@@ -12,7 +13,7 @@ export default function useDeleteActivity() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/activity/${id}`, {
+      const res = await fetchWithAuth(`/api/activity/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

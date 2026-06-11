@@ -1,4 +1,4 @@
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import Image from 'next/image';
 import type { ActivityWithCategory } from '@customTypes/collections/activity';
 import './activityCard.scss';

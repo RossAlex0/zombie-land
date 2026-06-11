@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 
 import '@styles/error.scss';
 export default function Error({

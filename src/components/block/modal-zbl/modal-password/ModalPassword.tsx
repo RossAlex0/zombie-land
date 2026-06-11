@@ -1,11 +1,12 @@
 'use client';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import FormInput from '@components/ui/FormInput/FormInput';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import FormInput from '@components/ui/input/form-input/FormInput';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
 import '../modalZbl.scss';
+import ModalZbl from '../ModalZbl';
 
 type ModalPasswordProps = {
   onValidate: (password: string) => void;
@@ -20,7 +21,7 @@ export default function ModalPassword({ onValidate, onClose }: ModalPasswordProp
   };
 
   return (
-    <>
+    <ModalZbl onClose={onClose}>
       <form className="modal_password_form" onSubmit={handleSubmit}>
         <TextZbl color="grey" redPrefix="//">
           Veuillez renseigner votre mot de passe actuel
@@ -54,6 +55,6 @@ export default function ModalPassword({ onValidate, onClose }: ModalPasswordProp
           <X size={20} color="#ac382a" />
         </button>
       </form>
-    </>
+    </ModalZbl>
   );
 }

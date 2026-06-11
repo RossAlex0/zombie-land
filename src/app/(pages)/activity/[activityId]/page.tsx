@@ -1,15 +1,15 @@
 'use client';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
 import useFetch from '@hooks/api-request/useFetch';
 import { useParams } from 'next/navigation';
 import Loading from '../../../loading';
-
-import './activity.scss';
 import Image from 'next/image';
 import { parseDateWithoutTime } from '@shared/date';
 import AttractionsCarousel from '@components/block/carousel/CarouselZbl';
 import { useMemo } from 'react';
+import './activity.scss';
+
 export default function ActivityDetails() {
   const { activityId } = useParams();
 

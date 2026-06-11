@@ -2,10 +2,10 @@
 
 import useFetch from '@hooks/api-request/useFetch';
 import { Clock, Users, Ticket, ShieldAlert, FileWarning, Lock } from 'lucide-react';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import Loading from '../../loading';
 import { configuration } from '@prismaInstance/*';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import './info.scss';
 
 export default function InformationPage() {

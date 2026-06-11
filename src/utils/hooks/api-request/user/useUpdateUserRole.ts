@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { RoleName } from '@customTypes/enum/roles';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 
 type UpdateRoleBody = { role: RoleName };
 type UpdateRoleResponse = { message: string };
@@ -18,7 +19,7 @@ export default function useUpdateUserRole() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/user/${userId}`, {
+      const res = await fetchWithAuth(`/api/user/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

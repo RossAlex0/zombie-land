@@ -4,6 +4,7 @@ import {
   CategoryMinAggregateInputType,
   categoryUpdateInput,
 } from '../../../../../prisma/generated/models';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 
 type CategoryResponse = { id: number; email: string };
 type CategoryResult = { ok: boolean; data: CategoryResponse[] } | { error: string };
@@ -17,7 +18,7 @@ export default function useUpdateCategory(id: number) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/category/${id}`, {
+      const res = await fetchWithAuth(`/api/category/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },

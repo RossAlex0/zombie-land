@@ -4,14 +4,14 @@ import useFetch from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
 import Loading from '../../loading';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { useCallback, useMemo, useState } from 'react';
 import ActivityCard from '@components/block/card/ActivityCard';
 import Link from 'next/link';
 import Chips from '@components/ui/chips/Chips';
-import SearchInput from '@components/ui/searchInput/SearchInput';
+import SearchInput from '@components/ui/input/search-input/SearchInput';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import './activity.scss';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 
 export default function ActivitiesPage() {
   const {

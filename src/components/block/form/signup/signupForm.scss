@@ -1,0 +1,47 @@
+@use '../../../../utils/styles/variables' as *;
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__submit {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+  }
+
+  &__button {
+    display: flex;
+    width: 100%;
+  }
+
+  &__input {
+    margin-bottom: 0.5rem;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  &__link-accent {
+    color: $primary-yellow;
+    text-decoration: underline;
+  }
+}

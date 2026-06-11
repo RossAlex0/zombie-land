@@ -1,4 +1,5 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React from 'react';
 
 type ResetPasswordBody = { email: string };
@@ -14,7 +15,7 @@ export default function useResetPassword() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/user/reset-password', {
+      const res = await fetchWithAuth('/api/user/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

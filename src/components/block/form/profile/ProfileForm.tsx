@@ -1,9 +1,9 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import FormInput from '@components/ui/FormInput/FormInput';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import FormInput from '@components/ui/input/form-input/FormInput';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import type { User } from '@context/authProvider';
 import './profileForm.scss';
 

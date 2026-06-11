@@ -1,5 +1,5 @@
 import { category } from '@prismaInstance/*';
-import TextZbl from '../textZbl/TextZbl';
+import TextZbl from '../text-zbl/TextZbl';
 
 import './chips.scss';
 type ChipsProps = {

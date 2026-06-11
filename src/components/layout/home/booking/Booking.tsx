@@ -1,12 +1,12 @@
 'use client';
 
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { Calendar1, Minus, NotepadText, Plus, TicketMinus, Users } from 'lucide-react';
-import ZombieDayPicker from '@components/block/zombieDatePicker/ZombieDatePicker';
+import ZombieDayPicker from '@components/block/zombie-date-picker/ZombieDatePicker';
 import type { DateRange } from 'react-day-picker';
 import { useMemo, useState } from 'react';
 import { getNbDays, parseDateFr } from '@shared/date';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import { configuration } from '@prismaInstance/*';
 
 import './booking.scss';

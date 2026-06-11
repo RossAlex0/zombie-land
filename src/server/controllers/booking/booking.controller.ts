@@ -1,9 +1,7 @@
-import { randomBytes } from 'crypto';
 import { bookingCreateSchema } from '@server/schemas';
 import { BookingModel } from '@server/services';
 
 import { getTokenAccess } from '../../../utils/api/token';
-import { startOfUtcDay, addUtcDays, getNbDays } from '@shared/date';
 import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../utils/errors/errors';
 import { NextContext } from '@customTypes/nextApi';

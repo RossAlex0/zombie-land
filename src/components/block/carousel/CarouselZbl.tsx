@@ -4,10 +4,10 @@ import ActivityCard from '../card/ActivityCard';
 import Slider from 'react-slick';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
+import Link from 'next/link';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './carouselZbl.scss';
-import Link from 'next/link';
 
 function PrevArrow({ onClick }: { onClick?: () => void }) {
   return (
