@@ -10,7 +10,7 @@ import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useDeleteCategory from '@hooks/api-request/category/useDeleteCategory';
-import '../backOffice.scss';
+import '../backoffice.scss';
 
 type Category = {
   [key: string]: unknown;

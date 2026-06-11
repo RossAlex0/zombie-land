@@ -4,7 +4,7 @@ import { FilterPeriod } from '@customTypes/enum/filterPeriod';
 import { useState } from 'react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import ContentBackOffice from '@components/layout/content-back-office/ContentBackoffice';
-import './backOffice.scss';
+import './backoffice.scss';
 
 export default function Home() {
   const [period, setPeriod] = useState<string>(FilterPeriod.TODAY);

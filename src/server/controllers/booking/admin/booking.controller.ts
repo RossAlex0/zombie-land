@@ -12,17 +12,17 @@ export const adminBookingController = {
         },
       },
     });
-    return NextResponse.json(bookings);
+    return NextResponse.json({ data: bookings });
   },
 
-  getBookingById: async (req: NextRequest, context: { params: { bookingId: string } }) => {
+  getBookingById: async (_req: NextRequest, context: { params: { bookingId: string } }) => {
     const { bookingId } = context.params;
     const bookingService = new BookingModel();
     const booking = await bookingService.getBookingById(Number(bookingId));
     if (!booking) {
       throw new NotFoundError('Booking not found');
     }
-    return NextResponse.json(booking);
+    return NextResponse.json({ data: booking });
   },
 
   /*cancelBooking: async (req: NextRequest, context: { params: { bookingId: string } }) => {

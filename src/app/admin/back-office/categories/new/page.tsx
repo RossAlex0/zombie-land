@@ -7,7 +7,7 @@ import FormInput from '@components/ui/input/form-input/FormInput';
 import { clearCache } from '@hooks/api-request/useFetch';
 import useCreateCategory from '@hooks/api-request/category/useCreateCategory';
 import { useState } from 'react';
-import '../../backOffice.scss';
+import '../../backoffice.scss';
 import '../[id]/categoryEdit.scss';
 
 export default function CategoryCreatePage() {

@@ -10,7 +10,7 @@ import useUpdateUserRole from '@hooks/api-request/user/useUpdateUserRole';
 import { RoleName } from '@customTypes/enum/roles';
 import type { IUserBO } from '@customTypes/collections/user';
 
-import '../../backOffice.scss';
+import '../../backoffice.scss';
 import './userEdit.scss';
 
 type User = IUserBO;

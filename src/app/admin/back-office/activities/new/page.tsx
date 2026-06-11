@@ -10,7 +10,7 @@ import FormInput from '@components/ui/input/form-input/FormInput';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
-import '../../backOffice.scss';
+import '../../backoffice.scss';
 import '../[id]/activityEdit.scss';
 
 const statusOptions = [

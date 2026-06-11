@@ -11,7 +11,7 @@ import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import type { IUserBO } from '@customTypes/collections/user';
 
-import '../backOffice.scss';
+import '../backoffice.scss';
 
 type User = IUserBO & { [key: string]: unknown };
 
