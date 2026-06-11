@@ -10,3 +10,5 @@ stripe trigger checkout.session.completed
 https://docs.stripe.com/checkout/quickstart?client=next
 
 https://docs.stripe.com/payments/accept-a-payment
+
+https://docs.stripe.com/api/checkout/sessions/create#create_checkout_session-line_items-price_data

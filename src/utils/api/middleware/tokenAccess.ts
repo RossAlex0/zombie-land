@@ -16,7 +16,7 @@ export function verifyAccessToken<T>(controller: Controller<T>) {
     if (!token) {
       throw new UnauthorizedError('No token access');
     }
-
+    console.log(token);
     try {
       const payload = jwt.verify(token, secret) as AccessTokenPayload;
 

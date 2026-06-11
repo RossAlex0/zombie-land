@@ -1,4 +1,33 @@
+import { Decimal } from '@prisma/client/runtime/client';
 import stripe from 'stripe';
+
+//type prisma à récupérer et utiliser
+type BookingTicket = {
+  id: number;
+  reservation_number: string;
+  category_id: number;
+  unit_price: Decimal;
+  validity_date: Date;
+  booking_id: number;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+export function ticketToStripeLineItems(
+  tickets: BookingTicket[]
+): stripe.Checkout.SessionCreateParams.LineItem[] {
+  return tickets.map((ticket) => ({
+    quantity: 1,
+    price_data: {
+      currency: 'eur',
+      product_data: {
+        name: `Ticket #${ticket.id}`,
+      },
+      unit_amount: Math.round(Number(ticket.unit_price) * 100),
+    },
+  }));
+}
 
 export async function getCheckoutSessionURL(
   items: stripe.Checkout.SessionCreateParams.LineItem[],
@@ -9,6 +38,11 @@ export async function getCheckoutSessionURL(
   if (!key) throw new Error('no secret Stripe API KEY');
   const stripeClient = new stripe(key);
   const FRONT_URL = process.env.FRONT_URL;
+
+  if (!FRONT_URL?.startsWith('http')) {
+    throw new Error(`FRONT_URL invalide : ${FRONT_URL}`);
+  }
+
   const sessionParameters: stripe.Checkout.SessionCreateParams = {
     line_items: items,
     mode: 'payment',
