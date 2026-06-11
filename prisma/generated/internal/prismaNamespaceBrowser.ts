@@ -190,6 +190,7 @@ export const UserScalarFieldEnum = {
   birth_date: 'birth_date',
   password: 'password',
   role_id: 'role_id',
+  stripe_customer_id: 'stripe_customer_id',
   password_changed_at: 'password_changed_at',
   created_at: 'created_at',
   updated_at: 'updated_at',

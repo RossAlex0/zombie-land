@@ -4,19 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../../utils/errors/errors';
 
 export const adminBookingController = {
-  makeBookingForUser: async (req: NextRequest) => {
-    const body = await req.json();
-    const { userId, from, to, tickets } = bookingCreateForUserSchema.parse(body);
-
-    const user = await new UserModel().findUserById(userId, { id: true });
-    if (!user) {
-      return new NotFoundError('User not found');
-    }
-    const bookingService = new BookingModel();
-    const booking = await bookingService.createBooking(userId, from, to, tickets);
-    return NextResponse.json(booking, { status: 201 });
-  },
-
   getAllBookings: async (req: NextRequest) => {
     const bookingService = new BookingModel();
     const bookings = await bookingService.readAll({
