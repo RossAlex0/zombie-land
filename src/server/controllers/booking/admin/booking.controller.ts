@@ -15,8 +15,11 @@ export const adminBookingController = {
     return NextResponse.json({ data: bookings });
   },
 
-  getBookingById: async (_req: NextRequest, context: { params: { bookingId: string } }) => {
-    const { bookingId } = context.params;
+  getBookingById: async (
+    _req: NextRequest,
+    context: { params: Promise<{ bookingId: string }> }
+  ) => {
+    const { bookingId } = await context.params;
     const bookingService = new BookingModel();
     const booking = await bookingService.getBookingById(Number(bookingId));
     if (!booking) {
