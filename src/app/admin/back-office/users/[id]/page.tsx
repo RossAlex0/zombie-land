@@ -5,8 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
-import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
-import BackOfficeValue from '@components/ui/backOfficeValue/BackOfficeValue';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateUserRole from '@hooks/api-request/user/useUpdateUserRole';
 import { RoleName } from '@customTypes/enum/roles';
@@ -57,19 +55,45 @@ function UserEditForm({ user, id }: FormProps) {
       }}
     >
       <div className="user-edit__grid">
-        <BackOfficeValue label="Prénom">{user.first_name}</BackOfficeValue>
-        <BackOfficeValue label="Nom">{user.last_name}</BackOfficeValue>
-        <BackOfficeValue label="Email">{user.email}</BackOfficeValue>
-        <BackOfficeValue label="Email vérifié" color={user.valid_email ? 'white' : 'yellow'}>
-          {user.valid_email ? 'Oui' : 'Non'}
-        </BackOfficeValue>
-        <BackOfficeValue label="Date de naissance">
-          {user.birth_date ? user.birth_date.split('T')[0].split('-').reverse().join('/') : '—'}
-        </BackOfficeValue>
+        <div className="bo-value">
+          <TextZbl jetbrains>Prénom</TextZbl>
+          <TextZbl jetbrains className="bo-value__content">
+            {user.first_name}
+          </TextZbl>
+        </div>
+        <div className="bo-value">
+          <TextZbl jetbrains>Nom</TextZbl>
+          <TextZbl jetbrains className="bo-value__content">
+            {user.last_name}
+          </TextZbl>
+        </div>
+        <div className="bo-value">
+          <TextZbl jetbrains>Email</TextZbl>
+          <TextZbl jetbrains className="bo-value__content">
+            {user.email}
+          </TextZbl>
+        </div>
+        <div className="bo-value">
+          <TextZbl jetbrains>Email vérifié</TextZbl>
+          <TextZbl
+            jetbrains
+            color={user.valid_email ? 'white' : 'yellow'}
+            className="bo-value__content"
+          >
+            {user.valid_email ? 'Oui' : 'Non'}
+          </TextZbl>
+        </div>
+        <div className="bo-value">
+          <TextZbl jetbrains>Date de naissance</TextZbl>
+          <TextZbl jetbrains className="bo-value__content">
+            {user.birth_date ? user.birth_date.split('T')[0].split('-').reverse().join('/') : '—'}
+          </TextZbl>
+        </div>
 
-        <BackOfficeField label="Rôle">
+        <div className="bo-field">
+          <TextZbl jetbrains>Rôle</TextZbl>
           <DropDownZbl options={roleOptions} value={role} onChange={(opt) => setRole(opt.value)} />
-        </BackOfficeField>
+        </div>
       </div>
 
       {submitError && (

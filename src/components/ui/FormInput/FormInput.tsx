@@ -1,20 +1,42 @@
 import React from 'react';
 import './FormInput.scss';
 
-type FormInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+type FormInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'children'> & {
   children: React.ReactNode;
-  className: string;
   error?: string;
-  props?: React.InputHTMLAttributes<HTMLInputElement>;
+  as?: 'input' | 'textarea';
+  wrapperClassName?: string;
 };
-export default function FormInput({ children, error, ...props }: FormInputProps) {
-  const errorId = error ? `${props.id}-error` : undefined;
+
+export default function FormInput({
+  children,
+  error,
+  as: Tag = 'input',
+  wrapperClassName = 'formInput',
+  ...props
+}: FormInputProps) {
+  const labelId = props.id ? `${props.id}-label` : undefined;
+  const errorId = error && props.id ? `${props.id}-error` : undefined;
   return (
-    <div className="formInput">
-      <label htmlFor={props.id} className="signupForm_label">
+    <div className={wrapperClassName}>
+      <div id={labelId} className="signupForm_label">
         {children}
-      </label>
-      <input aria-invalid={error ? true : undefined} aria-describedby={errorId} {...props} />
+      </div>
+      {Tag === 'textarea' ? (
+        <textarea
+          aria-labelledby={labelId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
+          {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+        />
+      ) : (
+        <input
+          aria-labelledby={labelId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
+          {...props}
+        />
+      )}
       {error && (
         <span id={errorId} className="formInput__error" role="alert">
           {error}

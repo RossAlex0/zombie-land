@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
+import FormInput from '@components/ui/FormInput/FormInput';
 import { clearCache } from '@hooks/api-request/useFetch';
 import useCreateCategory from '@hooks/api-request/category/useCreateCategory';
 import { useState } from 'react';
@@ -55,9 +55,15 @@ export default function CategoryCreatePage() {
           handleSubmit(new FormData(e.currentTarget));
         }}
       >
-        <BackOfficeField label="Nom de la catégorie">
-          <input className="backoffice-field__input" type="text" name="label" />
-        </BackOfficeField>
+        <FormInput
+          id="label"
+          name="label"
+          type="text"
+          className="bo-field__input"
+          wrapperClassName="bo-field"
+        >
+          <TextZbl jetbrains>Nom de la catégorie</TextZbl>
+        </FormInput>
 
         {(submitError || hookError) && (
           <TextZbl jetbrains color="yellow">

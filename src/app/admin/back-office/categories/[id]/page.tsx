@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
+import FormInput from '@components/ui/FormInput/FormInput';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateCategory from '@hooks/api-request/category/useUpdateCategory';
 import '../../backoffice.scss';
@@ -60,14 +60,16 @@ function CategoryEditForm({ category, id }: FormProps) {
         handleSubmit(new FormData(e.currentTarget));
       }}
     >
-      <BackOfficeField label="Nom de la catégorie">
-        <input
-          className="backoffice-field__input"
-          type="text"
-          name="label"
-          defaultValue={category.label}
-        />
-      </BackOfficeField>
+      <FormInput
+        id="label"
+        name="label"
+        type="text"
+        className="bo-field__input"
+        defaultValue={category.label}
+        wrapperClassName="bo-field"
+      >
+        <TextZbl jetbrains>Nom de la catégorie</TextZbl>
+      </FormInput>
 
       {(submitError || hookError) && (
         <TextZbl jetbrains color="yellow">

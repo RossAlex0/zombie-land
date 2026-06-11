@@ -6,7 +6,7 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
-import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
+import FormInput from '@components/ui/FormInput/FormInput';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
@@ -91,19 +91,27 @@ export default function ActivityCreatePage() {
         }}
       >
         <div className="activity-edit__grid">
-          <BackOfficeField label="Nom">
-            <input className="backoffice-field__input" type="text" name="name" />
-          </BackOfficeField>
+          <FormInput
+            id="name"
+            name="name"
+            type="text"
+            className="bo-field__input"
+            wrapperClassName="bo-field"
+          >
+            <TextZbl jetbrains>Nom</TextZbl>
+          </FormInput>
 
-          <BackOfficeField label="Statut">
+          <div className="bo-field">
+            <TextZbl jetbrains>Statut</TextZbl>
             <DropDownZbl
               options={statusOptions}
               value={status}
               onChange={(opt) => setStatus(opt.value)}
             />
-          </BackOfficeField>
+          </div>
 
-          <BackOfficeField label="Catégories" fullWidth>
+          <div className="bo-field bo-field--full">
+            <TextZbl jetbrains>Catégories</TextZbl>
             <div className="activity-edit__categories">
               {categories?.map((cat) => (
                 <Chips
@@ -114,18 +122,27 @@ export default function ActivityCreatePage() {
                 />
               ))}
             </div>
-          </BackOfficeField>
+          </div>
 
-          <BackOfficeField label="Image" fullWidth>
-            <input className="backoffice-field__input" type="text" name="picture" />
-          </BackOfficeField>
+          <FormInput
+            id="picture"
+            name="picture"
+            type="text"
+            className="bo-field__input"
+            wrapperClassName="bo-field bo-field--full"
+          >
+            <TextZbl jetbrains>Image</TextZbl>
+          </FormInput>
 
-          <BackOfficeField label="Description" fullWidth>
-            <textarea
-              className="backoffice-field__input backoffice-field__textarea"
-              name="description"
-            />
-          </BackOfficeField>
+          <FormInput
+            id="description"
+            name="description"
+            as="textarea"
+            className="bo-field__input bo-field__textarea"
+            wrapperClassName="bo-field bo-field--full"
+          >
+            <TextZbl jetbrains>Description</TextZbl>
+          </FormInput>
         </div>
 
         {submitError && (
