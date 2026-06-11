@@ -1,0 +1,47 @@
+@use '../../../utils/styles/variables' as *;
+@use 'sass:map';
+
+.modal {
+  height: 100vh;
+  width: 100vw;
+  inset: 0;
+  position: fixed;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.766);
+  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 40%;
+    padding: 4rem;
+    background: $medium-black;
+    border: 1px solid $light-black;
+    border-radius: 8px;
+  }
+}
+
+.modal_password {
+  &_close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  &_btn {
+    margin: auto;
+    padding-inline: 2rem;
+  }
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

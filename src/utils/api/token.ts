@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import { prisma } from '@prismaInstance/*';
 import { NextRequest } from 'next/server';
-import { AccessTokenPayload } from '@middleware/tokenAccess';
 import { COOKIE_NAMES } from '@customTypes/enum/cookies';
+import { AccessTokenPayload } from '@customTypes/token';
 
 const ACCESS_TOKEN_TTL = '15m';
 const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000;

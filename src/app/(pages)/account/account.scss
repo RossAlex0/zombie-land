@@ -1,0 +1,56 @@
+@use 'sass:map';
+@use '../../../utils/styles/variables' as *;
+
+.account_disconnect {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.account {
+  min-height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4rem;
+  position: relative;
+
+  &_flash {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 5vh;
+    background-color: $medium-black;
+    z-index: 501;
+  }
+
+  &_container {
+    height: fit-content;
+    min-height: 470px;
+    width: 45%;
+    border: 0.5px solid $dark-white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'desktop')) {
+  .account {
+    flex-direction: column;
+    gap: 2rem;
+
+    &_container {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@use '../../../../utils/styles/variables' as *;
+@use 'sass:map';
+
+.profile_form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8%;
+
+  & > div {
+    width: 46%;
+    margin-bottom: 2rem;
+  }
+  & > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .profile_form {
+    flex-direction: column;
+
+    & > div {
+      width: 100%;
+    }
+  }
+}

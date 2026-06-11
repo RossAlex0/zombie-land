@@ -1,45 +1,34 @@
 'use client';
-import React from 'react';
+import { UserWithRoleAndBooking } from '@customTypes/collections/user';
+import { user } from '@prismaInstance/*';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
+import { useCallback } from 'react';
 
-type UpdateProfileBody = {
-  first_name?: string;
-  last_name?: string;
-  birth_date?: string;
+type UpdateProfileResult = {
+  ok: boolean;
+  data?: UserWithRoleAndBooking;
+  error?: string;
+  message?: string;
 };
-type UpdateProfileResponse = { message: string };
-type UpdateProfileResult = { ok: true; data: UpdateProfileResponse } | { ok: false; error: string };
 
-export default function useUpdateProfile() {
-  const [data, setData] = React.useState<UpdateProfileResponse | null>(null);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
-
-  const updateProfile = async (body: UpdateProfileBody): Promise<UpdateProfileResult> => {
-    setLoading(true);
-    setError(null);
+export const useUpdateProfile = () =>
+  useCallback(async (body: Partial<user>): Promise<UpdateProfileResult> => {
     try {
-      const res = await fetch('/api/user/me', {
-        method: 'PUT',
+      const res = await fetchWithAuth('/api/user/me', {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
         credentials: 'include',
       });
       const json = await res.json();
       if (!res.ok) {
-        const message = json?.error || `Erreur ${res.status}`;
-        setError(message);
+        const message = json?.error || `Error ${res.status}`;
         return { ok: false, error: message };
       }
-      setData(json);
-      return { ok: true, data: json };
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur réseau';
-      setError(message);
-      return { ok: false, error: message };
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  return { updateProfile, data, loading, error };
-}
+      return { ok: true, data: json.data, message: json.message };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error server';
+      return { ok: false, error: message };
+    }
+  }, []);

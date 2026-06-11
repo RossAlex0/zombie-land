@@ -1,5 +1,6 @@
 'use client';
 
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import { useState, useEffect } from 'react';
 
 const cache = new Map<string, unknown>();
@@ -25,7 +26,7 @@ export default function useFetch<T>(url: string | null, forceRefresh = false) {
       setError(null);
 
       try {
-        const res = await fetch(url, { signal: controller.signal });
+        const res = await fetchWithAuth(url, { signal: controller.signal });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const result = await res.json();
         cache.set(url, result.data);

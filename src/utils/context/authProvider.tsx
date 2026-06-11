@@ -1,12 +1,10 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { user } from '@prismaInstance/*';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-export type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
+export type User = user & {
   role: { id: number; name: string };
 };
 
@@ -27,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const fetchMe = async () => {
       try {
-        const res = await fetch('/api/user/me', { signal: controller.signal });
+        const res = await fetchWithAuth('/api/user/me', { signal: controller.signal });
         if (res.ok) {
           const json = await res.json();
 

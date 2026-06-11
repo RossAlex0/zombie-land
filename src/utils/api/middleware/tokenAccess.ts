@@ -5,10 +5,9 @@ import { UnauthorizedError } from '../../errors/errors';
 import { NextContext } from '@customTypes/nextApi';
 import { Controller } from '@helpers/withErrorHandler';
 import { UserModel } from '@server/services';
+import { AccessTokenPayload } from '@customTypes/token';
 
 const secret = process.env.JWT_SECRET as string;
-
-export type AccessTokenPayload = { userId: number; role: number; iat: number; exp: number };
 
 export function verifyAccessToken<T>(controller: Controller<T>) {
   return async (req: NextRequest, context: NextContext<T>): Promise<NextResponse> => {
