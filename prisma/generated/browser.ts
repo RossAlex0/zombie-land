@@ -43,10 +43,10 @@ export type category_activity = Prisma.category_activityModel
  */
 export type configuration = Prisma.configurationModel
 /**
- * Model price_modifier
+ * Model ticket_category
  * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
  */
-export type price_modifier = Prisma.price_modifierModel
+export type ticket_category = Prisma.ticket_categoryModel
 /**
  * Model role
  * 
@@ -57,11 +57,6 @@ export type role = Prisma.roleModel
  * 
  */
 export type ticket = Prisma.ticketModel
-/**
- * Model ticket_price_modifier
- * 
- */
-export type ticket_price_modifier = Prisma.ticket_price_modifierModel
 /**
  * Model user
  * 

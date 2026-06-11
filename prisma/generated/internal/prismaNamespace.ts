@@ -389,10 +389,9 @@ export const ModelName = {
   category: 'category',
   category_activity: 'category_activity',
   configuration: 'configuration',
-  price_modifier: 'price_modifier',
+  ticket_category: 'ticket_category',
   role: 'role',
   ticket: 'ticket',
-  ticket_price_modifier: 'ticket_price_modifier',
   user: 'user',
   refresh_token: 'refresh_token'
 } as const
@@ -410,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "activity" | "booking" | "category" | "category_activity" | "configuration" | "price_modifier" | "role" | "ticket" | "ticket_price_modifier" | "user" | "refresh_token"
+    modelProps: "activity" | "booking" | "category" | "category_activity" | "configuration" | "ticket_category" | "role" | "ticket" | "user" | "refresh_token"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -784,77 +783,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    price_modifier: {
-      payload: Prisma.$price_modifierPayload<ExtArgs>
-      fields: Prisma.price_modifierFieldRefs
+    ticket_category: {
+      payload: Prisma.$ticket_categoryPayload<ExtArgs>
+      fields: Prisma.ticket_categoryFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.price_modifierFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload> | null
+          args: Prisma.ticket_categoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.price_modifierFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         findFirst: {
-          args: Prisma.price_modifierFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload> | null
+          args: Prisma.ticket_categoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.price_modifierFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         findMany: {
-          args: Prisma.price_modifierFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>[]
+          args: Prisma.ticket_categoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>[]
         }
         create: {
-          args: Prisma.price_modifierCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         createMany: {
-          args: Prisma.price_modifierCreateManyArgs<ExtArgs>
+          args: Prisma.ticket_categoryCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.price_modifierCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>[]
+          args: Prisma.ticket_categoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>[]
         }
         delete: {
-          args: Prisma.price_modifierDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         update: {
-          args: Prisma.price_modifierUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         deleteMany: {
-          args: Prisma.price_modifierDeleteManyArgs<ExtArgs>
+          args: Prisma.ticket_categoryDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.price_modifierUpdateManyArgs<ExtArgs>
+          args: Prisma.ticket_categoryUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.price_modifierUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>[]
+          args: Prisma.ticket_categoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>[]
         }
         upsert: {
-          args: Prisma.price_modifierUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_modifierPayload>
+          args: Prisma.ticket_categoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_categoryPayload>
         }
         aggregate: {
-          args: Prisma.Price_modifierAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePrice_modifier>
+          args: Prisma.Ticket_categoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTicket_category>
         }
         groupBy: {
-          args: Prisma.price_modifierGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Price_modifierGroupByOutputType>[]
+          args: Prisma.ticket_categoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Ticket_categoryGroupByOutputType>[]
         }
         count: {
-          args: Prisma.price_modifierCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Price_modifierCountAggregateOutputType> | number
+          args: Prisma.ticket_categoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Ticket_categoryCountAggregateOutputType> | number
         }
       }
     }
@@ -1003,80 +1002,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ticketCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TicketCountAggregateOutputType> | number
-        }
-      }
-    }
-    ticket_price_modifier: {
-      payload: Prisma.$ticket_price_modifierPayload<ExtArgs>
-      fields: Prisma.ticket_price_modifierFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ticket_price_modifierFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ticket_price_modifierFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        findFirst: {
-          args: Prisma.ticket_price_modifierFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ticket_price_modifierFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        findMany: {
-          args: Prisma.ticket_price_modifierFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>[]
-        }
-        create: {
-          args: Prisma.ticket_price_modifierCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        createMany: {
-          args: Prisma.ticket_price_modifierCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ticket_price_modifierCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>[]
-        }
-        delete: {
-          args: Prisma.ticket_price_modifierDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        update: {
-          args: Prisma.ticket_price_modifierUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        deleteMany: {
-          args: Prisma.ticket_price_modifierDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ticket_price_modifierUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ticket_price_modifierUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>[]
-        }
-        upsert: {
-          args: Prisma.ticket_price_modifierUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ticket_price_modifierPayload>
-        }
-        aggregate: {
-          args: Prisma.Ticket_price_modifierAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTicket_price_modifier>
-        }
-        groupBy: {
-          args: Prisma.ticket_price_modifierGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Ticket_price_modifierGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ticket_price_modifierCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Ticket_price_modifierCountAggregateOutputType> | number
         }
       }
     }
@@ -1282,11 +1207,16 @@ export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typ
 
 export const BookingScalarFieldEnum = {
   id: 'id',
+  reference: 'reference',
   status: 'status',
   start_at: 'start_at',
   end_at: 'end_at',
   duration: 'duration',
   user_id: 'user_id',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  total_paid: 'total_paid',
+  promo_code: 'promo_code',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -1327,15 +1257,17 @@ export const ConfigurationScalarFieldEnum = {
 export type ConfigurationScalarFieldEnum = (typeof ConfigurationScalarFieldEnum)[keyof typeof ConfigurationScalarFieldEnum]
 
 
-export const Price_modifierScalarFieldEnum = {
+export const Ticket_categoryScalarFieldEnum = {
   id: 'id',
   label: 'label',
   reduction: 'reduction',
+  is_default: 'is_default',
+  display_order: 'display_order',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
-export type Price_modifierScalarFieldEnum = (typeof Price_modifierScalarFieldEnum)[keyof typeof Price_modifierScalarFieldEnum]
+export type Ticket_categoryScalarFieldEnum = (typeof Ticket_categoryScalarFieldEnum)[keyof typeof Ticket_categoryScalarFieldEnum]
 
 
 export const RoleScalarFieldEnum = {
@@ -1350,23 +1282,16 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 export const TicketScalarFieldEnum = {
   id: 'id',
   reservation_number: 'reservation_number',
+  unit_price: 'unit_price',
   status: 'status',
   validity_date: 'validity_date',
   booking_id: 'booking_id',
+  category_id: 'category_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
-
-
-export const Ticket_price_modifierScalarFieldEnum = {
-  ticket_id: 'ticket_id',
-  price_modifier_id: 'price_modifier_id',
-  created_at: 'created_at'
-} as const
-
-export type Ticket_price_modifierScalarFieldEnum = (typeof Ticket_price_modifierScalarFieldEnum)[keyof typeof Ticket_price_modifierScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -1378,6 +1303,7 @@ export const UserScalarFieldEnum = {
   birth_date: 'birth_date',
   password: 'password',
   role_id: 'role_id',
+  stripe_customer_id: 'stripe_customer_id',
   password_changed_at: 'password_changed_at',
   created_at: 'created_at',
   updated_at: 'updated_at',
@@ -1620,10 +1546,9 @@ export type GlobalOmitConfig = {
   category?: Prisma.categoryOmit
   category_activity?: Prisma.category_activityOmit
   configuration?: Prisma.configurationOmit
-  price_modifier?: Prisma.price_modifierOmit
+  ticket_category?: Prisma.ticket_categoryOmit
   role?: Prisma.roleOmit
   ticket?: Prisma.ticketOmit
-  ticket_price_modifier?: Prisma.ticket_price_modifierOmit
   user?: Prisma.userOmit
   refresh_token?: Prisma.refresh_tokenOmit
 }

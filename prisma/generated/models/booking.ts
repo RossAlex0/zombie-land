@@ -30,43 +30,64 @@ export type BookingAvgAggregateOutputType = {
   id: number | null
   duration: number | null
   user_id: number | null
+  subtotal: runtime.Decimal | null
+  discount: runtime.Decimal | null
+  total_paid: runtime.Decimal | null
 }
 
 export type BookingSumAggregateOutputType = {
   id: number | null
   duration: number | null
   user_id: number | null
+  subtotal: runtime.Decimal | null
+  discount: runtime.Decimal | null
+  total_paid: runtime.Decimal | null
 }
 
 export type BookingMinAggregateOutputType = {
   id: number | null
+  reference: string | null
   status: string | null
   start_at: Date | null
   end_at: Date | null
   duration: number | null
   user_id: number | null
+  subtotal: runtime.Decimal | null
+  discount: runtime.Decimal | null
+  total_paid: runtime.Decimal | null
+  promo_code: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type BookingMaxAggregateOutputType = {
   id: number | null
+  reference: string | null
   status: string | null
   start_at: Date | null
   end_at: Date | null
   duration: number | null
   user_id: number | null
+  subtotal: runtime.Decimal | null
+  discount: runtime.Decimal | null
+  total_paid: runtime.Decimal | null
+  promo_code: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type BookingCountAggregateOutputType = {
   id: number
+  reference: number
   status: number
   start_at: number
   end_at: number
   duration: number
   user_id: number
+  subtotal: number
+  discount: number
+  total_paid: number
+  promo_code: number
   created_at: number
   updated_at: number
   _all: number
@@ -77,43 +98,64 @@ export type BookingAvgAggregateInputType = {
   id?: true
   duration?: true
   user_id?: true
+  subtotal?: true
+  discount?: true
+  total_paid?: true
 }
 
 export type BookingSumAggregateInputType = {
   id?: true
   duration?: true
   user_id?: true
+  subtotal?: true
+  discount?: true
+  total_paid?: true
 }
 
 export type BookingMinAggregateInputType = {
   id?: true
+  reference?: true
   status?: true
   start_at?: true
   end_at?: true
   duration?: true
   user_id?: true
+  subtotal?: true
+  discount?: true
+  total_paid?: true
+  promo_code?: true
   created_at?: true
   updated_at?: true
 }
 
 export type BookingMaxAggregateInputType = {
   id?: true
+  reference?: true
   status?: true
   start_at?: true
   end_at?: true
   duration?: true
   user_id?: true
+  subtotal?: true
+  discount?: true
+  total_paid?: true
+  promo_code?: true
   created_at?: true
   updated_at?: true
 }
 
 export type BookingCountAggregateInputType = {
   id?: true
+  reference?: true
   status?: true
   start_at?: true
   end_at?: true
   duration?: true
   user_id?: true
+  subtotal?: true
+  discount?: true
+  total_paid?: true
+  promo_code?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -207,11 +249,16 @@ export type bookingGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type BookingGroupByOutputType = {
   id: number
+  reference: string
   status: string
   start_at: Date
   end_at: Date
   duration: number
   user_id: number
+  subtotal: runtime.Decimal
+  discount: runtime.Decimal
+  total_paid: runtime.Decimal
+  promo_code: string | null
   created_at: Date
   updated_at: Date
   _count: BookingCountAggregateOutputType | null
@@ -241,11 +288,16 @@ export type bookingWhereInput = {
   OR?: Prisma.bookingWhereInput[]
   NOT?: Prisma.bookingWhereInput | Prisma.bookingWhereInput[]
   id?: Prisma.IntFilter<"booking"> | number
+  reference?: Prisma.StringFilter<"booking"> | string
   status?: Prisma.StringFilter<"booking"> | string
   start_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   end_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   duration?: Prisma.IntFilter<"booking"> | number
   user_id?: Prisma.IntFilter<"booking"> | number
+  subtotal?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.StringNullableFilter<"booking"> | string | null
   created_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
@@ -254,11 +306,16 @@ export type bookingWhereInput = {
 
 export type bookingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
   start_at?: Prisma.SortOrder
   end_at?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
+  promo_code?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user?: Prisma.userOrderByWithRelationInput
@@ -267,6 +324,7 @@ export type bookingOrderByWithRelationInput = {
 
 export type bookingWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  reference?: string
   AND?: Prisma.bookingWhereInput | Prisma.bookingWhereInput[]
   OR?: Prisma.bookingWhereInput[]
   NOT?: Prisma.bookingWhereInput | Prisma.bookingWhereInput[]
@@ -275,19 +333,28 @@ export type bookingWhereUniqueInput = Prisma.AtLeast<{
   end_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   duration?: Prisma.IntFilter<"booking"> | number
   user_id?: Prisma.IntFilter<"booking"> | number
+  subtotal?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.StringNullableFilter<"booking"> | string | null
   created_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   ticket?: Prisma.TicketListRelationFilter
-}, "id">
+}, "id" | "reference">
 
 export type bookingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
   start_at?: Prisma.SortOrder
   end_at?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
+  promo_code?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.bookingCountOrderByAggregateInput
@@ -302,20 +369,30 @@ export type bookingScalarWhereWithAggregatesInput = {
   OR?: Prisma.bookingScalarWhereWithAggregatesInput[]
   NOT?: Prisma.bookingScalarWhereWithAggregatesInput | Prisma.bookingScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"booking"> | number
+  reference?: Prisma.StringWithAggregatesFilter<"booking"> | string
   status?: Prisma.StringWithAggregatesFilter<"booking"> | string
   start_at?: Prisma.DateTimeWithAggregatesFilter<"booking"> | Date | string
   end_at?: Prisma.DateTimeWithAggregatesFilter<"booking"> | Date | string
   duration?: Prisma.IntWithAggregatesFilter<"booking"> | number
   user_id?: Prisma.IntWithAggregatesFilter<"booking"> | number
+  subtotal?: Prisma.DecimalWithAggregatesFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalWithAggregatesFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalWithAggregatesFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.StringNullableWithAggregatesFilter<"booking"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"booking"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"booking"> | Date | string
 }
 
 export type bookingCreateInput = {
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.userCreateNestedOneWithoutBookingInput
@@ -324,21 +401,31 @@ export type bookingCreateInput = {
 
 export type bookingUncheckedCreateInput = {
   id?: number
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
   user_id: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   ticket?: Prisma.ticketUncheckedCreateNestedManyWithoutBookingInput
 }
 
 export type bookingUpdateInput = {
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.userUpdateOneRequiredWithoutBookingNestedInput
@@ -347,11 +434,16 @@ export type bookingUpdateInput = {
 
 export type bookingUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticket?: Prisma.ticketUncheckedUpdateManyWithoutBookingNestedInput
@@ -359,42 +451,62 @@ export type bookingUncheckedUpdateInput = {
 
 export type bookingCreateManyInput = {
   id?: number
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
   user_id: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
 
 export type bookingUpdateManyMutationInput = {
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type bookingUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type bookingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
   start_at?: Prisma.SortOrder
   end_at?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
+  promo_code?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -403,26 +515,39 @@ export type bookingAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
 }
 
 export type bookingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
   start_at?: Prisma.SortOrder
   end_at?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
+  promo_code?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type bookingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
   start_at?: Prisma.SortOrder
   end_at?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
+  promo_code?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -431,6 +556,9 @@ export type bookingSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  subtotal?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+  total_paid?: Prisma.SortOrder
 }
 
 export type BookingScalarRelationFilter = {
@@ -446,6 +574,14 @@ export type BookingListRelationFilter = {
 
 export type bookingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type bookingCreateNestedOneWithoutTicketInput = {
@@ -505,10 +641,15 @@ export type bookingUncheckedUpdateManyWithoutUserNestedInput = {
 }
 
 export type bookingCreateWithoutTicketInput = {
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.userCreateNestedOneWithoutBookingInput
@@ -516,11 +657,16 @@ export type bookingCreateWithoutTicketInput = {
 
 export type bookingUncheckedCreateWithoutTicketInput = {
   id?: number
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
   user_id: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -542,10 +688,15 @@ export type bookingUpdateToOneWithWhereWithoutTicketInput = {
 }
 
 export type bookingUpdateWithoutTicketInput = {
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.userUpdateOneRequiredWithoutBookingNestedInput
@@ -553,20 +704,30 @@ export type bookingUpdateWithoutTicketInput = {
 
 export type bookingUncheckedUpdateWithoutTicketInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type bookingCreateWithoutUserInput = {
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   ticket?: Prisma.ticketCreateNestedManyWithoutBookingInput
@@ -574,10 +735,15 @@ export type bookingCreateWithoutUserInput = {
 
 export type bookingUncheckedCreateWithoutUserInput = {
   id?: number
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   ticket?: Prisma.ticketUncheckedCreateNestedManyWithoutBookingInput
@@ -614,30 +780,45 @@ export type bookingScalarWhereInput = {
   OR?: Prisma.bookingScalarWhereInput[]
   NOT?: Prisma.bookingScalarWhereInput | Prisma.bookingScalarWhereInput[]
   id?: Prisma.IntFilter<"booking"> | number
+  reference?: Prisma.StringFilter<"booking"> | string
   status?: Prisma.StringFilter<"booking"> | string
   start_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   end_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   duration?: Prisma.IntFilter<"booking"> | number
   user_id?: Prisma.IntFilter<"booking"> | number
+  subtotal?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFilter<"booking"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.StringNullableFilter<"booking"> | string | null
   created_at?: Prisma.DateTimeFilter<"booking"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"booking"> | Date | string
 }
 
 export type bookingCreateManyUserInput = {
   id?: number
+  reference: string
   status?: string
   start_at: Date | string
   end_at: Date | string
   duration: number
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid: runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
 
 export type bookingUpdateWithoutUserInput = {
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticket?: Prisma.ticketUpdateManyWithoutBookingNestedInput
@@ -645,10 +826,15 @@ export type bookingUpdateWithoutUserInput = {
 
 export type bookingUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticket?: Prisma.ticketUncheckedUpdateManyWithoutBookingNestedInput
@@ -656,10 +842,15 @@ export type bookingUncheckedUpdateWithoutUserInput = {
 
 export type bookingUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   start_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total_paid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  promo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -697,11 +888,16 @@ export type BookingCountOutputTypeCountTicketArgs<ExtArgs extends runtime.Types.
 
 export type bookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  reference?: boolean
   status?: boolean
   start_at?: boolean
   end_at?: boolean
   duration?: boolean
   user_id?: boolean
+  subtotal?: boolean
+  discount?: boolean
+  total_paid?: boolean
+  promo_code?: boolean
   created_at?: boolean
   updated_at?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -711,11 +907,16 @@ export type bookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 
 export type bookingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  reference?: boolean
   status?: boolean
   start_at?: boolean
   end_at?: boolean
   duration?: boolean
   user_id?: boolean
+  subtotal?: boolean
+  discount?: boolean
+  total_paid?: boolean
+  promo_code?: boolean
   created_at?: boolean
   updated_at?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -723,11 +924,16 @@ export type bookingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type bookingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  reference?: boolean
   status?: boolean
   start_at?: boolean
   end_at?: boolean
   duration?: boolean
   user_id?: boolean
+  subtotal?: boolean
+  discount?: boolean
+  total_paid?: boolean
+  promo_code?: boolean
   created_at?: boolean
   updated_at?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -735,16 +941,21 @@ export type bookingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type bookingSelectScalar = {
   id?: boolean
+  reference?: boolean
   status?: boolean
   start_at?: boolean
   end_at?: boolean
   duration?: boolean
   user_id?: boolean
+  subtotal?: boolean
+  discount?: boolean
+  total_paid?: boolean
+  promo_code?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type bookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "start_at" | "end_at" | "duration" | "user_id" | "created_at" | "updated_at", ExtArgs["result"]["booking"]>
+export type bookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "status" | "start_at" | "end_at" | "duration" | "user_id" | "subtotal" | "discount" | "total_paid" | "promo_code" | "created_at" | "updated_at", ExtArgs["result"]["booking"]>
 export type bookingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   ticket?: boolean | Prisma.booking$ticketArgs<ExtArgs>
@@ -765,11 +976,16 @@ export type $bookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    reference: string
     status: string
     start_at: Date
     end_at: Date
     duration: number
     user_id: number
+    subtotal: runtime.Decimal
+    discount: runtime.Decimal
+    total_paid: runtime.Decimal
+    promo_code: string | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["booking"]>
@@ -1198,11 +1414,16 @@ export interface Prisma__bookingClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface bookingFieldRefs {
   readonly id: Prisma.FieldRef<"booking", 'Int'>
+  readonly reference: Prisma.FieldRef<"booking", 'String'>
   readonly status: Prisma.FieldRef<"booking", 'String'>
   readonly start_at: Prisma.FieldRef<"booking", 'DateTime'>
   readonly end_at: Prisma.FieldRef<"booking", 'DateTime'>
   readonly duration: Prisma.FieldRef<"booking", 'Int'>
   readonly user_id: Prisma.FieldRef<"booking", 'Int'>
+  readonly subtotal: Prisma.FieldRef<"booking", 'Decimal'>
+  readonly discount: Prisma.FieldRef<"booking", 'Decimal'>
+  readonly total_paid: Prisma.FieldRef<"booking", 'Decimal'>
+  readonly promo_code: Prisma.FieldRef<"booking", 'String'>
   readonly created_at: Prisma.FieldRef<"booking", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"booking", 'DateTime'>
 }

@@ -56,10 +56,9 @@ export const ModelName = {
   category: 'category',
   category_activity: 'category_activity',
   configuration: 'configuration',
-  price_modifier: 'price_modifier',
+  ticket_category: 'ticket_category',
   role: 'role',
   ticket: 'ticket',
-  ticket_price_modifier: 'ticket_price_modifier',
   user: 'user',
   refresh_token: 'refresh_token'
 } as const
@@ -95,11 +94,16 @@ export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typ
 
 export const BookingScalarFieldEnum = {
   id: 'id',
+  reference: 'reference',
   status: 'status',
   start_at: 'start_at',
   end_at: 'end_at',
   duration: 'duration',
   user_id: 'user_id',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  total_paid: 'total_paid',
+  promo_code: 'promo_code',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -140,15 +144,17 @@ export const ConfigurationScalarFieldEnum = {
 export type ConfigurationScalarFieldEnum = (typeof ConfigurationScalarFieldEnum)[keyof typeof ConfigurationScalarFieldEnum]
 
 
-export const Price_modifierScalarFieldEnum = {
+export const Ticket_categoryScalarFieldEnum = {
   id: 'id',
   label: 'label',
   reduction: 'reduction',
+  is_default: 'is_default',
+  display_order: 'display_order',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
-export type Price_modifierScalarFieldEnum = (typeof Price_modifierScalarFieldEnum)[keyof typeof Price_modifierScalarFieldEnum]
+export type Ticket_categoryScalarFieldEnum = (typeof Ticket_categoryScalarFieldEnum)[keyof typeof Ticket_categoryScalarFieldEnum]
 
 
 export const RoleScalarFieldEnum = {
@@ -163,23 +169,16 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 export const TicketScalarFieldEnum = {
   id: 'id',
   reservation_number: 'reservation_number',
+  unit_price: 'unit_price',
   status: 'status',
   validity_date: 'validity_date',
   booking_id: 'booking_id',
+  category_id: 'category_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
-
-
-export const Ticket_price_modifierScalarFieldEnum = {
-  ticket_id: 'ticket_id',
-  price_modifier_id: 'price_modifier_id',
-  created_at: 'created_at'
-} as const
-
-export type Ticket_price_modifierScalarFieldEnum = (typeof Ticket_price_modifierScalarFieldEnum)[keyof typeof Ticket_price_modifierScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -191,6 +190,7 @@ export const UserScalarFieldEnum = {
   birth_date: 'birth_date',
   password: 'password',
   role_id: 'role_id',
+  stripe_customer_id: 'stripe_customer_id',
   password_changed_at: 'password_changed_at',
   created_at: 'created_at',
   updated_at: 'updated_at',
