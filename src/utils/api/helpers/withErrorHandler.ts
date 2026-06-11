@@ -19,18 +19,21 @@ export function withErrorHandler<T>(controller: Controller<T>) {
           const field = String(issue.path[0]);
           if (field && !errors[field]) errors[field] = issue.message;
         }
-        return NextResponse.json({ message: 'Champs invalides', errors }, { status: 400 });
+        return NextResponse.json(
+          { error: 'Invalid value for field', code: 'VALIDATION_ERROR', fieldErrors: errors },
+          { status: 400 }
+        );
       }
 
-      if (!(error instanceof HttpError) || (error.code && error.statusCode === 500)) {
+      if (!(error instanceof HttpError) || error.statusCode >= 500) {
         return NextResponse.json(
-          { message: 'Internal Server Error', code: 'INTERNAL_SERVER_ERROR' },
+          { error: 'Internal Server Error', code: 'INTERNAL_SERVER_ERROR' },
           { status: 500 }
         );
       }
 
       return NextResponse.json(
-        { message: error.message, code: error.code },
+        { error: error.message, code: error.code },
         { status: error.statusCode }
       );
     }

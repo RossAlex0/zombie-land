@@ -1,13 +1,10 @@
 'use client';
 
+import { user } from '@prismaInstance/*';
 import { fetchWithAuth } from '@shared/fetchWithAuth';
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-export type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
+export type User = user & {
   role: { id: number; name: string };
 };
 
