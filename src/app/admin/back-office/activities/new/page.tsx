@@ -6,6 +6,7 @@ import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
+import FormInput from '@components/ui/FormInput/FormInput';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
@@ -22,12 +23,7 @@ export default function ActivityCreatePage() {
   const { activity: createActivity, loading } = useCreateActivity();
   const { data: categories } = useFetch<category[]>('/api/category');
 
-  const [form, setForm] = useState({
-    name: '',
-    description: '',
-    picture: '',
-    status: 'open',
-  });
+  const [status, setStatus] = useState('open');
   const [categoryIds, setCategoryIds] = useState<number[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -35,32 +31,38 @@ export default function ActivityCreatePage() {
     setCategoryIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
   };
 
-  const validate = (): string | null => {
-    if (!form.name.trim()) return "Le nom de l'activité est obligatoire.";
-    if (form.name.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
-    if (form.name.trim().length > 100) return 'Le nom ne peut pas dépasser 100 caractères.';
-    if (form.picture) {
-      try {
-        new URL(form.picture);
-      } catch {
-        return "L'URL de l'image n'est pas valide.";
-      }
-    }
-    return null;
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
-    const validationError = validate();
-    if (validationError) {
-      setSubmitError(validationError);
+    const name = (formData.get('name') as string)?.trim() ?? '';
+    const picture = (formData.get('picture') as string)?.trim() ?? '';
+    const description = (formData.get('description') as string)?.trim() ?? '';
+
+    if (!name) {
+      setSubmitError("Le nom de l'activité est obligatoire.");
       return;
     }
+    if (name.length < 2) {
+      setSubmitError('Le nom doit contenir au moins 2 caractères.');
+      return;
+    }
+    if (name.length > 100) {
+      setSubmitError('Le nom ne peut pas dépasser 100 caractères.');
+      return;
+    }
+    if (picture) {
+      try {
+        new URL(picture);
+      } catch {
+        setSubmitError("L'URL de l'image n'est pas valide.");
+        return;
+      }
+    }
+
     const res = await createActivity({
-      name: form.name,
-      description: form.description || undefined,
-      picture: form.picture || undefined,
-      status: form.status,
+      name,
+      description: description || undefined,
+      picture: picture || undefined,
+      status,
       category_activity: categoryIds.map((id) => ({ category_id: id })),
     });
     if ('ok' in res && res.ok) {
@@ -81,28 +83,34 @@ export default function ActivityCreatePage() {
         </div>
       </div>
 
-      <div className="activity-edit">
+      <form
+        className="activity-edit"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(new FormData(e.currentTarget));
+        }}
+      >
         <div className="activity-edit__grid">
-          <div className="activity-edit__field">
-            <TextZbl jetbrains>Name</TextZbl>
-            <input
-              className="activity-edit__input"
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-            />
-          </div>
+          <FormInput
+            id="name"
+            name="name"
+            type="text"
+            className="bo-field__input"
+            wrapperClassName="bo-field"
+          >
+            <TextZbl jetbrains>Nom</TextZbl>
+          </FormInput>
 
-          <div className="activity-edit__field">
-            <TextZbl jetbrains>Status</TextZbl>
+          <div className="bo-field">
+            <TextZbl jetbrains>Statut</TextZbl>
             <DropDownZbl
               options={statusOptions}
-              value={form.status}
-              onChange={(opt) => setForm((prev) => ({ ...prev, status: opt.value }))}
+              value={status}
+              onChange={(opt) => setStatus(opt.value)}
             />
           </div>
 
-          <div className="activity-edit__field activity-edit__field--full">
+          <div className="bo-field bo-field--full">
             <TextZbl jetbrains>Catégories</TextZbl>
             <div className="activity-edit__categories">
               {categories?.map((cat) => (
@@ -116,24 +124,25 @@ export default function ActivityCreatePage() {
             </div>
           </div>
 
-          <div className="activity-edit__field activity-edit__field--full">
-            <TextZbl jetbrains>Picture</TextZbl>
-            <input
-              className="activity-edit__input"
-              type="text"
-              value={form.picture}
-              onChange={(e) => setForm((prev) => ({ ...prev, picture: e.target.value }))}
-            />
-          </div>
+          <FormInput
+            id="picture"
+            name="picture"
+            type="text"
+            className="bo-field__input"
+            wrapperClassName="bo-field bo-field--full"
+          >
+            <TextZbl jetbrains>Image</TextZbl>
+          </FormInput>
 
-          <div className="activity-edit__field activity-edit__field--full">
+          <FormInput
+            id="description"
+            name="description"
+            as="textarea"
+            className="bo-field__input bo-field__textarea"
+            wrapperClassName="bo-field bo-field--full"
+          >
             <TextZbl jetbrains>Description</TextZbl>
-            <textarea
-              className="activity-edit__input activity-edit__textarea"
-              value={form.description}
-              onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-            />
-          </div>
+          </FormInput>
         </div>
 
         {submitError && (
@@ -146,18 +155,11 @@ export default function ActivityCreatePage() {
           <ButtonZbl theme="light" navTo="/admin/back-office/activities">
             Annuler
           </ButtonZbl>
-          <ButtonZbl
-            theme="light"
-            navTo=""
-            onClick={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
+          <ButtonZbl type="submit" theme="light">
             {loading ? 'Création...' : 'Créer'}
           </ButtonZbl>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

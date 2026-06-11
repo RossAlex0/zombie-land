@@ -57,3 +57,46 @@
     display: none;
   }
 }
+
+.bo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &--full {
+    grid-column: 1 / -1;
+  }
+
+  &__input {
+    padding: 0.6rem 0.8rem;
+    font-family: $font-jetbrains-text;
+    font-size: $font-size-content-m;
+    color: $primary-white;
+    background-color: $medium-black;
+    border: 1px solid $dark-grey;
+    border-radius: 4px;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-yellow;
+    }
+  }
+
+  &__textarea {
+    height: 100px;
+    resize: vertical;
+  }
+}
+
+.bo-value {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__content {
+    padding: 0.6rem 0.8rem;
+    background-color: $medium-black;
+    border: 1px solid $dark-grey;
+    border-radius: 4px;
+  }
+}

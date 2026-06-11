@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import FormInput from '@components/ui/FormInput/FormInput';
 import { clearCache } from '@hooks/api-request/useFetch';
 import useCreateCategory from '@hooks/api-request/category/useCreateCategory';
 import { useState } from 'react';
@@ -11,24 +12,21 @@ import '../[id]/category-edit.scss';
 
 export default function CategoryCreatePage() {
   const router = useRouter();
-  const [label, setLabel] = useState('');
   const { category: createCategory, loading, error: hookError } = useCreateCategory();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const validate = (): string | null => {
-    if (!label.trim()) return 'Le nom de la catégorie est obligatoire.';
-    if (label.trim().length < 2) return 'Le nom doit contenir au moins 2 caractères.';
-    return null;
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
-    const validationError = validate();
-    if (validationError) {
-      setSubmitError(validationError);
+    const label = (formData.get('label') as string)?.trim() ?? '';
+    if (!label) {
+      setSubmitError('Le nom de la catégorie est obligatoire.');
       return;
     }
-    const result = await createCategory({ label: label.trim() });
+    if (label.length < 2) {
+      setSubmitError('Le nom doit contenir au moins 2 caractères.');
+      return;
+    }
+    const result = await createCategory({ label });
     if ('ok' in result && result.ok) {
       clearCache('/api/category');
       router.push('/admin/back-office/categories?success=created&entity=Catégorie');
@@ -50,16 +48,22 @@ export default function CategoryCreatePage() {
         </div>
       </div>
 
-      <div className="category-edit">
-        <div className="category-edit__field">
+      <form
+        className="category-edit"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(new FormData(e.currentTarget));
+        }}
+      >
+        <FormInput
+          id="label"
+          name="label"
+          type="text"
+          className="bo-field__input"
+          wrapperClassName="bo-field"
+        >
           <TextZbl jetbrains>Nom de la catégorie</TextZbl>
-          <input
-            className="category-edit__input"
-            type="text"
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-          />
-        </div>
+        </FormInput>
 
         {(submitError || hookError) && (
           <TextZbl jetbrains color="yellow">
@@ -71,18 +75,11 @@ export default function CategoryCreatePage() {
           <ButtonZbl theme="light" navTo="/admin/back-office/categories">
             Annuler
           </ButtonZbl>
-          <ButtonZbl
-            theme="light"
-            navTo=""
-            onClick={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
+          <ButtonZbl type="submit" theme="light">
             {loading ? 'Création...' : 'Créer'}
           </ButtonZbl>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
