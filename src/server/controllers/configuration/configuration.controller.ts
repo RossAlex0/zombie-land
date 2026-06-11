@@ -37,7 +37,15 @@ export const configurationController = {
 
     const configuratinUpdated = await configurationService.update({
       where: { id: 1 },
-      data: configurationBody,
+      data: {
+        ...configurationBody,
+        ...(configurationBody.opening_hours && {
+          opening_hours: new Date(`1970-01-01T${configurationBody.opening_hours}:00.000Z`),
+        }),
+        ...(configurationBody.closing_hours && {
+          closing_hours: new Date(`1970-01-01T${configurationBody.closing_hours}:00.000Z`),
+        }),
+      },
     });
 
     return NextResponse.json(
