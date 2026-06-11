@@ -53,7 +53,13 @@ function CategoryEditForm({ category, id }: FormProps) {
   };
 
   return (
-    <form className="category-edit" action={handleSubmit}>
+    <form
+      className="category-edit"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(new FormData(e.currentTarget));
+      }}
+    >
       <BackOfficeField label="Nom de la catégorie">
         <input
           className="backoffice-field__input"
