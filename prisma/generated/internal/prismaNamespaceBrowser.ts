@@ -100,6 +100,10 @@ export const BookingScalarFieldEnum = {
   end_at: 'end_at',
   duration: 'duration',
   user_id: 'user_id',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  total_paid: 'total_paid',
+  promo_code: 'promo_code',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -165,6 +169,7 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 export const TicketScalarFieldEnum = {
   id: 'id',
   reservation_number: 'reservation_number',
+  unit_price: 'unit_price',
   status: 'status',
   validity_date: 'validity_date',
   booking_id: 'booking_id',

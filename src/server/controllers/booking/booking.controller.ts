@@ -38,6 +38,7 @@ export const bookingController = {
     return NextResponse.json(booking, { status: 200 });
   },
 
+  /*
   cancelMyBooking: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {
     const token = getTokenAccess(req);
     const { bookingId } = await context.params;
@@ -66,4 +67,5 @@ export const bookingController = {
 
     return NextResponse.json({ message: 'Booking cancelled' }, { status: 200 });
   },
+  */
 };

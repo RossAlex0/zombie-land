@@ -1,5 +1,8 @@
 import * as z from 'zod';
 
+/** Nombre max de personnes pour une réservation en ligne. Au-delà : réservation de groupe via l'équipe. */
+export const MAX_BOOKING_PEOPLE = 15;
+
 export const bookingCreateSchema = z
   .object({
     from: z.coerce.date(),
@@ -18,7 +21,13 @@ export const bookingCreateSchema = z
   }))
   .refine(({ to, from }) => to >= from, {
     message: 'La date de fin doit être postérieure à la date de début',
-  });
+  })
+  .refine(
+    ({ tickets }) => tickets.reduce((sum, { quantity }) => sum + quantity, 0) <= MAX_BOOKING_PEOPLE,
+    {
+      message: `Réservation limitée à ${MAX_BOOKING_PEOPLE} personnes. Pour un groupe plus important, contactez l'équipe pour une réservation de groupe.`,
+    }
+  );
 
 export const bookingCreateForUserSchema = z
   .object({

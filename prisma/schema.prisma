@@ -27,6 +27,10 @@ model booking {
   end_at     DateTime @db.Date
   duration   Int
   user_id    Int
+  subtotal   Decimal  @db.Decimal(10,2)
+  discount   Decimal  @db.Decimal(10,2)
+  total_paid Decimal  @db.Decimal(10,2)
+  promo_code String?
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @default(now()) @db.Timestamp(6)
   user       user     @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: NoAction, map: "fk_booking_user")
@@ -85,6 +89,7 @@ model role {
 model ticket {
   id                 Int             @id @default(autoincrement())
   reservation_number String          @unique @db.VarChar(50)
+  unit_price         Decimal         @db.Decimal(10,2)
   status             String          @default("valid") @db.VarChar(50)
   validity_date      DateTime        @db.Date
   booking_id         Int

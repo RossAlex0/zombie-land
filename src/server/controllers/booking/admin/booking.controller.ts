@@ -1,17 +1,17 @@
-import { randomBytes } from 'crypto';
 import { bookingCreateForUserSchema } from '@server/schemas';
-import { BookingModel } from '@server/services';
-import { startOfUtcDay, addUtcDays, getNbDays } from '@shared/date';
+import { BookingModel, UserModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
-
-const generateBookingReference = () =>
-  `ZBL-${new Date().getFullYear()}-${randomBytes(3).toString('hex').toUpperCase()}`;
+import { NotFoundError } from '../../../../utils/errors/errors';
 
 export const adminBookingController = {
   makeBookingForUser: async (req: NextRequest) => {
     const body = await req.json();
     const { userId, from, to, tickets } = bookingCreateForUserSchema.parse(body);
 
+    const user = await new UserModel().findUserById(userId, { id: true });
+    if (!user) {
+      return new NotFoundError('User not found');
+    }
     const bookingService = new BookingModel();
     const booking = await bookingService.createBooking(userId, from, to, tickets);
     return NextResponse.json(booking, { status: 201 });
@@ -21,7 +21,9 @@ export const adminBookingController = {
     const bookingService = new BookingModel();
     const bookings = await bookingService.readAll({
       include: {
-        ticket: true,
+        _count: {
+          select: { ticket: true },
+        },
       },
     });
     return NextResponse.json(bookings);
@@ -31,13 +33,23 @@ export const adminBookingController = {
     const { bookingId } = context.params;
     const bookingService = new BookingModel();
     const booking = await bookingService.getBookingById(Number(bookingId));
+    if (!booking) {
+      throw new NotFoundError('Booking not found');
+    }
     return NextResponse.json(booking);
   },
 
-  cancelBooking: async (req: NextRequest, context: { params: { bookingId: string } }) => {
+  /*cancelBooking: async (req: NextRequest, context: { params: { bookingId: string } }) => {
     const { bookingId } = context.params;
     const bookingService = new BookingModel();
-    await bookingService.cancel(Number(bookingId));
+    const booking = await bookingService.cancel(Number(bookingId));
+    if (!booking) {
+      throw new NotFoundError('Booking not found');
+    }
+    if (booking.status === 'cancelled') {
+      return NextResponse.json({ message: 'Booking already cancelled' }, { status: 200 });
+    }
     return NextResponse.json({ message: 'Booking cancelled' });
   },
+    */
 };
