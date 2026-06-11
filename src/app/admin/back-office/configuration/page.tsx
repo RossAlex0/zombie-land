@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import TextZbl from '@components/ui/textZbl/TextZbl';
 import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
 import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
-import BackOfficeField from '@components/ui/backOfficeField/BackOfficeField';
+import FormInput from '@components/ui/FormInput/FormInput';
 import FlashMessage from '@components/ui/flashMessage/FlashMessage';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchConfiguration from '@hooks/api-request/configuration/usePatchConfiguration';
@@ -29,9 +29,11 @@ const statusOptions = [
 
 type FormProps = {
   config: Configuration;
+  onSuccess: () => void;
+  onStatusChange: (status: string) => void;
 };
 
-function ConfigurationForm({ config }: FormProps) {
+function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
   const router = useRouter();
   const [status, setStatus] = useState(config.status);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -65,6 +67,18 @@ function ConfigurationForm({ config }: FormProps) {
       return;
     }
 
+    const hasChanged =
+      entry_price !== config.entry_price ||
+      capacity !== config.capacity ||
+      opening_hours !== config.opening_hours ||
+      closing_hours !== config.closing_hours ||
+      status !== config.status;
+
+    if (!hasChanged) {
+      router.push('/admin/back-office/configuration');
+      return;
+    }
+
     const result = await patchConfiguration({
       entry_price,
       capacity,
@@ -74,6 +88,7 @@ function ConfigurationForm({ config }: FormProps) {
     });
     if (result.ok) {
       clearCache('/api/configuration');
+      onSuccess();
       router.push('/admin/back-office/configuration?success=updated&entity=Configuration');
     } else {
       setSubmitError(result.error);
@@ -89,53 +104,65 @@ function ConfigurationForm({ config }: FormProps) {
       }}
     >
       <div className="configuration-edit__grid">
-        <BackOfficeField label="Prix d'entrée (€)">
-          <input
-            className="backoffice-field__input"
-            type="number"
-            name="entry_price"
-            min="0"
-            step="0.01"
-            defaultValue={config.entry_price}
-          />
-        </BackOfficeField>
+        <FormInput
+          id="entry_price"
+          name="entry_price"
+          type="number"
+          className="bo-field__input"
+          min="0"
+          step="0.01"
+          defaultValue={config.entry_price}
+          wrapperClassName="bo-field"
+        >
+          <TextZbl jetbrains>Prix d&apos;entrée (€)</TextZbl>
+        </FormInput>
 
-        <BackOfficeField label="Capacité">
-          <input
-            className="backoffice-field__input"
-            type="number"
-            name="capacity"
-            min="1"
-            step="1"
-            defaultValue={config.capacity}
-          />
-        </BackOfficeField>
+        <FormInput
+          id="capacity"
+          name="capacity"
+          type="number"
+          className="bo-field__input"
+          min="1"
+          step="1"
+          defaultValue={config.capacity}
+          wrapperClassName="bo-field"
+        >
+          <TextZbl jetbrains>Capacité</TextZbl>
+        </FormInput>
 
-        <BackOfficeField label="Heure d'ouverture">
-          <input
-            className="backoffice-field__input"
-            type="time"
-            name="opening_hours"
-            defaultValue={config.opening_hours}
-          />
-        </BackOfficeField>
+        <FormInput
+          id="opening_hours"
+          name="opening_hours"
+          type="time"
+          className="bo-field__input"
+          defaultValue={config.opening_hours}
+          wrapperClassName="bo-field"
+        >
+          <TextZbl jetbrains>Heure d&apos;ouverture</TextZbl>
+        </FormInput>
 
-        <BackOfficeField label="Heure de fermeture">
-          <input
-            className="backoffice-field__input"
-            type="time"
-            name="closing_hours"
-            defaultValue={config.closing_hours}
-          />
-        </BackOfficeField>
+        <FormInput
+          id="closing_hours"
+          name="closing_hours"
+          type="time"
+          className="bo-field__input"
+          defaultValue={config.closing_hours}
+          wrapperClassName="bo-field"
+        >
+          <TextZbl jetbrains>Heure de fermeture</TextZbl>
+        </FormInput>
 
-        <BackOfficeField label="Statut">
+        <div className="bo-field">
+          <TextZbl jetbrains>Statut</TextZbl>
           <DropDownZbl
             options={statusOptions}
             value={status}
-            onChange={(opt) => setStatus(opt.value)}
+            onChange={(opt) => {
+              setStatus(opt.value);
+              onStatusChange(opt.value);
+            }}
           />
-        </BackOfficeField>
+        </div>
       </div>
 
       {submitError && (
@@ -157,7 +184,13 @@ function ConfigurationForm({ config }: FormProps) {
 }
 
 export default function ConfigurationPage() {
-  const { data: config, loading, error } = useFetch<Configuration>('/api/configuration');
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [displayedStatus, setDisplayedStatus] = useState<string | null>(null);
+  const {
+    data: config,
+    loading,
+    error,
+  } = useFetch<Configuration>('/api/configuration', refreshTrigger);
 
   return (
     <div className="backoffice_content">
@@ -169,7 +202,7 @@ export default function ConfigurationPage() {
           {config && (
             <div className="backoffice_content_header_title_items yellow">
               <TextZbl jetbrains color="yellow">
-                {config.status}
+                {displayedStatus ?? config.status}
               </TextZbl>
             </div>
           )}
@@ -178,13 +211,19 @@ export default function ConfigurationPage() {
 
       <FlashMessage />
 
-      {loading && <TextZbl jetbrains>Chargement...</TextZbl>}
+      {loading && !config && <TextZbl jetbrains>Chargement...</TextZbl>}
       {error && (
         <TextZbl jetbrains color="yellow">
           Erreur : {error.message}
         </TextZbl>
       )}
-      {config && <ConfigurationForm config={config} />}
+      {config && (
+        <ConfigurationForm
+          config={config}
+          onSuccess={() => setRefreshTrigger((prev) => !prev)}
+          onStatusChange={setDisplayedStatus}
+        />
+      )}
     </div>
   );
 }

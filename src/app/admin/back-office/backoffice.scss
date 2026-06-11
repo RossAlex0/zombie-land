@@ -80,6 +80,19 @@
       outline: none;
       border-color: $primary-yellow;
     }
+
+    &[type='number'] {
+      appearance: textfield;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        display: none;
+      }
+    }
+
+    &[type='time']::-webkit-calendar-picker-indicator {
+      display: none;
+    }
   }
 
   &__textarea {
