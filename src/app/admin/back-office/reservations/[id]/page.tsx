@@ -47,11 +47,6 @@ const ticketColumns: Column<TicketRow>[] = [
   { key: 'reduction', label: 'Réduction' },
   { key: 'unit_price', label: 'Prix unitaire' },
   { key: 'validity_date', label: 'Validité' },
-  {
-    key: 'status',
-    label: 'Statut',
-    render: (value) => <StatusBadge status={value as BadgeStatus} />,
-  },
 ];
 
 export default function ReservationDetailPage() {
