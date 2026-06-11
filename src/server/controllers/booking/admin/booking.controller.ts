@@ -1,10 +1,9 @@
-import { bookingCreateForUserSchema } from '@server/schemas';
-import { BookingModel, UserModel } from '@server/services';
+import { BookingModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../../utils/errors/errors';
 
 export const adminBookingController = {
-  getAllBookings: async (req: NextRequest) => {
+  getAllBookings: async (_req: NextRequest) => {
     const bookingService = new BookingModel();
     const bookings = await bookingService.readAll({
       include: {

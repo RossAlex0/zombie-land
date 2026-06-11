@@ -1,4 +1,5 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React from 'react';
 
 type CategoryResult = { ok: boolean } | { error: string };
@@ -12,7 +13,7 @@ export default function useDeleteCategory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/category/${id}`, {
+      const res = await fetchWithAuth(`/api/category/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

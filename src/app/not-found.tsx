@@ -1,6 +1,6 @@
 import '@styles/notFound.scss';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 
 export default function NotFound() {
   return (

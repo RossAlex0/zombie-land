@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import FormInput from '@components/ui/FormInput/FormInput';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import FormInput from '@components/ui/input/form-input/FormInput';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateCategory from '@hooks/api-request/category/useUpdateCategory';
-import '../../backoffice.scss';
-import './category-edit.scss';
+import '../../backOffice.scss';
+import './categoryEdit.scss';
 
 type Category = {
   id: number;

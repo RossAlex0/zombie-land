@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateUserRole from '@hooks/api-request/user/useUpdateUserRole';
 import { RoleName } from '@customTypes/enum/roles';
-import type { IUserBO } from '@customTypes/User';
-import '../../backoffice.scss';
-import './user-edit.scss';
+import type { IUserBO } from '@customTypes/collections/user';
+
+import '../../backOffice.scss';
+import './userEdit.scss';
 
 type User = IUserBO;
 

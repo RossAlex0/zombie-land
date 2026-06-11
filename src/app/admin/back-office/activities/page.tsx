@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PencilLine, Trash2, Plus } from 'lucide-react';
-import DataTable, { Column } from '@components/block/dataTable/DataTable';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import StatusBadge, { BadgeStatus } from '@components/ui/statusBadge/StatusBadge';
-import FlashMessage from '@components/ui/flashMessage/FlashMessage';
-import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
+import DataTable, { Column } from '@components/block/data-table/DataTable';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import StatusBadge, { BadgeStatus } from '@components/ui/status-badge/StatusBadge';
+import FlashMessage from '@components/ui/flash-message/FlashMessage';
+import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
 import useFetch from '@hooks/api-request/useFetch';
 import useDeleteActivity from '@hooks/api-request/activity/useDeleteActivity';
-import '../backoffice.scss';
+import '../backOffice.scss';
 
 type Activity = {
   [key: string]: unknown;

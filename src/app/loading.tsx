@@ -1,4 +1,4 @@
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import '@styles/loading.scss';
 
 export default function Loading() {

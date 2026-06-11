@@ -2,16 +2,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
-import FormInput from '@components/ui/FormInput/FormInput';
+import FormInput from '@components/ui/input/form-input/FormInput';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
-import '../../backoffice.scss';
-import '../[id]/activity-edit.scss';
+import '../../backOffice.scss';
+import '../[id]/activityEdit.scss';
 
 const statusOptions = [
   { value: 'open', label: 'open' },

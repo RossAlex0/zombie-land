@@ -1,10 +1,9 @@
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { NotepadText, RollerCoaster } from 'lucide-react';
 import AttractionsCarousel from '@components/block/carousel/CarouselZbl';
-
-import './homeActivities.scss';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import './homeActivities.scss';
 
 export default function HomeActivites({ activities }: { activities: ActivityWithCategory[] }) {
   return (

@@ -1,8 +1,8 @@
 'use client';
 import ParkMap from '@components/block/park-map/ParkMap';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { NotepadText, Radiation, RollerCoaster, ArrowRight } from 'lucide-react';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import type { activity, configuration } from '@prismaInstance/*';
 import { getNbDays } from '@shared/date';
 import { useMemo } from 'react';

@@ -1,8 +1,8 @@
 'use client';
-import './sidebar.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { House, FerrisWheel, Tag, Users, CalendarDays, Ticket, HandCoins, Cog } from 'lucide-react';
+import './sidebar.scss';
 
 const links = [
   { label: 'Accueil', href: '/admin/back-office', icon: House },

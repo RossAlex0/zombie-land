@@ -1,6 +1,6 @@
 import SidebarNav from './SidebarNav';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import './sidebar.scss';
 import Image from 'next/image';
 

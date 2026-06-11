@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PencilLine, Trash2, Plus } from 'lucide-react';
-import DataTable, { Column } from '@components/block/dataTable/DataTable';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import FlashMessage from '@components/ui/flashMessage/FlashMessage';
-import ConfirmModal from '@components/ui/confirmModal/ConfirmModal';
+import DataTable, { Column } from '@components/block/data-table/DataTable';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import FlashMessage from '@components/ui/flash-message/FlashMessage';
+import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useDeleteCategory from '@hooks/api-request/category/useDeleteCategory';
-import '../backoffice.scss';
+import '../backOffice.scss';
 
 type Category = {
   [key: string]: unknown;

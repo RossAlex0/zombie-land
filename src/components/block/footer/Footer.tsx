@@ -1,7 +1,7 @@
-import InfectLogo from '@components/ui/infectLogo/InfectLogo';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import './footer.scss';
+import InfectLogo from '@components/ui/infect-logo/InfectLogo';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import FooterNav from './FooterNav';
+import './footer.scss';
 
 export default function Footer() {
   return (

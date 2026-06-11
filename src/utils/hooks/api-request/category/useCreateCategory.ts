@@ -4,6 +4,7 @@ import {
   categoryCreateInput,
   CategoryMinAggregateInputType,
 } from '../../../../../prisma/generated/models';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 
 type CategoryResponse = { id: number; email: string };
 type CategoryResult = { ok: boolean; data: CategoryResponse[] } | { error: string };
@@ -17,7 +18,7 @@ export default function useCreateCategory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/category`, {
+      const res = await fetchWithAuth(`/api/category`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },

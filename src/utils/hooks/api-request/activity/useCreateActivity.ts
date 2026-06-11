@@ -1,4 +1,5 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React from 'react';
 
 type ActivityCreatePayload = {
@@ -21,7 +22,7 @@ export default function useCreateActivity() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/activity`, {
+      const res = await fetchWithAuth(`/api/activity`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },

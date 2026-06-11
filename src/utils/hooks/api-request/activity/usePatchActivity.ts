@@ -1,4 +1,5 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React from 'react';
 
 type ActivityUpdatePayload = {
@@ -21,7 +22,7 @@ export default function usePatchActivity(id: number) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/activity/${id}`, {
+      const res = await fetchWithAuth(`/api/activity/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },

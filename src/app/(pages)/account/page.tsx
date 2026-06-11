@@ -1,20 +1,18 @@
 'use client';
 
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { useAuth } from '@context/authProvider';
 import { Home } from 'lucide-react';
 import Loading from '../../loading';
-import FormInput from '@components/ui/FormInput/FormInput';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useUpdateProfile } from '@hooks/api-request/user/useUpdateProfile';
 import { useUpdatePassword } from '@hooks/api-request/user/useUpdatePassword';
-import FlashMessage from '@components/ui/flashMessage/FlashMessage';
+import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import { usePathname, useRouter } from 'next/navigation';
-import ModalZbl from '@components/block/modal-zbl/ModalZbl';
-import './account.scss';
 import ModalPassword from '@components/block/modal-zbl/modal-password/ModalPassword';
 import ProfileForm from '@components/block/form/profile/ProfileForm';
+import './account.scss';
 
 export default function Account() {
   const { user, loading, setUser } = useAuth();
@@ -100,12 +98,10 @@ export default function Account() {
         </section>
       )}
       {openModalPassword ? (
-        <ModalZbl onClose={() => setOpenModalPassword(false)}>
-          <ModalPassword
-            onClose={() => setOpenModalPassword(false)}
-            onValidate={handleValidatePassword}
-          />
-        </ModalZbl>
+        <ModalPassword
+          onClose={() => setOpenModalPassword(false)}
+          onValidate={handleValidatePassword}
+        />
       ) : undefined}
     </>
   );

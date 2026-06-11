@@ -1,12 +1,11 @@
 'use client';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import TextZbl from '@components/ui/textZbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { Lock } from 'lucide-react';
 import Link from 'next/link';
-
-import './header.scss';
-import InfectLogo from '@components/ui/infectLogo/InfectLogo';
+import InfectLogo from '@components/ui/infect-logo/InfectLogo';
 import { useAuth } from '@context/authProvider';
+import './header.scss';
 
 export default function Header() {
   const { user, loading } = useAuth();

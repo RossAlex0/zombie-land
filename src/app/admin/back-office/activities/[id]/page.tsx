@@ -2,16 +2,16 @@
 
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
-import FormInput from '@components/ui/FormInput/FormInput';
+import FormInput from '@components/ui/input/form-input/FormInput';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import { category } from '@prismaInstance/*';
-import '../../backoffice.scss';
-import './activity-edit.scss';
+import '../../backOffice.scss';
+import './activityEdit.scss';
 
 type Activity = {
   id: number;
