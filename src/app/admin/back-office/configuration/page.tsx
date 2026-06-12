@@ -11,15 +11,8 @@ import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchConfiguration from '@hooks/api-request/configuration/usePatchConfiguration';
 import '../backoffice.scss';
 import './configuration.scss';
-
-type Configuration = {
-  id: number;
-  entry_price: number;
-  capacity: number;
-  status: string;
-  opening_hours: string;
-  closing_hours: string;
-};
+import { configuration } from '@prismaInstance/*';
+import { Decimal } from '@prisma/client/runtime/index-browser';
 
 const statusOptions = [
   { value: 'active', label: 'active' },
@@ -28,7 +21,7 @@ const statusOptions = [
 ];
 
 type FormProps = {
-  config: Configuration;
+  config: Partial<configuration>;
   onSuccess: () => void;
   onStatusChange: (status: string) => void;
 };
@@ -37,7 +30,9 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
   const router = useRouter();
   const [status, setStatus] = useState(config.status);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const { configuration: patchConfiguration, loading } = usePatchConfiguration();
+  const { patchConfiguration, loading } = usePatchConfiguration();
+
+  const entryPrice = config.entry_price as unknown as number;
 
   const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
@@ -68,10 +63,10 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
     }
 
     const hasChanged =
-      entry_price !== config.entry_price ||
+      entry_price !== Number(config.entry_price) ||
       capacity !== config.capacity ||
-      opening_hours !== config.opening_hours ||
-      closing_hours !== config.closing_hours ||
+      new Date(opening_hours) !== new Date(config.opening_hours!) ||
+      new Date(closing_hours) !== new Date(config.closing_hours!) ||
       status !== config.status;
 
     if (!hasChanged) {
@@ -85,12 +80,14 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
       status,
       opening_hours,
       closing_hours,
-    });
+    } as unknown as Partial<configuration>);
+
     if (result.ok) {
       clearCache('/api/configuration');
       onSuccess();
       router.push('/admin/back-office/configuration?success=updated&entity=Configuration');
-    } else {
+    }
+    if (result.error) {
       setSubmitError(result.error);
     }
   };
@@ -111,7 +108,7 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
           className="bo-field__input"
           min="0"
           step="0.01"
-          defaultValue={config.entry_price}
+          defaultValue={entryPrice}
           wrapperClassName="bo-field"
         >
           <TextZbl jetbrains>Prix d&apos;entrée (€)</TextZbl>
@@ -135,7 +132,7 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
           name="opening_hours"
           type="time"
           className="bo-field__input"
-          defaultValue={config.opening_hours}
+          defaultValue={String(config.opening_hours)}
           wrapperClassName="bo-field"
         >
           <TextZbl jetbrains>Heure d&apos;ouverture</TextZbl>
@@ -146,7 +143,7 @@ function ConfigurationForm({ config, onSuccess, onStatusChange }: FormProps) {
           name="closing_hours"
           type="time"
           className="bo-field__input"
-          defaultValue={config.closing_hours}
+          defaultValue={String(config.closing_hours)}
           wrapperClassName="bo-field"
         >
           <TextZbl jetbrains>Heure de fermeture</TextZbl>
@@ -190,7 +187,7 @@ export default function ConfigurationPage() {
     data: config,
     loading,
     error,
-  } = useFetch<Configuration>('/api/configuration', refreshTrigger);
+  } = useFetch<configuration>('/api/configuration', refreshTrigger);
 
   return (
     <div className="backoffice_content">
