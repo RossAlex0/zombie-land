@@ -5,6 +5,21 @@ import { getTokenAccess } from '../../../utils/api/token';
 import { bookingCreateSchema } from '@server/schemas';
 import { BookingModel, UserModel } from '@server/services';
 
+// {
+//   "from": "2026-07-15T00:00:00.000Z",
+//   "to": "2026-07-15T00:00:00.000Z",
+//   "tickets": [
+//     {
+//       "category_id": 1,
+//       "quantity": 2
+//     },
+//     {
+//       "category_id": 2,
+//       "quantity": 2
+//     }
+//   ]
+// }
+
 export const checkoutController = {
   createBookingAndCheckoutSession: async (req: NextRequest) => {
     // const token = getTokenAccess(req)

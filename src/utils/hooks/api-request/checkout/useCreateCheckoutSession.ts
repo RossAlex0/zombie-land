@@ -6,6 +6,21 @@ export default function useCeateCheckoutSession() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
+  // {
+  //   "from": "2026-07-15T00:00:00.000Z",
+  //   "to": "2026-07-15T00:00:00.000Z",
+  //   "tickets": [
+  //     {
+  //       "category_id": 1,
+  //       "quantity": 2
+  //     },
+  //     {
+  //       "category_id": 2,
+  //       "quantity": 2
+  //     }
+  //   ]
+  // }
+
   const session = async (bookingId: number) => {
     setLoading(true);
     setError(null);
@@ -14,7 +29,7 @@ export default function useCeateCheckoutSession() {
         method: 'POST',
         body: JSON.stringify({
           bookingId,
-          //Line-items
+          //Line-items,
         }),
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

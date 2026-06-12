@@ -1,4 +1,4 @@
-# Test weebhoobs :
+# Test weebhooks (Linux) :
 
 Sur 2 terminaux différents :
 
@@ -12,3 +12,7 @@ https://docs.stripe.com/checkout/quickstart?client=next
 https://docs.stripe.com/payments/accept-a-payment
 
 https://docs.stripe.com/api/checkout/sessions/create#create_checkout_session-line_items-price_data
+
+# Stripe CLI
+
+https://docs.stripe.com/stripe-cli
