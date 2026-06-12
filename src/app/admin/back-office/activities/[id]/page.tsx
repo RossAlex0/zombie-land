@@ -12,6 +12,7 @@ import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import './activityEdit.scss';
+import Image from 'next/image';
 
 type Activity = {
   id: number;
@@ -51,7 +52,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
   const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
     const name = (formData.get('name') as string)?.trim() ?? '';
-    const picture = (formData.get('picture') as string)?.trim() ?? '';
+    const picture = (formData.get('picture') as File) ?? null;
     const description = (formData.get('description') as string)?.trim() ?? '';
 
     if (!name) {
@@ -67,10 +68,15 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
       return;
     }
     if (picture) {
-      try {
-        new URL(picture);
-      } catch {
-        setSubmitError("L'URL de l'image n'est pas valide.");
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(picture.type)) {
+        setSubmitError("L'image doit être au format JPEG, PNG ou WebP.");
+        return;
+      }
+
+      const maxSizeMo = 4; // < 4.5 Mo recommandé pour Cloudinary server upload
+      if (picture.size > maxSizeMo * 1024 * 1024) {
+        setSubmitError(`L'image ne doit pas dépasser ${maxSizeMo} Mo.`);
         return;
       }
     }
@@ -81,7 +87,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
     const currentCategoryIds = [...categoryIds].sort();
     const hasChanged =
       name !== activity.name ||
-      picture !== (activity.picture ?? '') ||
+      (picture instanceof File && picture.size > 0) ||
       description !== (activity.description ?? '') ||
       status !== activity.status ||
       JSON.stringify(currentCategoryIds) !== JSON.stringify(originalCategoryIds);
@@ -140,7 +146,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
           />
         </div>
 
-        <div className="bo-field bo-field--full">
+        <div className="bo-field ">
           <TextZbl jetbrains>Catégories</TextZbl>
           <div className="activity-edit__categories">
             {categories.map((cat) => (
@@ -154,16 +160,20 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
           </div>
         </div>
 
-        <FormInput
-          id="picture"
-          name="picture"
-          type="text"
-          className="bo-field__input"
-          defaultValue={activity.picture ?? ''}
-          wrapperClassName="bo-field bo-field--full"
-        >
-          <TextZbl jetbrains>Image</TextZbl>
-        </FormInput>
+        <div className="bo-field field_row">
+          <FormInput
+            id="picture"
+            name="picture"
+            type="file"
+            className="bo-field__input"
+            wrapperClassName="bo-field"
+          >
+            <TextZbl jetbrains>Image</TextZbl>
+          </FormInput>
+          {activity.picture ? (
+            <Image src={activity.picture} alt="attraction" height={60} width={80} />
+          ) : undefined}
+        </div>
 
         <FormInput
           id="description"

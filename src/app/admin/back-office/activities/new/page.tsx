@@ -34,7 +34,7 @@ export default function ActivityCreatePage() {
   const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
     const name = (formData.get('name') as string)?.trim() ?? '';
-    const picture = (formData.get('picture') as string)?.trim() ?? '';
+    const picture = (formData.get('picture') as File) ?? null;
     const description = (formData.get('description') as string)?.trim() ?? '';
 
     if (!name) {
@@ -50,10 +50,15 @@ export default function ActivityCreatePage() {
       return;
     }
     if (picture) {
-      try {
-        new URL(picture);
-      } catch {
-        setSubmitError("L'URL de l'image n'est pas valide.");
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(picture.type)) {
+        setSubmitError("L'image doit être au format JPEG, PNG ou WebP.");
+        return;
+      }
+
+      const maxSizeMo = 4; // < 4.5 Mo recommandé pour Cloudinary server upload
+      if (picture.size > maxSizeMo * 1024 * 1024) {
+        setSubmitError(`L'image ne doit pas dépasser ${maxSizeMo} Mo.`);
         return;
       }
     }
@@ -65,10 +70,10 @@ export default function ActivityCreatePage() {
       status,
       category_activity: categoryIds.map((id) => ({ category_id: id })),
     });
-    if ('ok' in res && res.ok) {
+    if (res?.ok) {
       clearCache('/api/activity');
       router.push('/admin/back-office/activities?success=created&entity=Activité');
-    } else if ('error' in res) {
+    } else if (res?.error) {
       setSubmitError(res.error);
     }
   };
@@ -110,7 +115,7 @@ export default function ActivityCreatePage() {
             />
           </div>
 
-          <div className="bo-field bo-field--full">
+          <div className="bo-field ">
             <TextZbl jetbrains>Catégories</TextZbl>
             <div className="activity-edit__categories">
               {categories?.map((cat) => (
@@ -127,9 +132,9 @@ export default function ActivityCreatePage() {
           <FormInput
             id="picture"
             name="picture"
-            type="text"
+            type="file"
             className="bo-field__input"
-            wrapperClassName="bo-field bo-field--full"
+            wrapperClassName="bo-field"
           >
             <TextZbl jetbrains>Image</TextZbl>
           </FormInput>
