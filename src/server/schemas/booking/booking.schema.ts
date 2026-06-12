@@ -5,8 +5,8 @@ export const MAX_BOOKING_PEOPLE = 15;
 
 export const bookingCreateSchema = z
   .object({
-    from: z.coerce.date(),
-    to: z.coerce.date().optional(),
+    from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     tickets: z.array(
       z.object({
         category_id: z.number().int().positive(),

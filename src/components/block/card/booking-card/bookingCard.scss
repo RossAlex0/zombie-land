@@ -1,0 +1,92 @@
+// bookingCard.scss
+@use '../../../../utils/styles/variables' as *;
+
+.booking_card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: $medium-black;
+  border: 1px solid $light-black;
+  border-radius: 8px;
+  transition: border-color 0.25s ease;
+
+  &:hover {
+    border-color: $primary-red;
+  }
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &_ref {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  &_status {
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid;
+
+    &_confirmed {
+      border-color: $primary-green;
+      color: $primary-green;
+    }
+    &_pending {
+      border-color: $primary-yellow;
+      color: $primary-yellow;
+    }
+    &_cancelled {
+      border-color: $primary-red;
+      color: $primary-red;
+    }
+  }
+
+  &_dates {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &_tickets {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-top: 0.5px solid $light-black;
+    border-bottom: 0.5px solid $light-black;
+
+    &_head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    &_list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    &_item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-left: 1.5rem;
+    }
+  }
+
+  &_footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

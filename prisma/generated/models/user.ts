@@ -45,12 +45,12 @@ export type UserMinAggregateOutputType = {
   birth_date: Date | null
   password: string | null
   role_id: number | null
-  stripe_customer_id: string | null
   password_changed_at: Date | null
   created_at: Date | null
   updated_at: Date | null
   deleted_at: Date | null
   deleted: boolean | null
+  stripe_customer_id: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -62,12 +62,12 @@ export type UserMaxAggregateOutputType = {
   birth_date: Date | null
   password: string | null
   role_id: number | null
-  stripe_customer_id: string | null
   password_changed_at: Date | null
   created_at: Date | null
   updated_at: Date | null
   deleted_at: Date | null
   deleted: boolean | null
+  stripe_customer_id: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -79,12 +79,12 @@ export type UserCountAggregateOutputType = {
   birth_date: number
   password: number
   role_id: number
-  stripe_customer_id: number
   password_changed_at: number
   created_at: number
   updated_at: number
   deleted_at: number
   deleted: number
+  stripe_customer_id: number
   _all: number
 }
 
@@ -108,12 +108,12 @@ export type UserMinAggregateInputType = {
   birth_date?: true
   password?: true
   role_id?: true
-  stripe_customer_id?: true
   password_changed_at?: true
   created_at?: true
   updated_at?: true
   deleted_at?: true
   deleted?: true
+  stripe_customer_id?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -125,12 +125,12 @@ export type UserMaxAggregateInputType = {
   birth_date?: true
   password?: true
   role_id?: true
-  stripe_customer_id?: true
   password_changed_at?: true
   created_at?: true
   updated_at?: true
   deleted_at?: true
   deleted?: true
+  stripe_customer_id?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -142,12 +142,12 @@ export type UserCountAggregateInputType = {
   birth_date?: true
   password?: true
   role_id?: true
-  stripe_customer_id?: true
   password_changed_at?: true
   created_at?: true
   updated_at?: true
   deleted_at?: true
   deleted?: true
+  stripe_customer_id?: true
   _all?: true
 }
 
@@ -246,12 +246,12 @@ export type UserGroupByOutputType = {
   birth_date: Date | null
   password: string
   role_id: number
-  stripe_customer_id: string | null
   password_changed_at: Date | null
   created_at: Date
   updated_at: Date
   deleted_at: Date | null
   deleted: boolean
+  stripe_customer_id: string | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -286,12 +286,12 @@ export type userWhereInput = {
   birth_date?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   password?: Prisma.StringFilter<"user"> | string
   role_id?: Prisma.IntFilter<"user"> | number
-  stripe_customer_id?: Prisma.StringNullableFilter<"user"> | string | null
   password_changed_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"user"> | Date | string
   deleted_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   deleted?: Prisma.BoolFilter<"user"> | boolean
+  stripe_customer_id?: Prisma.StringNullableFilter<"user"> | string | null
   booking?: Prisma.BookingListRelationFilter
   refresh_token?: Prisma.Refresh_tokenListRelationFilter
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.roleWhereInput>
@@ -306,12 +306,12 @@ export type userOrderByWithRelationInput = {
   birth_date?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   password_changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   booking?: Prisma.bookingOrderByRelationAggregateInput
   refresh_token?: Prisma.refresh_tokenOrderByRelationAggregateInput
   role?: Prisma.roleOrderByWithRelationInput
@@ -349,12 +349,12 @@ export type userOrderByWithAggregationInput = {
   birth_date?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   password_changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.userCountOrderByAggregateInput
   _avg?: Prisma.userAvgOrderByAggregateInput
   _max?: Prisma.userMaxOrderByAggregateInput
@@ -374,12 +374,12 @@ export type userScalarWhereWithAggregatesInput = {
   birth_date?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
   password?: Prisma.StringWithAggregatesFilter<"user"> | string
   role_id?: Prisma.IntWithAggregatesFilter<"user"> | number
-  stripe_customer_id?: Prisma.StringNullableWithAggregatesFilter<"user"> | string | null
   password_changed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"user"> | Date | string
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"user"> | boolean
+  stripe_customer_id?: Prisma.StringNullableWithAggregatesFilter<"user"> | string | null
 }
 
 export type userCreateInput = {
@@ -389,12 +389,12 @@ export type userCreateInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
@@ -409,12 +409,12 @@ export type userUncheckedCreateInput = {
   birth_date?: Date | string | null
   password: string
   role_id?: number
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
@@ -426,12 +426,12 @@ export type userUpdateInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
@@ -446,12 +446,12 @@ export type userUncheckedUpdateInput = {
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role_id?: Prisma.IntFieldUpdateOperationsInput | number
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -465,12 +465,12 @@ export type userCreateManyInput = {
   birth_date?: Date | string | null
   password: string
   role_id?: number
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
 }
 
 export type userUpdateManyMutationInput = {
@@ -480,12 +480,12 @@ export type userUpdateManyMutationInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type userUncheckedUpdateManyInput = {
@@ -497,12 +497,12 @@ export type userUncheckedUpdateManyInput = {
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role_id?: Prisma.IntFieldUpdateOperationsInput | number
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserScalarRelationFilter = {
@@ -529,12 +529,12 @@ export type userCountOrderByAggregateInput = {
   birth_date?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  stripe_customer_id?: Prisma.SortOrder
 }
 
 export type userAvgOrderByAggregateInput = {
@@ -551,12 +551,12 @@ export type userMaxOrderByAggregateInput = {
   birth_date?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  stripe_customer_id?: Prisma.SortOrder
 }
 
 export type userMinOrderByAggregateInput = {
@@ -568,12 +568,12 @@ export type userMinOrderByAggregateInput = {
   birth_date?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
   password_changed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  stripe_customer_id?: Prisma.SortOrder
 }
 
 export type userSumOrderByAggregateInput = {
@@ -666,12 +666,12 @@ export type userCreateWithoutBookingInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
 }
@@ -685,12 +685,12 @@ export type userUncheckedCreateWithoutBookingInput = {
   birth_date?: Date | string | null
   password: string
   role_id?: number
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -717,12 +717,12 @@ export type userUpdateWithoutBookingInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
 }
@@ -736,12 +736,12 @@ export type userUncheckedUpdateWithoutBookingInput = {
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role_id?: Prisma.IntFieldUpdateOperationsInput | number
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -752,12 +752,12 @@ export type userCreateWithoutRoleInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenCreateNestedManyWithoutUserInput
 }
@@ -770,12 +770,12 @@ export type userUncheckedCreateWithoutRoleInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
   refresh_token?: Prisma.refresh_tokenUncheckedCreateNestedManyWithoutUserInput
 }
@@ -818,12 +818,12 @@ export type userScalarWhereInput = {
   birth_date?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   password?: Prisma.StringFilter<"user"> | string
   role_id?: Prisma.IntFilter<"user"> | number
-  stripe_customer_id?: Prisma.StringNullableFilter<"user"> | string | null
   password_changed_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"user"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"user"> | Date | string
   deleted_at?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
   deleted?: Prisma.BoolFilter<"user"> | boolean
+  stripe_customer_id?: Prisma.StringNullableFilter<"user"> | string | null
 }
 
 export type userCreateWithoutRefresh_tokenInput = {
@@ -833,12 +833,12 @@ export type userCreateWithoutRefresh_tokenInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingCreateNestedManyWithoutUserInput
   role?: Prisma.roleCreateNestedOneWithoutUserInput
 }
@@ -852,12 +852,12 @@ export type userUncheckedCreateWithoutRefresh_tokenInput = {
   birth_date?: Date | string | null
   password: string
   role_id?: number
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
   booking?: Prisma.bookingUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -884,12 +884,12 @@ export type userUpdateWithoutRefresh_tokenInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   role?: Prisma.roleUpdateOneRequiredWithoutUserNestedInput
 }
@@ -903,12 +903,12 @@ export type userUncheckedUpdateWithoutRefresh_tokenInput = {
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role_id?: Prisma.IntFieldUpdateOperationsInput | number
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -920,12 +920,12 @@ export type userCreateManyRoleInput = {
   valid_email?: boolean | null
   birth_date?: Date | string | null
   password: string
-  stripe_customer_id?: string | null
   password_changed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   deleted_at?: Date | string | null
   deleted?: boolean
+  stripe_customer_id?: string | null
 }
 
 export type userUpdateWithoutRoleInput = {
@@ -935,12 +935,12 @@ export type userUpdateWithoutRoleInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUpdateManyWithoutUserNestedInput
 }
@@ -953,12 +953,12 @@ export type userUncheckedUpdateWithoutRoleInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   booking?: Prisma.bookingUncheckedUpdateManyWithoutUserNestedInput
   refresh_token?: Prisma.refresh_tokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -971,12 +971,12 @@ export type userUncheckedUpdateManyWithoutRoleInput = {
   valid_email?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1028,12 +1028,12 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   birth_date?: boolean
   password?: boolean
   role_id?: boolean
-  stripe_customer_id?: boolean
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
   deleted_at?: boolean
   deleted?: boolean
+  stripe_customer_id?: boolean
   booking?: boolean | Prisma.user$bookingArgs<ExtArgs>
   refresh_token?: boolean | Prisma.user$refresh_tokenArgs<ExtArgs>
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
@@ -1049,12 +1049,12 @@ export type userSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   birth_date?: boolean
   password?: boolean
   role_id?: boolean
-  stripe_customer_id?: boolean
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
   deleted_at?: boolean
   deleted?: boolean
+  stripe_customer_id?: boolean
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1067,12 +1067,12 @@ export type userSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   birth_date?: boolean
   password?: boolean
   role_id?: boolean
-  stripe_customer_id?: boolean
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
   deleted_at?: boolean
   deleted?: boolean
+  stripe_customer_id?: boolean
   role?: boolean | Prisma.roleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1085,15 +1085,15 @@ export type userSelectScalar = {
   birth_date?: boolean
   password?: boolean
   role_id?: boolean
-  stripe_customer_id?: boolean
   password_changed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
   deleted_at?: boolean
   deleted?: boolean
+  stripe_customer_id?: boolean
 }
 
-export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "valid_email" | "birth_date" | "password" | "role_id" | "stripe_customer_id" | "password_changed_at" | "created_at" | "updated_at" | "deleted_at" | "deleted", ExtArgs["result"]["user"]>
+export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "valid_email" | "birth_date" | "password" | "role_id" | "password_changed_at" | "created_at" | "updated_at" | "deleted_at" | "deleted" | "stripe_customer_id", ExtArgs["result"]["user"]>
 export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   booking?: boolean | Prisma.user$bookingArgs<ExtArgs>
   refresh_token?: boolean | Prisma.user$refresh_tokenArgs<ExtArgs>
@@ -1123,12 +1123,12 @@ export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     birth_date: Date | null
     password: string
     role_id: number
-    stripe_customer_id: string | null
     password_changed_at: Date | null
     created_at: Date
     updated_at: Date
     deleted_at: Date | null
     deleted: boolean
+    stripe_customer_id: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1563,12 +1563,12 @@ export interface userFieldRefs {
   readonly birth_date: Prisma.FieldRef<"user", 'DateTime'>
   readonly password: Prisma.FieldRef<"user", 'String'>
   readonly role_id: Prisma.FieldRef<"user", 'Int'>
-  readonly stripe_customer_id: Prisma.FieldRef<"user", 'String'>
   readonly password_changed_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly deleted_at: Prisma.FieldRef<"user", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"user", 'Boolean'>
+  readonly stripe_customer_id: Prisma.FieldRef<"user", 'String'>
 }
     
 

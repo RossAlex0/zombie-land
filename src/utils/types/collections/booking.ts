@@ -10,3 +10,18 @@ export type TicketWithCategory = ticket & {
 export type BookingWithTickets = booking & {
   ticket: TicketWithCategory[];
 };
+
+export type BookingCreatePayload = {
+  from: Date;
+  to: Date;
+  tickets: {
+    category_id: number;
+    quantity: number;
+  }[];
+};
+
+export enum BookingStatus {
+  CANCELLED = 'cancelled',
+  PENDING = 'pending',
+  CONFIRMED = 'confirmed',
+}

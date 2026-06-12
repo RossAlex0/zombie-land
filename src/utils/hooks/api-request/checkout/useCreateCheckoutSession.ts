@@ -1,7 +1,8 @@
 'use client';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import React, { useCallback } from 'react';
 
-export default function useCeateCheckoutSession() {
+export default function useCreateCheckoutSession() {
   const [loading, setLoading] = React.useState(false);
 
   // {
@@ -19,10 +20,10 @@ export default function useCeateCheckoutSession() {
   //   ]
   // }
 
-  const session = useCallback(async (bookingId: number) => {
+  const createCheckoutSession = useCallback(async (bookingId: number) => {
     setLoading(true);
     try {
-      const res = await fetch(`/checkout/`, {
+      const res = await fetchWithAuth(`/api/checkout`, {
         method: 'POST',
         body: JSON.stringify({
           bookingId,
@@ -36,8 +37,7 @@ export default function useCeateCheckoutSession() {
         const message = json?.error || `Erreur ${res.status}`;
         return { ok: false, error: message };
       }
-
-      return { ok: true, redirect: json.checkoutUrl as string };
+      return { ok: true, redirect: json.checkoutURL as string };
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Erreur réseau';
       return { ok: false, error: message };
@@ -46,5 +46,5 @@ export default function useCeateCheckoutSession() {
     }
   }, []);
 
-  return { session, loading };
+  return { createCheckoutSession, loading };
 }

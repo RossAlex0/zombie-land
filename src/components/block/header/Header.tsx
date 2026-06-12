@@ -13,7 +13,7 @@ export default function Header() {
   const navigationNames = [
     { label: 'Accueil', href: '/' },
     { label: 'Activités', href: '/activity' },
-    { label: 'Reservations', href: '/' },
+    { label: 'Reservations', href: '/booking' },
     { label: 'Manuel de survie', href: '/info' },
   ];
 
@@ -23,7 +23,7 @@ export default function Header() {
     <header className="header">
       <InfectLogo />
       {!loading ? (
-        <div className="header_link">
+        <div className={`header_link ${user ? 'link_end' : 'link_between'}`}>
           <nav className="header_link_nav">
             {navigationNames.map((nav, index) => (
               <Link key={nav.label} href={nav.href} className="header_link_nav_text">

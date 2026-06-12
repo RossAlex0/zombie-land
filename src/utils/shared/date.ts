@@ -51,3 +51,6 @@ export const endOfUtcDay = (date: Date) =>
 /** Ajoute n jours en UTC (renvoie le minuit UTC du jour résultant). */
 export const addUtcDays = (date: Date, days: number) =>
   new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + days));
+
+export const toDayString = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;

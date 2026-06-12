@@ -1,3 +1,4 @@
+import { BookingStatus } from '@customTypes/collections/booking';
 import { prisma } from '@prismaInstance/*';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
@@ -23,10 +24,10 @@ export async function stripeWebhook(req: NextRequest) {
 
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
     }
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-
         //récupère le stripe_customer_id fourni par stripe sous forme de string (stripe peut renvoyer un object dans certains cas)
         let customerId: string | null = null;
         if (typeof session.customer === 'string') {
@@ -43,18 +44,22 @@ export async function stripeWebhook(req: NextRequest) {
 
         const bookingId = Number(bookingIdRaw);
 
-        const updatedBooking = await prisma.booking.update({
-          where: {
-            id: bookingId,
-            status: 'pending',
-          },
-          data: {
-            status: 'paid',
-          },
-        });
+        if (session.payment_status === 'paid') {
+          await prisma.$transaction([
+            prisma.booking.updateMany({
+              where: { id: bookingId, status: BookingStatus.PENDING },
+              data: { status: BookingStatus.CONFIRMED },
+            }),
+            prisma.ticket.updateMany({
+              where: { booking_id: bookingId },
+              data: { status: 'valid' },
+            }),
+          ]);
+        }
 
         const booking = await prisma.booking.findFirst({
           where: { id: bookingId },
+          select: { user_id: true },
         });
 
         if (booking?.user_id && customerId) {

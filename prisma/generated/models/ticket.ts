@@ -28,104 +28,104 @@ export type AggregateTicket = {
 
 export type TicketAvgAggregateOutputType = {
   id: number | null
-  unit_price: runtime.Decimal | null
   booking_id: number | null
+  unit_price: runtime.Decimal | null
   category_id: number | null
 }
 
 export type TicketSumAggregateOutputType = {
   id: number | null
-  unit_price: runtime.Decimal | null
   booking_id: number | null
+  unit_price: runtime.Decimal | null
   category_id: number | null
 }
 
 export type TicketMinAggregateOutputType = {
   id: number | null
   reservation_number: string | null
-  unit_price: runtime.Decimal | null
   status: string | null
   validity_date: Date | null
   booking_id: number | null
-  category_id: number | null
   created_at: Date | null
   updated_at: Date | null
+  unit_price: runtime.Decimal | null
+  category_id: number | null
 }
 
 export type TicketMaxAggregateOutputType = {
   id: number | null
   reservation_number: string | null
-  unit_price: runtime.Decimal | null
   status: string | null
   validity_date: Date | null
   booking_id: number | null
-  category_id: number | null
   created_at: Date | null
   updated_at: Date | null
+  unit_price: runtime.Decimal | null
+  category_id: number | null
 }
 
 export type TicketCountAggregateOutputType = {
   id: number
   reservation_number: number
-  unit_price: number
   status: number
   validity_date: number
   booking_id: number
-  category_id: number
   created_at: number
   updated_at: number
+  unit_price: number
+  category_id: number
   _all: number
 }
 
 
 export type TicketAvgAggregateInputType = {
   id?: true
-  unit_price?: true
   booking_id?: true
+  unit_price?: true
   category_id?: true
 }
 
 export type TicketSumAggregateInputType = {
   id?: true
-  unit_price?: true
   booking_id?: true
+  unit_price?: true
   category_id?: true
 }
 
 export type TicketMinAggregateInputType = {
   id?: true
   reservation_number?: true
-  unit_price?: true
   status?: true
   validity_date?: true
   booking_id?: true
-  category_id?: true
   created_at?: true
   updated_at?: true
+  unit_price?: true
+  category_id?: true
 }
 
 export type TicketMaxAggregateInputType = {
   id?: true
   reservation_number?: true
-  unit_price?: true
   status?: true
   validity_date?: true
   booking_id?: true
-  category_id?: true
   created_at?: true
   updated_at?: true
+  unit_price?: true
+  category_id?: true
 }
 
 export type TicketCountAggregateInputType = {
   id?: true
   reservation_number?: true
-  unit_price?: true
   status?: true
   validity_date?: true
   booking_id?: true
-  category_id?: true
   created_at?: true
   updated_at?: true
+  unit_price?: true
+  category_id?: true
   _all?: true
 }
 
@@ -218,13 +218,13 @@ export type ticketGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type TicketGroupByOutputType = {
   id: number
   reservation_number: string
-  unit_price: runtime.Decimal
   status: string
   validity_date: Date
   booking_id: number
-  category_id: number
   created_at: Date
   updated_at: Date
+  unit_price: runtime.Decimal
+  category_id: number
   _count: TicketCountAggregateOutputType | null
   _avg: TicketAvgAggregateOutputType | null
   _sum: TicketSumAggregateOutputType | null
@@ -253,13 +253,13 @@ export type ticketWhereInput = {
   NOT?: Prisma.ticketWhereInput | Prisma.ticketWhereInput[]
   id?: Prisma.IntFilter<"ticket"> | number
   reservation_number?: Prisma.StringFilter<"ticket"> | string
-  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFilter<"ticket"> | string
   validity_date?: Prisma.DateTimeFilter<"ticket"> | Date | string
   booking_id?: Prisma.IntFilter<"ticket"> | number
-  category_id?: Prisma.IntFilter<"ticket"> | number
   created_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
+  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFilter<"ticket"> | number
   booking?: Prisma.XOR<Prisma.BookingScalarRelationFilter, Prisma.bookingWhereInput>
   category?: Prisma.XOR<Prisma.Ticket_categoryScalarRelationFilter, Prisma.ticket_categoryWhereInput>
 }
@@ -267,13 +267,13 @@ export type ticketWhereInput = {
 export type ticketOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   reservation_number?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   status?: Prisma.SortOrder
   validity_date?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
   booking?: Prisma.bookingOrderByWithRelationInput
   category?: Prisma.ticket_categoryOrderByWithRelationInput
 }
@@ -284,13 +284,13 @@ export type ticketWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ticketWhereInput | Prisma.ticketWhereInput[]
   OR?: Prisma.ticketWhereInput[]
   NOT?: Prisma.ticketWhereInput | Prisma.ticketWhereInput[]
-  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFilter<"ticket"> | string
   validity_date?: Prisma.DateTimeFilter<"ticket"> | Date | string
   booking_id?: Prisma.IntFilter<"ticket"> | number
-  category_id?: Prisma.IntFilter<"ticket"> | number
   created_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
+  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFilter<"ticket"> | number
   booking?: Prisma.XOR<Prisma.BookingScalarRelationFilter, Prisma.bookingWhereInput>
   category?: Prisma.XOR<Prisma.Ticket_categoryScalarRelationFilter, Prisma.ticket_categoryWhereInput>
 }, "id" | "reservation_number">
@@ -298,13 +298,13 @@ export type ticketWhereUniqueInput = Prisma.AtLeast<{
 export type ticketOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   reservation_number?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   status?: Prisma.SortOrder
   validity_date?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
   _count?: Prisma.ticketCountOrderByAggregateInput
   _avg?: Prisma.ticketAvgOrderByAggregateInput
   _max?: Prisma.ticketMaxOrderByAggregateInput
@@ -318,22 +318,22 @@ export type ticketScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ticketScalarWhereWithAggregatesInput | Prisma.ticketScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"ticket"> | number
   reservation_number?: Prisma.StringWithAggregatesFilter<"ticket"> | string
-  unit_price?: Prisma.DecimalWithAggregatesFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringWithAggregatesFilter<"ticket"> | string
   validity_date?: Prisma.DateTimeWithAggregatesFilter<"ticket"> | Date | string
   booking_id?: Prisma.IntWithAggregatesFilter<"ticket"> | number
-  category_id?: Prisma.IntWithAggregatesFilter<"ticket"> | number
   created_at?: Prisma.DateTimeWithAggregatesFilter<"ticket"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"ticket"> | Date | string
+  unit_price?: Prisma.DecimalWithAggregatesFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntWithAggregatesFilter<"ticket"> | number
 }
 
 export type ticketCreateInput = {
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   booking: Prisma.bookingCreateNestedOneWithoutTicketInput
   category: Prisma.ticket_categoryCreateNestedOneWithoutTicketInput
 }
@@ -341,22 +341,22 @@ export type ticketCreateInput = {
 export type ticketUncheckedCreateInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   booking_id: number
-  category_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: number
 }
 
 export type ticketUpdateInput = {
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   booking?: Prisma.bookingUpdateOneRequiredWithoutTicketNestedInput
   category?: Prisma.ticket_categoryUpdateOneRequiredWithoutTicketNestedInput
 }
@@ -364,46 +364,46 @@ export type ticketUpdateInput = {
 export type ticketUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   booking_id?: Prisma.IntFieldUpdateOperationsInput | number
-  category_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ticketCreateManyInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   booking_id: number
-  category_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: number
 }
 
 export type ticketUpdateManyMutationInput = {
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type ticketUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   booking_id?: Prisma.IntFieldUpdateOperationsInput | number
-  category_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TicketListRelationFilter = {
@@ -419,50 +419,50 @@ export type ticketOrderByRelationAggregateInput = {
 export type ticketCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reservation_number?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   status?: Prisma.SortOrder
   validity_date?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
 }
 
 export type ticketAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
 }
 
 export type ticketMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reservation_number?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   status?: Prisma.SortOrder
   validity_date?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
 }
 
 export type ticketMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reservation_number?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   status?: Prisma.SortOrder
   validity_date?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
 }
 
 export type ticketSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  unit_price?: Prisma.SortOrder
   booking_id?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
 }
 
@@ -552,23 +552,23 @@ export type ticketUncheckedUpdateManyWithoutCategoryNestedInput = {
 
 export type ticketCreateWithoutBookingInput = {
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   category: Prisma.ticket_categoryCreateNestedOneWithoutTicketInput
 }
 
 export type ticketUncheckedCreateWithoutBookingInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
-  category_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: number
 }
 
 export type ticketCreateOrConnectWithoutBookingInput = {
@@ -603,34 +603,34 @@ export type ticketScalarWhereInput = {
   NOT?: Prisma.ticketScalarWhereInput | Prisma.ticketScalarWhereInput[]
   id?: Prisma.IntFilter<"ticket"> | number
   reservation_number?: Prisma.StringFilter<"ticket"> | string
-  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFilter<"ticket"> | string
   validity_date?: Prisma.DateTimeFilter<"ticket"> | Date | string
   booking_id?: Prisma.IntFilter<"ticket"> | number
-  category_id?: Prisma.IntFilter<"ticket"> | number
   created_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ticket"> | Date | string
+  unit_price?: Prisma.DecimalFilter<"ticket"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFilter<"ticket"> | number
 }
 
 export type ticketCreateWithoutCategoryInput = {
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   booking: Prisma.bookingCreateNestedOneWithoutTicketInput
 }
 
 export type ticketUncheckedCreateWithoutCategoryInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   booking_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type ticketCreateOrConnectWithoutCategoryInput = {
@@ -662,87 +662,87 @@ export type ticketUpdateManyWithWhereWithoutCategoryInput = {
 export type ticketCreateManyBookingInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
-  category_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: number
 }
 
 export type ticketUpdateWithoutBookingInput = {
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   category?: Prisma.ticket_categoryUpdateOneRequiredWithoutTicketNestedInput
 }
 
 export type ticketUncheckedUpdateWithoutBookingInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ticketUncheckedUpdateManyWithoutBookingInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ticketCreateManyCategoryInput = {
   id?: number
   reservation_number: string
-  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   validity_date: Date | string
   booking_id: number
   created_at?: Date | string
   updated_at?: Date | string
+  unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type ticketUpdateWithoutCategoryInput = {
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   booking?: Prisma.bookingUpdateOneRequiredWithoutTicketNestedInput
 }
 
 export type ticketUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   booking_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type ticketUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reservation_number?: Prisma.StringFieldUpdateOperationsInput | string
-  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   validity_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   booking_id?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 
@@ -750,13 +750,13 @@ export type ticketUncheckedUpdateManyWithoutCategoryInput = {
 export type ticketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reservation_number?: boolean
-  unit_price?: boolean
   status?: boolean
   validity_date?: boolean
   booking_id?: boolean
-  category_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  unit_price?: boolean
+  category_id?: boolean
   booking?: boolean | Prisma.bookingDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ticket_categoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
@@ -764,13 +764,13 @@ export type ticketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type ticketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reservation_number?: boolean
-  unit_price?: boolean
   status?: boolean
   validity_date?: boolean
   booking_id?: boolean
-  category_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  unit_price?: boolean
+  category_id?: boolean
   booking?: boolean | Prisma.bookingDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ticket_categoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
@@ -778,13 +778,13 @@ export type ticketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ticketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reservation_number?: boolean
-  unit_price?: boolean
   status?: boolean
   validity_date?: boolean
   booking_id?: boolean
-  category_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  unit_price?: boolean
+  category_id?: boolean
   booking?: boolean | Prisma.bookingDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ticket_categoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
@@ -792,16 +792,16 @@ export type ticketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ticketSelectScalar = {
   id?: boolean
   reservation_number?: boolean
-  unit_price?: boolean
   status?: boolean
   validity_date?: boolean
   booking_id?: boolean
-  category_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  unit_price?: boolean
+  category_id?: boolean
 }
 
-export type ticketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reservation_number" | "unit_price" | "status" | "validity_date" | "booking_id" | "category_id" | "created_at" | "updated_at", ExtArgs["result"]["ticket"]>
+export type ticketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reservation_number" | "status" | "validity_date" | "booking_id" | "created_at" | "updated_at" | "unit_price" | "category_id", ExtArgs["result"]["ticket"]>
 export type ticketInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   booking?: boolean | Prisma.bookingDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ticket_categoryDefaultArgs<ExtArgs>
@@ -824,13 +824,13 @@ export type $ticketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     reservation_number: string
-    unit_price: runtime.Decimal
     status: string
     validity_date: Date
     booking_id: number
-    category_id: number
     created_at: Date
     updated_at: Date
+    unit_price: runtime.Decimal
+    category_id: number
   }, ExtArgs["result"]["ticket"]>
   composites: {}
 }
@@ -1258,13 +1258,13 @@ export interface Prisma__ticketClient<T, Null = never, ExtArgs extends runtime.T
 export interface ticketFieldRefs {
   readonly id: Prisma.FieldRef<"ticket", 'Int'>
   readonly reservation_number: Prisma.FieldRef<"ticket", 'String'>
-  readonly unit_price: Prisma.FieldRef<"ticket", 'Decimal'>
   readonly status: Prisma.FieldRef<"ticket", 'String'>
   readonly validity_date: Prisma.FieldRef<"ticket", 'DateTime'>
   readonly booking_id: Prisma.FieldRef<"ticket", 'Int'>
-  readonly category_id: Prisma.FieldRef<"ticket", 'Int'>
   readonly created_at: Prisma.FieldRef<"ticket", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"ticket", 'DateTime'>
+  readonly unit_price: Prisma.FieldRef<"ticket", 'Decimal'>
+  readonly category_id: Prisma.FieldRef<"ticket", 'Int'>
 }
     
 
