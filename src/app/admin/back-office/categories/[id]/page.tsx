@@ -7,7 +7,7 @@ import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import FormInput from '@components/ui/input/form-input/FormInput';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import useUpdateCategory from '@hooks/api-request/category/useUpdateCategory';
-import '../../backOffice.scss';
+import '../../backoffice.scss';
 import './categoryEdit.scss';
 
 type Category = {

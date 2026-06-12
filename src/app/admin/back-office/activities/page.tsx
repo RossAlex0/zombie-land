@@ -11,7 +11,7 @@ import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
 import useFetch from '@hooks/api-request/useFetch';
 import useDeleteActivity from '@hooks/api-request/activity/useDeleteActivity';
-import '../backOffice.scss';
+import '../backoffice.scss';
 
 type Activity = {
   [key: string]: unknown;

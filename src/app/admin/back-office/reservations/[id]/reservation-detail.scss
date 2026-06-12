@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '../../../../../utils/styles/variables' as *;
+
+.reservation-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+
+    @media (max-width: map.get($breakpoints, 'mobile')) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__section-title {
+    margin-bottom: 0.5rem;
+  }
+}

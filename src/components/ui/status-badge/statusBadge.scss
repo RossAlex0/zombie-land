@@ -22,4 +22,10 @@
   &--close {
     background-color: $primary-red;
   }
+  &--valid {
+    background-color: $primary-green;
+  }
+  &--cancelled {
+    background-color: $primary-red;
+  }
 }

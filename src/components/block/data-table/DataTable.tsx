@@ -53,6 +53,7 @@ export default function DataTable<T extends Record<string, unknown>>({
           <input
             className="data-table__search-input"
             type="text"
+            name="search"
             placeholder="Rechercher..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}

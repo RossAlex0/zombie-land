@@ -1,6 +1,5 @@
 import { withErrorHandler } from '@helpers/withErrorHandler';
-import { verifyAccessToken } from '@middleware/tokenAccess';
-import { bookingController } from '@server/controllers';
+import { verifyAdmin } from '@middleware/verifyAdmin';
+import { adminBookingController } from '@server/controllers/booking/admin/booking.controller';
 
-export const GET = withErrorHandler(verifyAccessToken(bookingController.getMyBookingById));
-//export const PATCH = withErrorHandler(verifyAccessToken(bookingController.cancelMyBooking));
+export const GET = withErrorHandler(verifyAdmin(adminBookingController.getBookingById));

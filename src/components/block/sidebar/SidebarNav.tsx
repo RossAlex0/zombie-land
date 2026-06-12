@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { House, FerrisWheel, Tag, Users, CalendarDays, Ticket, HandCoins, Cog } from 'lucide-react';
+import { House, FerrisWheel, Tag, Users, CalendarDays, HandCoins, Cog } from 'lucide-react';
 import './sidebar.scss';
 
 const links = [
@@ -9,8 +9,7 @@ const links = [
   { label: 'Activitées', href: '/admin/back-office/activities', icon: FerrisWheel },
   { label: 'Catégories', href: '/admin/back-office/categories', icon: Tag },
   { label: 'Utilisateurs', href: '/admin/back-office/users', icon: Users },
-  { label: 'Réservations', href: '', icon: CalendarDays },
-  { label: 'Ticket', href: '', icon: Ticket },
+  { label: 'Réservations', href: '/admin/back-office/reservations', icon: CalendarDays },
   { label: 'Réduction prix', href: '', icon: HandCoins },
   { label: 'Configuration', href: '', icon: Cog },
 ];

@@ -10,7 +10,7 @@ import FormInput from '@components/ui/input/form-input/FormInput';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import { category } from '@prismaInstance/*';
-import '../../backOffice.scss';
+import '../../backoffice.scss';
 import './activityEdit.scss';
 
 type Activity = {
