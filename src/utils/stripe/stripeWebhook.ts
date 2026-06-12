@@ -34,7 +34,6 @@ export async function stripeWebhook(req: NextRequest) {
         } else if (session.customer?.id) {
           customerId = session.customer.id;
         }
-
         const bookingIdRaw = session.metadata?.booking_id;
 
         if (!bookingIdRaw) {
@@ -45,8 +44,13 @@ export async function stripeWebhook(req: NextRequest) {
         const bookingId = Number(bookingIdRaw);
 
         const updatedBooking = await prisma.booking.update({
-          where: { id: bookingId },
-          data: { status: 'paid' },
+          where: {
+            id: bookingId,
+            status: 'pending',
+          },
+          data: {
+            status: 'paid',
+          },
         });
 
         const booking = await prisma.booking.findFirst({
@@ -54,9 +58,14 @@ export async function stripeWebhook(req: NextRequest) {
         });
 
         if (booking?.user_id && customerId) {
-          await prisma.user.update({
-            where: { id: booking.user_id },
-            data: { stripe_customer_id: customerId },
+          await prisma.user.updateMany({
+            where: {
+              id: booking.user_id,
+              stripe_customer_id: null,
+            },
+            data: {
+              stripe_customer_id: customerId,
+            },
           });
         }
 

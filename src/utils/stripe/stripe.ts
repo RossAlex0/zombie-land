@@ -53,7 +53,11 @@ export async function getCheckoutSessionURL(
       booking_id: bookingId,
     },
   };
-  if (stripe_customer_id) sessionParameters.customer = stripe_customer_id;
+  if (stripe_customer_id) {
+    sessionParameters.customer = stripe_customer_id;
+  } else {
+    sessionParameters.customer_creation = 'always';
+  }
   const session = await stripeClient.checkout.sessions.create(sessionParameters);
   return session;
 }
