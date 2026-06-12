@@ -8,7 +8,7 @@ const baseOptions = {
   path: '/',
 };
 
-const ACCESS_TOKEN_MAX_AGE = 60 * 15;
+const ACCESS_TOKEN_MAX_AGE = 60 * 60 * 8;
 const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 export const setAuthCookies = (

@@ -36,7 +36,6 @@ export default function ButtonZbl({
       type={type}
       className={`${buttonClass} ${theme} ${props.className ?? ''}`}
       onClick={handleClick}
-      aria-label="button"
     >
       {children}
     </button>

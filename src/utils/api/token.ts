@@ -5,7 +5,7 @@ import { NextRequest } from 'next/server';
 import { COOKIE_NAMES } from '@customTypes/enum/cookies';
 import { AccessTokenPayload } from '@customTypes/token';
 
-const ACCESS_TOKEN_TTL = '15m';
+const ACCESS_TOKEN_TTL = '8h';
 const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 const secret = process.env.JWT_SECRET as string;

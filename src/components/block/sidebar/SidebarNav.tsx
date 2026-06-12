@@ -11,7 +11,7 @@ const links = [
   { label: 'Utilisateurs', href: '/admin/back-office/users', icon: Users },
   { label: 'Réservations', href: '/admin/back-office/reservations', icon: CalendarDays },
   { label: 'Réduction prix', href: '', icon: HandCoins },
-  { label: 'Configuration', href: '', icon: Cog },
+  { label: 'Configuration', href: '/admin/back-office/configuration', icon: Cog },
 ];
 
 export default function SidebarNav() {
