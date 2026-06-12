@@ -1,21 +1,8 @@
-import { Decimal } from '@prisma/client/runtime/client';
+import { ticket } from '@prismaInstance/*';
 import stripe from 'stripe';
 
-//type prisma à récupérer et utiliser
-type BookingTicket = {
-  id: number;
-  reservation_number: string;
-  category_id: number;
-  unit_price: Decimal;
-  validity_date: Date;
-  booking_id: number;
-  status: string;
-  created_at: Date;
-  updated_at: Date;
-};
-
 export function ticketToStripeLineItems(
-  tickets: BookingTicket[]
+  tickets: ticket[]
 ): stripe.Checkout.SessionCreateParams.LineItem[] {
   return tickets.map((ticket) => ({
     quantity: 1,
