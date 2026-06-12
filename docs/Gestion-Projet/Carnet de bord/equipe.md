@@ -124,3 +124,23 @@ Todo  :
 # 09/06/2026
 
 - Pages not found, error, loading crées
+- Merge : Footer, réservation (home),
+
+
+# 10/06/2026
+
+- Categories merged (update and delete + hooks)
+- Back office : catégories (sanitization)
+- Back office : user profile (hors booking)
+- Ajout d'un context d'Auth (données du user loggé disponible sur tout le front)
+- Refactor du sign-up (corrections scss, meilleures erreurs...)
+- Activity front
+  
+# 11/06/2026
+
+- Refactor fomulaires back office (utiliser les form inputs)
+- Pages infos pratiques / légales confidentialité
+- Back : profil utilisateur (hors booking, en réflexion)
+- Profil front
+
+- Payment Stripe : Début d'intégration (manque la gestion des Lines items de réservation, migration pour le stripe customer id en bdd)
