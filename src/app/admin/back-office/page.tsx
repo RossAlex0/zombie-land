@@ -2,7 +2,9 @@
 import { FilterPeriod } from '@customTypes/enum/filterPeriod';
 import { useState } from 'react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
-import ContentBackOffice from '@components/layout/content-back-office/ContentBackoffice';
+import ContentBackOffice, {
+  BookingRow,
+} from '@components/layout/content-back-office/ContentBackoffice';
 import { Stat } from '@components/block/stat-card/StatCards';
 import useFetch from '@hooks/api-request/useFetch';
 import './backoffice.scss';
@@ -16,6 +18,9 @@ type DashboardStats = {
 export default function Home() {
   const [period, setPeriod] = useState<string>(FilterPeriod.TODAY);
   const { data, loading, error } = useFetch<DashboardStats>(`/api/dashboard?period=${period}`);
+  const { data: bookings } = useFetch<BookingRow[]>('/api/booking');
+
+  const recentBookings = [...(bookings ?? [])].sort((a, b) => b.id - a.id).slice(0, 10);
 
   const stats: Stat[] = [
     { label: 'Réservations', value: data?.bookings ?? 0, lowLevel: 10, highLevel: 40 },
@@ -46,7 +51,12 @@ export default function Home() {
         </TextZbl>
       )}
 
-      <ContentBackOffice stats={stats} period={period} onPeriodChange={setPeriod} />
+      <ContentBackOffice
+        stats={stats}
+        period={period}
+        onPeriodChange={setPeriod}
+        recentBookings={recentBookings}
+      />
     </div>
   );
 }
