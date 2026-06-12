@@ -1,4 +1,3 @@
-@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .stat_cards {
@@ -15,16 +14,10 @@
 
   &_grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    // S'adapte au nombre de cartes : elles remplissent toujours la largeur (3, 4, …),
+    // et passent à moins de colonnes quand la place manque (responsive sans media query).
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
-
-    @media (max-width: map.get($breakpoints, 'desktop')) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: map.get($breakpoints, 'mobile')) {
-      grid-template-columns: 1fr;
-    }
   }
 }
 

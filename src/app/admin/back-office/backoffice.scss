@@ -46,6 +46,27 @@
     }
   }
 }
+.dashboard_section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $dark-white;
+  }
+
+  &_title {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
 
 .btn-danger {
   background-color: $primary-red;

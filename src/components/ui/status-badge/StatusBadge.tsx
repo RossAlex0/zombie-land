@@ -5,6 +5,7 @@ export type BadgeStatus =
   | 'validated'
   | 'valid'
   | 'open'
+  | 'confirmed'
   | 'cancel'
   | 'cancelled'
   | 'close';
