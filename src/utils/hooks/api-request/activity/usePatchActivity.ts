@@ -1,49 +1,41 @@
 'use client';
+import { ActivityPayload } from '@customTypes/collections/activity';
+import { buildFormData } from '@shared/buildFormData';
 import { fetchWithAuth } from '@shared/fetchWithAuth';
-import React from 'react';
-
-type ActivityUpdatePayload = {
-  name?: string;
-  description?: string;
-  status?: string;
-  picture?: string;
-  category_activity?: { category_id: number }[];
-};
+import React, { useCallback } from 'react';
 
 type ActivityResponse = { id: number };
-type ActivityResult = { ok: boolean; data: ActivityResponse } | { error: string };
+type ActivityResult = { ok: true; data: ActivityResponse } | { ok: false; error: string };
 
 export default function usePatchActivity(id: number) {
-  const [data, setData] = React.useState<ActivityResponse | null>(null);
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
 
-  const activity = async (body: ActivityUpdatePayload): Promise<ActivityResult> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetchWithAuth(`/api/activity/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      const json = await res.json();
-      if (!res.ok) {
-        const message = json?.error || `Erreur ${res.status}`;
-        setError(message);
+  const activity = useCallback(
+    async (body: ActivityPayload): Promise<ActivityResult> => {
+      setLoading(true);
+      try {
+        const formData = buildFormData(body);
+
+        const res = await fetchWithAuth(`/api/activity/${id}`, {
+          method: 'PATCH',
+          body: formData,
+        });
+
+        const json = await res.json();
+        if (!res.ok) {
+          const message = json?.error || `Erreur ${res.status}`;
+          return { ok: false, error: message };
+        }
+        return { ok: true, data: json.data ?? json };
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Erreur réseau';
         return { ok: false, error: message };
+      } finally {
+        setLoading(false);
       }
-      setData(json);
-      return { ok: true, data: json };
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur réseau';
-      setError(message);
-      return { ok: false, error: message };
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [id]
+  );
 
-  return { activity, data, loading, error };
+  return { activity, loading };
 }

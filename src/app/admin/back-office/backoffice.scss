@@ -113,3 +113,13 @@
     border-radius: 4px;
   }
 }
+
+.field_row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  & img {
+    border: 0.5px solid $dark-white;
+    border-radius: 6px;
+  }
+}

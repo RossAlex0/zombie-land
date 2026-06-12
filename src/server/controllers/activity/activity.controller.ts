@@ -2,6 +2,7 @@ import { NextContext } from '@customTypes/nextApi';
 import { activityCreateSchema, activityUpdateSchema } from '@server/schemas';
 import { ActivityModel, CategoryActivityModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
+import { uploadImage } from '@lib/cloudinary';
 
 const selectActivityWithCategory = {
   select: {
@@ -70,13 +71,31 @@ export const activityController = {
   },
 
   create: async (req: NextRequest) => {
-    const body = await req.json();
+    const formData = await req.formData();
 
-    const { category_activity, ...activityBody } = activityCreateSchema.parse(body);
+    const rawCategoryActivity = formData.get('category_activity');
+    const bodyToValidate = {
+      name: formData.get('name'),
+      description: formData.get('description') || undefined,
+      status: formData.get('status') || undefined,
+      category_activity: rawCategoryActivity
+        ? JSON.parse(rawCategoryActivity as string)
+        : undefined,
+    };
+
+    const { category_activity, ...activityBody } = activityCreateSchema.parse(bodyToValidate);
+
+    const file = formData.get('picture');
+    let pictureUrl: string | undefined;
+    if (file instanceof File && file.size > 0) {
+      pictureUrl = await uploadImage(file);
+    }
 
     const activityService = new ActivityModel();
 
-    const activity = await activityService.create({ data: activityBody });
+    const activity = await activityService.create({
+      data: { ...activityBody, picture: pictureUrl },
+    });
 
     const responseCategoryActivity = [];
     if (category_activity) {
@@ -91,6 +110,7 @@ export const activityController = {
         }
       }
     }
+
     if (responseCategoryActivity.length) {
       return NextResponse.json(
         { data: { ...activity, category_activity: responseCategoryActivity } },
@@ -102,18 +122,36 @@ export const activityController = {
 
   update: async (req: NextRequest, context: NextContext<{ activityId: string }>) => {
     const { activityId } = await context.params;
-    const body = await req.json();
+    const formData = await req.formData();
 
-    const { category_activity, ...activityFields } = activityUpdateSchema.parse(body);
+    const rawCategoryActivity = formData.get('category_activity');
+    const bodyToValidate = {
+      name: formData.get('name') || undefined,
+      description: formData.get('description') || undefined,
+      status: formData.get('status') || undefined,
+      category_activity: rawCategoryActivity
+        ? JSON.parse(rawCategoryActivity as string)
+        : undefined,
+    };
+
+    const { category_activity, ...activityFields } = activityUpdateSchema.parse(bodyToValidate);
+
+    const file = formData.get('picture');
+    const dataToUpdate: typeof activityFields & { picture?: string } = { ...activityFields };
+    if (file instanceof File && file.size > 0) {
+      dataToUpdate.picture = await uploadImage(file);
+    }
 
     const activityService = new ActivityModel();
-    const activity = await activityService.updateById(Number(activityId), activityFields);
+    const activity = await activityService.updateById(Number(activityId), dataToUpdate);
 
     if (category_activity !== undefined) {
       const categoryActivityService = new CategoryActivityModel();
       await categoryActivityService.deleteByActivityId(Number(activityId));
       for (const ca of category_activity) {
-        await categoryActivityService.create({ data: { ...ca, activity_id: Number(activityId) } });
+        await categoryActivityService.create({
+          data: { ...ca, activity_id: Number(activityId) },
+        });
       }
     }
 

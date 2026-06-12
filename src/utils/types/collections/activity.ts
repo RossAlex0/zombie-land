@@ -7,3 +7,11 @@ export type ActivityWithCategory = activity & {
     category: Pick<category, 'id' | 'label'>;
   }[];
 };
+
+export type ActivityPayload = {
+  name?: string;
+  description?: string;
+  status?: string;
+  picture?: File;
+  category_activity?: { category_id: number }[];
+};
