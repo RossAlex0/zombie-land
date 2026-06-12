@@ -8,6 +8,7 @@ import DataTable, { Column } from '@components/block/data-table/DataTable';
 import useFetch from '@hooks/api-request/useFetch';
 import '../../backoffice.scss';
 import './reservation-detail.scss';
+import { BookingWithTickets } from '@customTypes/collections/booking';
 
 type TicketRow = {
   [key: string]: unknown;
@@ -20,27 +21,6 @@ type TicketRow = {
   status: string;
 };
 
-type BookingDetail = {
-  id: number;
-  reference: string;
-  status: string;
-  start_at: string;
-  end_at: string;
-  duration: number;
-  subtotal: string;
-  discount: string;
-  total_paid: string;
-  promo_code: string | null;
-  ticket: {
-    id: number;
-    reservation_number: string;
-    unit_price: string;
-    status: string;
-    validity_date: string;
-    category: { label: string; reduction: number };
-  }[];
-};
-
 const ticketColumns: Column<TicketRow>[] = [
   { key: 'reservation_number', label: 'N° réservation', truncate: true },
   { key: 'category_label', label: 'Catégorie' },
@@ -51,7 +31,7 @@ const ticketColumns: Column<TicketRow>[] = [
 
 export default function ReservationDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: booking, loading, error } = useFetch<BookingDetail>(`/api/admin/booking/${id}`);
+  const { data: booking, loading, error } = useFetch<BookingWithTickets>(`/api/booking/${id}`);
 
   const ticketRows: TicketRow[] =
     booking?.ticket.map((t) => ({

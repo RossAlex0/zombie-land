@@ -1,6 +1,7 @@
 import { BookingModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../../utils/errors/errors';
+import { NextContext } from '@customTypes/nextApi';
 
 export const adminBookingController = {
   getAllBookings: async (_req: NextRequest) => {
@@ -15,10 +16,7 @@ export const adminBookingController = {
     return NextResponse.json({ data: bookings });
   },
 
-  getBookingById: async (
-    _req: NextRequest,
-    context: { params: Promise<{ bookingId: string }> }
-  ) => {
+  getBookingById: async (_req: NextRequest, context: NextContext<{ bookingId: string }>) => {
     const { bookingId } = await context.params;
     const bookingService = new BookingModel();
     const booking = await bookingService.getBookingById(Number(bookingId));

@@ -46,7 +46,7 @@ const columns: Column<BookingRow>[] = [
 ];
 
 export default function ReservationsPage() {
-  const { data, loading, error } = useFetch<BookingRow[]>('/api/admin/booking');
+  const { data, loading, error } = useFetch<BookingRow[]>('/api/booking');
 
   const bookings = data ?? [];
 
