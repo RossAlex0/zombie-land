@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import TextZbl from '@components/ui/textZbl/TextZbl';
-import ButtonZbl from '@components/ui/buttonZbl/ButtonZbl';
-import DropDownZbl from '@components/ui/dropDownZbl/DropDownZbl';
-import FormInput from '@components/ui/FormInput/FormInput';
-import FlashMessage from '@components/ui/flashMessage/FlashMessage';
+import TextZbl from '@components/ui/text-zbl/TextZbl';
+import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
+import FormInput from '@components/ui/input/form-input/FormInput';
+import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import useFetch, { clearCache } from '@hooks/api-request/useFetch';
 import usePatchConfiguration from '@hooks/api-request/configuration/usePatchConfiguration';
 import '../backoffice.scss';
