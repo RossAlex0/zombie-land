@@ -28,6 +28,8 @@
       "@server/*": ["./src/server/*"],
       "@helpers/*": ["./src/utils/api/helpers/*"],
       "@shared/*": ["./src/utils/shared/*"],
+      "@lib/*": ["./src/utils/lib/*"],
+      "@errors/*": ["./src/utils/errors/*"],
       "@context/*": ["./src/utils/context/*"]
     }
   },
