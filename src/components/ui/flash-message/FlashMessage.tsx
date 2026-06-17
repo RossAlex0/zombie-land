@@ -34,10 +34,18 @@ function FlashMessageInner() {
   useEffect(() => {
     if (!active) return;
     const timer = setTimeout(() => {
-      router.replace(pathname);
+      // On ne retire que nos propres clés pour préserver les autres
+      // paramètres d'URL (recherche, filtres, pagination...)
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('success');
+      params.delete('error');
+      params.delete('entity');
+      router.replace(params.size ? `${pathname}?${params.toString()}` : pathname, {
+        scroll: false,
+      });
     }, 3000);
     return () => clearTimeout(timer);
-  }, [active, router, pathname]);
+  }, [active, router, pathname, searchParams]);
 
   if (!active) return null;
 

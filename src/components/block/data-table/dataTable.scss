@@ -111,6 +111,40 @@
     font-size: $font-size-content-m;
   }
 
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid $primary-grey;
+    border-radius: 6px;
+    color: $primary-white;
+    padding: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background-color: $medium-black;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+  &__pagination-info {
+    color: $dark-white;
+    font-size: $font-size-content-s;
+  }
+
   @media (max-width: map.get($breakpoints, 'tablet')) {
     &__td--truncate {
       max-width: 0;

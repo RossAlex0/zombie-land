@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import './dataTable.scss';
 
@@ -19,6 +19,11 @@ type DataTableProps<T extends Record<string, unknown>> = {
   searchKeys?: (keyof T)[];
   renderActions?: (row: T) => React.ReactNode;
   emptyMessage?: string;
+  // Pagination serveur
+  total?: number;
+  page?: number;
+  limit?: number;
+  onPageChange?: (page: number) => void;
 };
 
 export default function DataTable<T extends Record<string, unknown>>({
@@ -28,8 +33,16 @@ export default function DataTable<T extends Record<string, unknown>>({
   searchKeys,
   renderActions,
   emptyMessage = 'Aucun résultat',
+  total,
+  page,
+  limit,
+  onPageChange,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState('');
+
+  const hasPagination =
+    total !== undefined && page !== undefined && limit !== undefined && !!onPageChange;
+  const totalPages = hasPagination ? Math.ceil(total / limit) : 1;
 
   const keysToSearch = searchKeys ?? (columns.map((col) => col.key) as (keyof T)[]);
 
@@ -118,6 +131,28 @@ export default function DataTable<T extends Record<string, unknown>>({
           </tbody>
         </table>
       </div>
+
+      {hasPagination && (
+        <div className="data-table__pagination">
+          <button
+            className="data-table__pagination-btn"
+            onClick={() => onPageChange(page - 1)}
+            disabled={page <= 1}
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <TextZbl jetbrains className="data-table__pagination-info">
+            {page} / {totalPages}
+          </TextZbl>
+          <button
+            className="data-table__pagination-btn"
+            onClick={() => onPageChange(page + 1)}
+            disabled={page >= totalPages}
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
