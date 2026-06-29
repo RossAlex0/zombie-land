@@ -15,20 +15,21 @@ export class DashboardModel extends AbstractModel<'booking'> {
   }
 
   /**
-   * Stats dashboard admin. Intervalle semi-ouvert [start, end[ (end = minuit du lendemain, exclu).
-   * - Commercial (réservations, tickets vendus, CA) : par DATE D'ACHAT (booking.created_at),
-   *   uniquement les bookings `confirmed` (payés).
-   * - Occupation : par DATE DE VISITE (ticket.validity_date).
-   *   entryPrice = prix d'entrée courant ; chaque ticket = 1 entrée 1 jour
-   *   (createBooking génère 1 ticket / personne / jour), donc pas de × nbDays sur le CA.
+   * Admin dashboard stats. Semi-open interval (start to end, with end = midnight of next day, excluded).
+   * - Commercial (bookings, tickets sold, revenue) : by PURCHASE DATE (booking.created_at), only `confirmed` bookings (paid).
+   * - Occupancy : by VISIT DATE (ticket.validity_date).
+   *   entryPrice = current entry price ; each ticket = 1 entry 1 day
+   *   (createBooking generates 1 ticket / person / day), therefore no × nbDays on the revenue.
+   * -
    */
   async getStats(start: Date, end: Date, entryPrice: number): Promise<DashboardStats> {
     const [bookings, paidTickets, occupancyTickets] = await Promise.all([
-      // Réservations confirmées achetées sur la période
+      // Confirmed booking in the period
       this.prisma.booking.count({
         where: { status: 'confirmed', created_at: { gte: start, lt: end } },
       }),
       // Tickets payés achetés sur la période → nb vendus + CA (réduction par catégorie)
+      // Paid ticket buy within the period + nb sold + TR (total revenue minus category reduction)
       this.prisma.ticket.findMany({
         where: {
           status: { in: PAID_TICKET_STATUSES },
@@ -36,7 +37,7 @@ export class DashboardModel extends AbstractModel<'booking'> {
         },
         select: { category: { select: { reduction: true } } },
       }),
-      // Tickets occupant un créneau sur la période (par date de visite)
+      // Tickets with validity during the period (by visit date)
       this.prisma.ticket.count({
         where: {
           status: { in: PAID_TICKET_STATUSES },
@@ -59,9 +60,10 @@ export class DashboardModel extends AbstractModel<'booking'> {
   }
 
   /**
-   * Occupation par jour de visite (tickets `valid`/`used`) sur [start, end[.
-   * Sert au diagramme d'occupation, indépendant des règles commerciales (CA).
-   * Renvoie une ligne par jour ayant au moins un ticket ; les jours vides sont comblés côté controller.
+   *
+   * Occupancy by visit day (tickets `valid`/`used`) over [start, end[.
+   * Used for the occupancy chart, independent of commercial rules (revenue).
+   * Returns one line per day with at least one ticket; empty days are filled on the controller side.
    */
   getDailyOccupancy(start: Date, end: Date) {
     return this.prisma.ticket.groupBy({

@@ -14,8 +14,8 @@
 
   &_grid {
     display: grid;
-    // S'adapte au nombre de cartes : elles remplissent toujours la largeur (3, 4, …),
-    // et passent à moins de colonnes quand la place manque (responsive sans media query).
+    // Adapt to the number of columns based on the available space
+    // switch to fewer columns when space is limited (responsive without media query).
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
   }

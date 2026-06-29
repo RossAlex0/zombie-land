@@ -9,7 +9,7 @@ type DashboardData = { occupancy: DayOccupancy[]; upcomingOccupancy: DayOccupanc
 
 type OccupancyChartProps = {
   title: string;
-  /** Quelle série afficher : occupation passée ou prévisionnel à venir. */
+  /** Which series to display : past occupancy or future occupancy */
   field: 'occupancy' | 'upcomingOccupancy';
 };
 
@@ -21,7 +21,7 @@ const formatDay = (iso: string) => {
 };
 
 export default function OccupancyChart({ title, field }: OccupancyChartProps) {
-  // Fenêtres fixes (30 jours), décorrélées du sélecteur de période du dashboard.
+  // Fixed windows (30 days), decoupled from the period selector in the dashboard.
   const { data, loading, error } = useFetch<DashboardData>('/api/dashboard?period=last-month');
 
   const occupancy = data?.[field] ?? [];

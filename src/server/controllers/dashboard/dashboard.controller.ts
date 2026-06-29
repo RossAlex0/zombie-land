@@ -7,19 +7,19 @@ import { startOfUtcDay, addUtcDays } from '@shared/date';
 const isFilterPeriod = (value: string | null): value is FilterPeriod =>
   value !== null && (Object.values(FilterPeriod) as string[]).includes(value);
 
-/** Nb de jours couverts par chaque période (fenêtre incluant aujourd'hui). */
+/** nb of days for each period */
 const PERIOD_DAYS: Record<FilterPeriod, number> = {
   [FilterPeriod.TODAY]: 1,
   [FilterPeriod.LAST_WEEK]: 7,
   [FilterPeriod.LAST_MONTH]: 30,
 };
 
-/** Fenêtre fixe du diagramme d'occupation : 30 derniers jours, indépendante du sélecteur de période. */
+/** Fixed window for the occupancy chart : last 30 days, independent of the period selector. */
 const OCCUPANCY_DAYS = 30;
 
 /**
- * Période commerciale pour les stats : [start, end[ à minuit pile, incluant aujourd'hui.
- * Debut et fin à minuit pile (comme à la création des commandes), `end` EXCLUE = minuit du lendemain.
+ * Commercial period for the dashboard stats, based on the `period` query param.
+ * Start and end are at midnight (UTC), `end` is EXCLUDED = midnight of the next day.
  */
 const getPeriodRange = (period: FilterPeriod) => {
   const now = new Date();
@@ -29,7 +29,6 @@ const getPeriodRange = (period: FilterPeriod) => {
   return { start, end, nbDays };
 };
 
-/** Occupation passée : 30 derniers jours */
 const getPastOccupancyRange = () => {
   const now = new Date();
   const start = startOfUtcDay(addUtcDays(now, -(OCCUPANCY_DAYS - 1)));
@@ -37,7 +36,6 @@ const getPastOccupancyRange = () => {
   return { start, end };
 };
 
-/** Prévisionnel : 30 prochains jours */
 const getUpcomingOccupancyRange = () => {
   const now = new Date();
   const start = startOfUtcDay(addUtcDays(now, 1));
@@ -49,7 +47,7 @@ const toDayKey = (date: Date) => date.toISOString().slice(0, 10);
 
 type DailyCount = { validity_date: Date; _count: { _all: number } };
 
-/** Construit une série de 30 jours à partir de `start`, en comblant les jours sans visite à 0. */
+/** Builds the occupancy series for the chart, filling in missing days with 0. */
 const buildOccupancySeries = (dailyRaw: DailyCount[], start: Date, capacity: number) => {
   const countByDate = new Map(dailyRaw.map((d) => [toDayKey(d.validity_date), d._count._all]));
   return Array.from({ length: OCCUPANCY_DAYS }, (_, i) => {
@@ -80,7 +78,7 @@ export const dashboardController = {
       dashboard.getDailyOccupancy(upcoming.start, upcoming.end),
     ]);
 
-    // Séries jour-par-jour (taux journalier = tickets du jour / capacité), décorrélées du sélecteur.
+    // Day-by-day series (daily rate = tickets of the day / capacity).
     const occupancy = buildOccupancySeries(pastRaw, past.start, capacity);
     const upcomingOccupancy = buildOccupancySeries(upcomingRaw, upcoming.start, capacity);
 
