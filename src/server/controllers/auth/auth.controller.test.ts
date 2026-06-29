@@ -11,6 +11,9 @@ const makeReq = (body: object) =>
     headers: { 'Content-Type': 'application/json' },
   });
 
+/**
+ * Ceating a "Customer" role that is a necessary  foreign key for a user as DB is not seeded and does not persist
+ * */
 beforeAll(async () => {
   await prisma.role.upsert({
     where: { id: 1 },
