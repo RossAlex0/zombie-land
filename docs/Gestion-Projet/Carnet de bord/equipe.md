@@ -144,3 +144,21 @@ Todo  :
 - Profil front
 
 - Payment Stripe : Début d'intégration (manque la gestion des Lines items de réservation, migration pour le stripe customer id en bdd)
+
+# 12/06/2026
+
+- Back office - configuration(singleton), reservation, détail d'une reservation + passe sur l'accessibilité
+  - Reste à faire : recherche + pagination
+- Back-end : Booking merged (inclue des migrations pour gérerles modifiations de prix et catégories de ticket, un ticket enfant = 50% du prix normal par ex)
+
+# 29/06/2026
+
+- Vendredi 12: Passage d'Ariel en présentation (Ludivine next)
+- MVP globalement terminé
+- To do : compléter le parcours de réservation (resa front -> création back + paiement sur stripe) (PR à vérifier)
+- PR dashboard back office avec graphs à vérifier
+- propositions PY :
+  - hebergement (dockerisation)
+  - tests
+  - (CI/CD)
+  - Responsive front à check
