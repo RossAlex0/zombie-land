@@ -81,79 +81,81 @@ export default function ProfileForm({
 
   return (
     <form className="profile_form" onSubmit={handleSubmit}>
-      <FormInput
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Email"
-        value={user.email}
-        onChange={() => {}}
-        disabled
-      >
-        <TextZbl tag="h4">Email</TextZbl>
-      </FormInput>
+      <div className="profile_form_fields">
+        <FormInput
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={user.email}
+          onChange={() => {}}
+          disabled
+        >
+          <TextZbl tag="h4">Email</TextZbl>
+        </FormInput>
 
-      <FormInput
-        id="birthday"
-        name="birthday"
-        type="date"
-        placeholder="Date de naissance"
-        value={values.birth_date || (user.birth_date ? String(user.birth_date).slice(0, 10) : '')}
-        onChange={(e) => handleChange('birth_date', e.target.value)}
-        disabled={loading}
-      >
-        <TextZbl tag="h4">Date de naissance</TextZbl>
-      </FormInput>
+        <FormInput
+          id="birthday"
+          name="birthday"
+          type="date"
+          placeholder="Date de naissance"
+          value={values.birth_date || (user.birth_date ? String(user.birth_date).slice(0, 10) : '')}
+          onChange={(e) => handleChange('birth_date', e.target.value)}
+          disabled={loading}
+        >
+          <TextZbl tag="h4">Date de naissance</TextZbl>
+        </FormInput>
 
-      <FormInput
-        id="first-name"
-        name="first-name"
-        type="text"
-        placeholder="Prénom"
-        value={values.first_name || user.first_name}
-        onChange={(e) => handleChange('first_name', e.target.value)}
-        disabled={loading}
-      >
-        <TextZbl tag="h4">Prénom</TextZbl>
-      </FormInput>
+        <FormInput
+          id="first-name"
+          name="first-name"
+          type="text"
+          placeholder="Prénom"
+          value={values.first_name || user.first_name}
+          onChange={(e) => handleChange('first_name', e.target.value)}
+          disabled={loading}
+        >
+          <TextZbl tag="h4">Prénom</TextZbl>
+        </FormInput>
 
-      <FormInput
-        id="last-name"
-        name="last-name"
-        type="text"
-        placeholder="Nom"
-        value={values.last_name || user.last_name}
-        onChange={(e) => handleChange('last_name', e.target.value)}
-        disabled={loading}
-      >
-        <TextZbl tag="h4">Nom</TextZbl>
-      </FormInput>
+        <FormInput
+          id="last-name"
+          name="last-name"
+          type="text"
+          placeholder="Nom"
+          value={values.last_name || user.last_name}
+          onChange={(e) => handleChange('last_name', e.target.value)}
+          disabled={loading}
+        >
+          <TextZbl tag="h4">Nom</TextZbl>
+        </FormInput>
 
-      <FormInput
-        id="password1"
-        name="password1"
-        type="password"
-        placeholder="********"
-        value={values.password}
-        onChange={(e) => handleChange('password', e.target.value)}
-        disabled={loading}
-        isPassword
-      >
-        <TextZbl tag="h4">Mot de passe</TextZbl>
-      </FormInput>
+        <FormInput
+          id="password1"
+          name="password1"
+          type="password"
+          placeholder="********"
+          value={values.password}
+          onChange={(e) => handleChange('password', e.target.value)}
+          disabled={loading}
+          isPassword
+        >
+          <TextZbl tag="h4">Mot de passe</TextZbl>
+        </FormInput>
 
-      <FormInput
-        id="password2"
-        name="password2"
-        type="password"
-        placeholder="********"
-        value={values.confirmPassword}
-        onChange={(e) => handleChange('confirmPassword', e.target.value)}
-        disabled={loading || !values.password}
-        isPassword
-      >
-        <TextZbl tag="h4">Confirmation du mot de passe</TextZbl>
-      </FormInput>
+        <FormInput
+          id="password2"
+          name="password2"
+          type="password"
+          placeholder="********"
+          value={values.confirmPassword}
+          onChange={(e) => handleChange('confirmPassword', e.target.value)}
+          disabled={loading || !values.password}
+          isPassword
+        >
+          <TextZbl tag="h4">Confirmation du mot de passe</TextZbl>
+        </FormInput>
+      </div>
 
       <div className="profile_form_footer">
         {passwordError && (

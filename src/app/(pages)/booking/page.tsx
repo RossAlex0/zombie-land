@@ -4,7 +4,7 @@ import ZombieDayPicker from '@components/block/zombie-date-picker/ZombieDatePick
 import useFetch from '@hooks/api-request/useFetch';
 import Loading from '../../loading';
 import TicketCategoryCard from '@components/block/card/ticket-category/TicketCategoryCard';
-import { booking, configuration, ticket_category } from '@prismaInstance/*';
+import { configuration, ticket_category } from '@prismaInstance/*';
 import { useMemo, useState } from 'react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import TicketSummary from '@components/block/ticket-summary/TicketSummary';
@@ -17,21 +17,20 @@ import FinalBookingModal from '@components/block/modal-zbl/final-booking/FinaleB
 import { BookingStatus, BookingWithTickets } from '@customTypes/collections/booking';
 import useCreateCheckoutSession from '@hooks/api-request/checkout/useCreateCheckoutSession';
 import { redirect } from 'next/navigation';
+import { useAuth } from '@context/authProvider';
+import BookingView from '@components/block/booking-view/BookingView';
 
 export default function BookingPage() {
   const { createBooking } = useCreateBooking();
   const { createCheckoutSession } = useCreateCheckoutSession();
+  const { user } = useAuth();
 
   const {
     data: ticketCat,
     loading: loadingTicketCat,
     error: errorTicketCat,
   } = useFetch<ticket_category[]>('/api/ticket-category');
-  const {
-    data: booking,
-    loading: loadingBooking,
-    error: errorBooking,
-  } = useFetch<booking[]>('/api/booking/me');
+
   const {
     data: config,
     loading: loadingConfig,
@@ -67,10 +66,10 @@ export default function BookingPage() {
     setQuantities((prev) => ({ ...prev, [categoryId]: quantity }));
   };
 
-  if (loadingTicketCat || loadingBooking || loadingConfig) {
+  if (loadingTicketCat || loadingConfig) {
     return <Loading />;
   }
-  if (errorBooking || errorTicketCat || errorConfig) {
+  if (errorTicketCat || errorConfig) {
     throw new Error('Error while synchronizing booking page data.');
   }
 
@@ -181,37 +180,7 @@ export default function BookingPage() {
           </div>
         </div>
       </div>
-      <div className="booking_history">
-        <div className="booking_history_container">
-          <TextZbl redPrefix="//" color="grey">
-            Mes réservations:
-          </TextZbl>
-          <TextZbl tag="h3" jetbrains color="yellow">
-            {booking?.filter((b) => b.status === 'confirmed').length ?? 0}
-          </TextZbl>
-        </div>
-        <div className="booking_history_container">
-          <TextZbl redPrefix="//" color="grey">
-            Mes réservations en attentes de paiement:
-          </TextZbl>
-          <TextZbl tag="h3" jetbrains color="yellow">
-            {booking?.filter((b) => b.status === BookingStatus.PENDING).length ?? 0}
-          </TextZbl>
-        </div>
-        <div className="booking_history_container">
-          <TextZbl redPrefix="//" color="grey">
-            Mes réservations passé:
-          </TextZbl>
-          <TextZbl tag="h3" jetbrains color="yellow">
-            {booking?.filter(
-              (b) => new Date(b.start_at) < new Date() || b.status === BookingStatus.CANCELLED
-            ).length ?? 0}
-          </TextZbl>
-        </div>
-        <div className="booking_history_btn">
-          <ButtonZbl navTo="/booking/me">Voir mes réservations</ButtonZbl>
-        </div>
-      </div>
+      {user ? <BookingView /> : undefined}
       {openModal && currentBooking ? (
         <FinalBookingModal
           onClose={() => setOpenModal(false)}
