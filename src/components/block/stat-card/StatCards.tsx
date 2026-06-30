@@ -18,10 +18,6 @@ type StatCardsProps = {
 export default function StatCards({ stats }: StatCardsProps) {
   return (
     <section className="stat_cards">
-      <TextZbl jetbrains className="stat_cards_note">
-        *Les chiffres affichés sont calculés suivant la date choisie
-      </TextZbl>
-
       <div className="stat_cards_grid">
         {stats.map((stat) => (
           <StatCard

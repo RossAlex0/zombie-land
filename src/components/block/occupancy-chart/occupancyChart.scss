@@ -1,0 +1,77 @@
+@use 'sass:map';
+@use '../../../utils/styles/variables' as *;
+
+// Les deux diagrammes côte à côte sur desktop, empilés en dessous.
+.occupancy_charts_row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 100%;
+
+  @media (max-width: map.get($breakpoints, 'desktop')) {
+    flex-direction: column;
+  }
+
+  .occupancy_chart {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.occupancy_chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  background-color: $light-black;
+  border: 1px solid $dark-white;
+  border-radius: 8px;
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 3.5rem;
+    gap: 1rem;
+  }
+
+  &_bars {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 3px;
+    height: 160px;
+    width: 100%;
+  }
+
+  &_bar {
+    flex: 1 1 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    background-color: rgba($primary-white, 0.06);
+    border-radius: 3px 3px 0 0;
+
+    &_fill {
+      width: 100%;
+      min-height: 2px;
+      border-radius: 3px 3px 0 0;
+      background-color: $primary-grey;
+      transition: height 0.2s ease;
+
+      &.low {
+        background-color: $primary-green;
+      }
+
+      &.medium {
+        background-color: $primary-yellow;
+      }
+
+      &.high {
+        background-color: $primary-red;
+      }
+    }
+  }
+}

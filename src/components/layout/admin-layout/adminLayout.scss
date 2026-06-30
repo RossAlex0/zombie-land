@@ -4,7 +4,8 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 20px;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   width: 100%;
   padding: 40px;
 
@@ -34,6 +35,8 @@
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     align-content: start;
+    height: auto;
+    overflow: visible;
     padding: 0;
     gap: 0;
 
