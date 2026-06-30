@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../utils/styles/variables' as *;
 
 .header {
@@ -67,4 +68,30 @@
 
 .link_between {
   justify-content: space-between;
+}
+
+// Tablette : header compact pour faire tenir les liens
+@media (max-width: map.get($breakpoints, 'tablet')) {
+  .header {
+    height: auto;
+    padding-block: 1rem;
+    padding-inline: 1.5rem;
+    gap: 1rem;
+
+    &_link {
+      width: auto;
+      max-width: none;
+
+      &_nav {
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+// Mobile : on masque le header classique, c'est HeaderMobile (barre d'icônes) qui prend le relais
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .header {
+    display: none;
+  }
 }

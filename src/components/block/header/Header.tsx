@@ -5,19 +5,13 @@ import { Lock } from 'lucide-react';
 import Link from 'next/link';
 import InfectLogo from '@components/ui/infect-logo/InfectLogo';
 import { useAuth } from '@context/authProvider';
+import { PUBLIC_NAV_ITEMS, PROFILE_NAV_ITEM } from './navItems';
 import './header.scss';
 
 export default function Header() {
   const { user, loading } = useAuth();
 
-  const navigationNames = [
-    { label: 'Accueil', href: '/' },
-    { label: 'Activités', href: '/activity' },
-    { label: 'Reservations', href: '/booking' },
-    { label: 'Manuel de survie', href: '/info' },
-  ];
-
-  if (user) navigationNames.push({ label: 'Profile', href: '/account' });
+  const navigationNames = user ? [...PUBLIC_NAV_ITEMS, PROFILE_NAV_ITEM] : PUBLIC_NAV_ITEMS;
 
   return (
     <header className="header">
