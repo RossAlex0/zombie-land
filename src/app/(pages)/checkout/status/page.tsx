@@ -94,11 +94,31 @@ function CheckoutStatusContent() {
               </span>
             </div>
 
-            <div className="checkout_status_info_total">
-              <TextZbl color="grey">TOTAL</TextZbl>
-              <TextZbl color="yellow" tag="h3">
-                {Number(booking.total_paid).toFixed(2)} €
-              </TextZbl>
+            <div className="checkout_status_prices">
+              {Number(booking.discount) > 0 && (
+                <>
+                  <div className="checkout_status_prices_row">
+                    <TextZbl color="grey" jetbrains>
+                      Sous-total
+                    </TextZbl>
+                    <TextZbl jetbrains>{Number(booking.subtotal).toFixed(2)} €</TextZbl>
+                  </div>
+                  <div className="checkout_status_prices_row checkout_status_prices_row--discount">
+                    <TextZbl color="grey" jetbrains>
+                      Réduction
+                    </TextZbl>
+                    <TextZbl jetbrains>-{Number(booking.discount).toFixed(2)} €</TextZbl>
+                  </div>
+                </>
+              )}
+              <div className="checkout_status_prices_total">
+                <TextZbl color="grey" jetbrains>
+                  {Number(booking.discount) > 0 ? 'Total payé' : 'Total'}
+                </TextZbl>
+                <TextZbl color="yellow" tag="h3" jetbrains>
+                  {Number(booking.total_paid).toFixed(2)} €
+                </TextZbl>
+              </div>
             </div>
           </div>
         ) : undefined}

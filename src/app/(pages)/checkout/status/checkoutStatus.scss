@@ -80,6 +80,42 @@
     }
   }
 
+  &_prices {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid $light-black;
+    border-bottom: 1px solid $light-black;
+
+    &_row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+
+      &--discount {
+        opacity: 0.8;
+      }
+    }
+
+    &_total {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+      border-top: 1px solid $light-black;
+
+      h3 {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
   &_badge {
     padding: 0.3rem 0.75rem;
     border-radius: 4px;
