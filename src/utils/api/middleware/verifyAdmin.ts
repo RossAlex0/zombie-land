@@ -5,11 +5,10 @@ import { getTokenAccess } from '../token';
 import { verifyAccessToken } from './tokenAccess';
 import { RoleModel } from '@server/services/role/role.service';
 
-const isAdmin = async (roleId: number) => {
+export const isAdmin = async (roleId: number) => {
   const roleService = new RoleModel();
 
   const role = await roleService.findRoleById(roleId);
-
   if (role && role.name === ROLE_NAMES.ADMIN) {
     return true;
   }
