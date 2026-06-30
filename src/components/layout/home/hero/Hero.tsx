@@ -56,7 +56,7 @@ export default function Hero({ activities, config }: HeroProps) {
           </TextZbl>
           <TextZbl jetbrains>&nbsp;attractions térrifiantes</TextZbl>
         </span>
-        <ButtonZbl navTo="/activity" theme="light" className="hero_text_btn">
+        <ButtonZbl navTo="/booking" theme="light" className="hero_text_btn">
           <TextZbl color="black" jetbrains>
             Reserver l&apos;entrée <ArrowRight size={18} />
           </TextZbl>
