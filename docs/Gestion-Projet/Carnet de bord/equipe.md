@@ -162,3 +162,9 @@ Todo  :
   - tests
   - (CI/CD)
   - Responsive front à check
+  
+# 30/06/2026
+
+- Tests : Test intégration login et inscription (merged). lancer 'npm run test:db' puis 'npm run test'
+- CSS : responsive sur la plupart des pages
+- Pagination sur le back office

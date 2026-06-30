@@ -11,7 +11,11 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:db": "docker compose -f docker-compose.test.yml up -d --wait && dotenv -e .env.test -- prisma migrate deploy",
+    "OLD_test": "node --import tsx --test 'src/**/*.test.ts'"
   },
   "dependencies": {
     "@daypicker/react": "^10.0.1",
@@ -30,6 +34,7 @@
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1",
     "stripe": "^22.2.0",
+    "vite": "^8.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -41,6 +46,7 @@
     "@types/react-dom": "^19",
     "@types/react-slick": "^0.23.13",
     "babel-plugin-react-compiler": "1.0.0",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "eslint-config-prettier": "^10.1.8",
@@ -49,7 +55,10 @@
     "prettier": "^3.8.3",
     "prisma": "^7.8.0",
     "sass": "^1.99.0",
-    "typescript": "^5"
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.9"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
