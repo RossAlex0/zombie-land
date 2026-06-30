@@ -1,33 +1,50 @@
 'use client';
 
 import TextZbl from '@components/ui/text-zbl/TextZbl';
-import { Calendar1, Minus, NotepadText, Plus, TicketMinus, Users } from 'lucide-react';
+import { NotepadText } from 'lucide-react';
 import ZombieDayPicker from '@components/block/zombie-date-picker/ZombieDatePicker';
-import type { DateRange } from 'react-day-picker';
-import { useMemo, useState } from 'react';
-import { getNbDays, parseDateFr } from '@shared/date';
+import { useMemo } from 'react';
+import { getNbDays } from '@shared/date';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import { configuration } from '@prismaInstance/*';
-
+import TicketSummary from '@components/block/ticket-summary/TicketSummary';
+import { useBooking } from '@context/bookingProvider';
 import './booking.scss';
 
 type HomeBookingsProps = {
   config: configuration;
 };
 
+const DEFAULT_CATEGORY_ID = 1; // Adult
+
 export default function HomeBookings({ config }: HomeBookingsProps) {
-  const [selectedDate, setSelectedDate] = useState<DateRange | undefined>();
-  const [numberOfPeople, setNumberOfPeople] = useState<number>(1);
+  const { selectedDate, setSelectedDate, quantities, setQuantities } = useBooking();
+
+  const numberOfPeople = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
 
   const isRemovePeopleDisabled = useMemo(() => numberOfPeople <= 1, [numberOfPeople]);
 
-  const addPeople = () => setNumberOfPeople(numberOfPeople + 1);
+  const addPeople = () => {
+    setQuantities((prev) => ({
+      ...prev,
+      [DEFAULT_CATEGORY_ID]: (prev[DEFAULT_CATEGORY_ID] ?? 0) + 1,
+    }));
+  };
 
   const removePeople = () => {
     if (!isRemovePeopleDisabled) {
-      setNumberOfPeople(numberOfPeople - 1);
+      setQuantities((prev) => ({
+        ...prev,
+        [DEFAULT_CATEGORY_ID]: Math.max(0, (prev[DEFAULT_CATEGORY_ID] ?? 0) - 1),
+      }));
     }
   };
+
+  const total = useMemo(() => {
+    if (!selectedDate?.from || !selectedDate?.to) return 0;
+    const nbDays = getNbDays(selectedDate.from, selectedDate.to);
+    return numberOfPeople * Number(config?.entry_price) * nbDays;
+  }, [numberOfPeople, selectedDate, config]);
 
   return (
     <section className="home_booking">
@@ -60,55 +77,23 @@ export default function HomeBookings({ config }: HomeBookingsProps) {
           <div className="home_booking_content_title">
             <TextZbl tag="h2">TICKET</TextZbl>
           </div>
-          <div className="home_booking_content_ticket_info">
-            <div className="home_booking_content_ticket_info_details">
-              <Calendar1 color="#ac382a" size={20} />
-              <TextZbl color="grey" jetbrains>
-                Date :
-              </TextZbl>
-              <TextZbl jetbrains>
-                {selectedDate?.from ? parseDateFr(selectedDate.from) : ''} au&nbsp; <br />
-                {selectedDate?.to ? parseDateFr(selectedDate.to) : ''}
-              </TextZbl>
-            </div>
-            <div className="home_booking_content_ticket_info_details">
-              <Users color="#ac382a" size={20} />
-              <TextZbl color="grey" jetbrains>
-                Personnes :
-              </TextZbl>
-              <TextZbl jetbrains>{numberOfPeople}</TextZbl>
-              <div className="home_booking_content_ticket_info_details_btns">
-                <button
-                  className={`${isRemovePeopleDisabled ? 'details_btn_disabled' : 'details_btn'} btn_left`}
-                  disabled={isRemovePeopleDisabled}
-                  onClick={removePeople}
-                >
-                  <Minus color="#e5e5e5" size={16} />
-                </button>
-                <button className="details_btn btn_right" onClick={addPeople}>
-                  <Plus color="#e5e5e5" size={16} />
-                </button>
-              </div>
-            </div>
-            <div className="home_booking_content_ticket_info_details">
-              <TicketMinus color="#ac382a" size={20} />
-              <TextZbl color="grey" jetbrains>
-                Prix du billet :
-              </TextZbl>
-              <TextZbl jetbrains>{String(config?.entry_price) ?? '-'} €</TextZbl>
-            </div>
-          </div>
+          <TicketSummary
+            selectedDate={selectedDate}
+            numberOfPeople={numberOfPeople}
+            entryPrice={Number(config?.entry_price ?? 0)}
+            onAddPeople={addPeople}
+            onRemovePeople={removePeople}
+            isRemoveDisabled={isRemovePeopleDisabled}
+          />
           <div className="home_booking_content_validation">
             <div className="home_booking_content_validation_price">
               <TextZbl color="grey">TOTAL</TextZbl>
               <TextZbl color="yellow" tag="h3">
-                {selectedDate?.from && selectedDate?.to
-                  ? `${numberOfPeople * (Number(config?.entry_price) * getNbDays(selectedDate.from, selectedDate.to))} €`
-                  : ''}
+                {total > 0 ? `${total.toFixed(2)} €` : ''}
               </TextZbl>
             </div>
             <div className="home_booking_content_validation_btn">
-              <ButtonZbl>
+              <ButtonZbl navTo="/booking">
                 <TextZbl color="black">Confirmer</TextZbl>
               </ButtonZbl>
             </div>

@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   sassOptions: {
     includePaths: [path.join(process.cwd(), 'src/utils/styles')],
   },
+  allowedDevOrigins: ['checkout.stripe.com'],
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**' },

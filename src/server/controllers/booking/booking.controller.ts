@@ -10,19 +10,21 @@ export const bookingController = {
   makeBooking: async (req: NextRequest) => {
     const token = getTokenAccess(req);
     const body = await req.json();
+
     const { from, to, tickets } = bookingCreateSchema.parse(body);
 
     const bookingService = new BookingModel();
+
     const booking = await bookingService.createBooking(token.userId, from, to, tickets);
 
-    return NextResponse.json(booking, { status: 201 });
+    return NextResponse.json({ data: booking }, { status: 201 });
   },
 
   getMyBookings: async (req: NextRequest) => {
     const token = getTokenAccess(req);
     const bookingService = new BookingModel();
     const bookings = await bookingService.getBookingsByUserId(token.userId);
-    return NextResponse.json(bookings, { status: 200 });
+    return NextResponse.json({ data: bookings }, { status: 200 });
   },
 
   getMyBookingById: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {

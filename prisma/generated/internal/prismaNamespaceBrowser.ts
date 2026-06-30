@@ -94,18 +94,18 @@ export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typ
 
 export const BookingScalarFieldEnum = {
   id: 'id',
-  reference: 'reference',
   status: 'status',
   start_at: 'start_at',
   end_at: 'end_at',
   duration: 'duration',
   user_id: 'user_id',
-  subtotal: 'subtotal',
-  discount: 'discount',
-  total_paid: 'total_paid',
-  promo_code: 'promo_code',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  discount: 'discount',
+  promo_code: 'promo_code',
+  subtotal: 'subtotal',
+  total_paid: 'total_paid',
+  reference: 'reference'
 } as const
 
 export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
@@ -169,13 +169,13 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 export const TicketScalarFieldEnum = {
   id: 'id',
   reservation_number: 'reservation_number',
-  unit_price: 'unit_price',
   status: 'status',
   validity_date: 'validity_date',
   booking_id: 'booking_id',
-  category_id: 'category_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  unit_price: 'unit_price',
+  category_id: 'category_id'
 } as const
 
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
@@ -190,12 +190,12 @@ export const UserScalarFieldEnum = {
   birth_date: 'birth_date',
   password: 'password',
   role_id: 'role_id',
-  stripe_customer_id: 'stripe_customer_id',
   password_changed_at: 'password_changed_at',
   created_at: 'created_at',
   updated_at: 'updated_at',
   deleted_at: 'deleted_at',
-  deleted: 'deleted'
+  deleted: 'deleted',
+  stripe_customer_id: 'stripe_customer_id'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

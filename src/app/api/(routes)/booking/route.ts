@@ -2,4 +2,4 @@ import { withErrorHandler } from '@helpers/withErrorHandler';
 import { verifyAdmin } from '@middleware/verifyAdmin';
 import { adminBookingController } from '@server/controllers/booking/admin/booking.controller';
 
-export const GET = withErrorHandler(verifyAdmin(adminBookingController.getAllBookings));
+export const GET = withErrorHandler(adminBookingController.getAllBookings);

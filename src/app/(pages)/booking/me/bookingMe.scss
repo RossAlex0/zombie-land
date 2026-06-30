@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use '../../../../utils/styles/variables' as *;
+
+.bookings_me {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  &_header {
+    display: flex;
+    flex-direction: column;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  @media (max-width: map.get($breakpoints, 'tablet')) {
+    padding: 2rem 1.5rem;
+  }
+}

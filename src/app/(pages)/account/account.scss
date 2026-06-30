@@ -41,6 +41,40 @@
     flex-direction: column;
     gap: 2rem;
     border-radius: 8px;
+
+    &--bookings {
+      max-height: 470px;
+    }
+  }
+
+  &_bookings {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-right: 0.5rem;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $dark-grey;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &_footer {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
   }
 }
 

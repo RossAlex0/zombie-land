@@ -1,8 +1,9 @@
 import { randomBytes } from 'crypto';
 import { AbstractModel } from '@server/services/AbstractModel';
-import { startOfUtcDay, addUtcDays, getNbDays } from '@shared/date';
+import { addUtcDays, getNbDays } from '@shared/date';
 import { ConfigurationModel } from '@server/services/configuration/configuration.service';
 import { BadRequestError, NotFoundError } from '../../../utils/errors/errors';
+import { BookingStatus } from '@customTypes/collections/booking';
 
 type TicketLine = { category_id: number; quantity: number };
 
@@ -19,17 +20,17 @@ export class BookingModel extends AbstractModel<'booking'> {
     return Math.round(n * 100) / 100;
   }
 
-  /** Crée un booking + ses tickets : 1 ticket par personne et par jour. */
-  async createBooking(userId: number, from: Date, to: Date, tickets: TicketLine[]) {
-    const start = startOfUtcDay(from);
-    const end = startOfUtcDay(to); // jour pur : end = start si réservation d'un seul jour -> vient du schema zod
-    const now = new Date();
+  async createBooking(userId: number, from: string, to: string, tickets: TicketLine[]) {
+    const start = new Date(`${from}T00:00:00.000Z`); // 2026-06-14T00:00:00Z -> stocké "2026-06-14"
+    const end = new Date(`${to}T00:00:00.000Z`);
+
+    const now = new Date(`${new Date().toISOString().slice(0, 10)}T00:00:00.000Z`);
     if (start < now) {
-      throw new BadRequestError('La date de réservation doit être dans le futur');
+      throw new BadRequestError('Booking date must be in the future');
     }
 
     const nbDays = getNbDays(start, end);
-    const days = Array.from({ length: nbDays }, (_, i) => addUtcDays(from, i));
+    const days = Array.from({ length: nbDays }, (_, i) => addUtcDays(start, i)); // start, pas from
 
     const config = await new ConfigurationModel().readSingleton();
     if (!config) {
@@ -42,7 +43,6 @@ export class BookingModel extends AbstractModel<'booking'> {
       where: { id: { in: categoryIds } },
     });
 
-    // tous les category_id demandés doivent exister
     if (categories.length !== new Set(categoryIds).size) {
       throw new BadRequestError('Une ou plusieurs catégories de ticket sont invalides');
     }
@@ -53,9 +53,8 @@ export class BookingModel extends AbstractModel<'booking'> {
 
     const reference = this.generateReference();
 
-    // reservation_number dérivé de la référence booking : ZBL-2026-XXXXXX-<jour>-<n° dans la journée>
     const ticketData = days.flatMap((day) => {
-      const dayCode = day.toISOString().slice(0, 10).replace(/-/g, ''); // YYYYMMDD
+      const dayCode = day.toISOString().slice(0, 10).replace(/-/g, ''); // YYYYMMDD, en UTC -> juste
       let seq = 0;
       return tickets.flatMap(({ category_id, quantity }) => {
         const unit_price = priceByCategory.get(category_id);
@@ -67,7 +66,7 @@ export class BookingModel extends AbstractModel<'booking'> {
           return {
             reservation_number: `${reference}-${dayCode}-${seq}`,
             unit_price,
-            status: 'pending', // devient 'valid' à la confirmation du paiement (webhook Stripe)
+            status: 'pending',
             validity_date: day,
             category_id,
           };
@@ -76,14 +75,14 @@ export class BookingModel extends AbstractModel<'booking'> {
     });
 
     const subtotal = this.round2(ticketData.reduce((sum, t) => sum + t.unit_price, 0));
-    const discount = 0; // pas de réduction globale pour l'instant -> pour faire evoluer
+    const discount = 0;
     const totalPaid = this.round2(subtotal - discount);
 
     return this.table.create({
       data: {
         reference,
         user_id: userId,
-        status: 'pending',
+        status: BookingStatus.PENDING,
         start_at: start,
         end_at: end,
         duration: nbDays,
@@ -98,7 +97,7 @@ export class BookingModel extends AbstractModel<'booking'> {
 
   getBookingsByUserId(userId: number) {
     return this.table.findMany({
-      where: { user_id: userId },
+      where: { user_id: userId, end_at: { gte: new Date() } },
       include: { ticket: { include: { category: true } } },
       orderBy: { created_at: 'desc' },
     });
@@ -116,7 +115,7 @@ export class BookingModel extends AbstractModel<'booking'> {
     return this.table.update({
       where: { id },
       data: {
-        status: 'cancelled',
+        status: BookingStatus.CANCELLED,
         ticket: { updateMany: { where: {}, data: { status: 'cancelled' } } },
       },
     });

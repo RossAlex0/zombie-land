@@ -12,10 +12,15 @@ import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import { usePathname, useRouter } from 'next/navigation';
 import ModalPassword from '@components/block/modal-zbl/modal-password/ModalPassword';
 import ProfileForm from '@components/block/form/profile/ProfileForm';
+import useFetch from '@hooks/api-request/useFetch';
+import { BookingWithTickets } from '@customTypes/collections/booking';
+import BookingCard from '@components/block/card/booking-card/BookingCard';
 import './account.scss';
 
 export default function Account() {
   const { user, loading, setUser } = useAuth();
+  const { data: bookings, loading: loadingBookings } =
+    useFetch<BookingWithTickets[]>('/api/booking/me');
   const updateProfile = useUpdateProfile();
   const updatePassword = useUpdatePassword();
   const pathname = usePathname();
@@ -80,10 +85,32 @@ export default function Account() {
               onRequestPasswordChange={handleRequestPasswordChange}
             />
           </div>
-          <div className="account_container">
+          <div className="account_container account_container--bookings">
             <TextZbl redPrefix="//" color="grey">
               Mes réservations
             </TextZbl>
+            {loadingBookings ? (
+              <TextZbl jetbrains color="grey">
+                Chargement de vos réservations...
+              </TextZbl>
+            ) : bookings && bookings.length > 0 ? (
+              <>
+                <div className="account_bookings">
+                  {bookings.slice(0, 5).map((booking) => (
+                    <BookingCard key={booking.id} booking={booking} />
+                  ))}
+                </div>
+                <div className="account_bookings_footer">
+                  <ButtonZbl theme="dark" navTo="/booking/me">
+                    <TextZbl color="yellow">Voir toutes mes réservations</TextZbl>
+                  </ButtonZbl>
+                </div>
+              </>
+            ) : (
+              <TextZbl jetbrains color="grey">
+                Aucune réservation enregistrée.
+              </TextZbl>
+            )}
           </div>
         </section>
       ) : (

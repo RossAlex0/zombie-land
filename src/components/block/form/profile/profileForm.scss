@@ -2,17 +2,23 @@
 @use 'sass:map';
 
 .profile_form {
+  flex: 1;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 8%;
+  flex-direction: column;
 
-  & > div {
-    width: 46%;
-    margin-bottom: 2rem;
+  &_fields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8%;
+
+    & > div {
+      width: 46%;
+      margin-bottom: 3rem;
+    }
   }
-  & > div:last-child {
-    width: 100%;
+
+  &_footer {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,10 +27,12 @@
 
 @media (max-width: map.get($breakpoints, 'mobile')) {
   .profile_form {
-    flex-direction: column;
+    &_fields {
+      flex-direction: column;
 
-    & > div {
-      width: 100%;
+      & > div {
+        width: 100%;
+      }
     }
   }
 }
