@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import { PencilLine, Trash2 } from 'lucide-react';
 import DataTable, { Column } from '@components/block/data-table/DataTable';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
+import SearchInput from '@components/ui/input/search-input/SearchInput';
 import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
-import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import { useBackofficeFilters } from '@hooks/useBackofficeFilters';
+import { useUserSearch } from '@hooks/api-request/user/useUserSearch';
 import type { IUserBO } from '@customTypes/collections/user';
 
 import '../backoffice.scss';
@@ -33,14 +35,30 @@ const columns: Column<User>[] = [
   },
 ];
 
-export default function UsersPage() {
-  const router = useRouter();
-  const { data: fetchData, loading, error } = useFetch<User[]>('/api/user');
-  const [deletedIds, setDeletedIds] = useState<Set<number>>(new Set());
+const roleOptions = [
+  { label: 'Tous les rôles', value: '' },
+  { label: 'Admin', value: 'admin' },
+  { label: 'Customer', value: 'customer' },
+];
+
+const LIMIT = 20;
+
+function UsersPageInner() {
+  const { router, searchParams, page, urlSearch, inputSearch, setInputSearch, updateParams } =
+    useBackofficeFilters();
+
+  const role = searchParams.get('role') ?? '';
+
+  const query = new URLSearchParams();
+  if (urlSearch) query.set('search', urlSearch);
+  if (role) query.set('role', role);
+  query.set('page', String(page));
+  query.set('limit', String(LIMIT));
+
+  const { users, total, limit, initialLoading, error, refresh } = useUserSearch(query.toString());
+
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-
-  const users = (fetchData ?? []).filter((u) => !deletedIds.has(u.id));
 
   const handleDeleteConfirm = async () => {
     if (pendingDeleteId === null) return;
@@ -53,9 +71,12 @@ export default function UsersPage() {
       });
       setPendingDeleteId(null);
       if (res.ok) {
-        clearCache('/api/user');
-        setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
-        router.replace('/admin/back-office/users?success=deleted&entity=Utilisateur');
+        refresh();
+        // Start from the current params to keep search, role and page intact.
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('success', 'deleted');
+        params.set('entity', 'Utilisateur');
+        router.replace(`?${params.toString()}`, { scroll: false });
       } else {
         const json = await res.json();
         setDeleteError(json?.message || `Erreur ${res.status}`);
@@ -75,10 +96,15 @@ export default function UsersPage() {
           </div>
           <div className="backoffice_content_header_title_items yellow">
             <TextZbl jetbrains color="yellow">
-              {users.length} utilisateurs
+              {total} utilisateurs
             </TextZbl>
           </div>
         </div>
+        <DropDownZbl
+          options={roleOptions}
+          value={role}
+          onChange={(opt) => updateParams({ role: opt.value })}
+        />
       </div>
 
       <FlashMessage />
@@ -92,7 +118,7 @@ export default function UsersPage() {
         onCancel={() => setPendingDeleteId(null)}
       />
 
-      {loading && <TextZbl jetbrains>Chargement...</TextZbl>}
+      {initialLoading && <TextZbl jetbrains>Chargement...</TextZbl>}
       {error && (
         <TextZbl jetbrains color="yellow">
           Erreur : {error.message}
@@ -104,35 +130,55 @@ export default function UsersPage() {
         </TextZbl>
       )}
 
-      {!loading && !error && (
-        <DataTable<User>
-          columns={columns}
-          data={users}
-          searchable
-          searchKeys={['first_name', 'last_name', 'email']}
-          emptyMessage="Aucun utilisateur trouvé"
-          renderActions={(row) => (
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <ButtonZbl theme="light" navTo={`/admin/back-office/users/${row.id}`}>
-                <PencilLine size={16} />
-                <span className="btn-label">Modifier</span>
-              </ButtonZbl>
-              <ButtonZbl
-                theme="custom"
-                className="btn-danger"
-                navTo=""
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPendingDeleteId(row.id);
-                }}
-              >
-                <Trash2 size={16} />
-                <span className="btn-label">Supprimer</span>
-              </ButtonZbl>
-            </div>
-          )}
-        />
+      {!error && (
+        <>
+          <SearchInput
+            value={inputSearch}
+            onChange={setInputSearch}
+            placeholder="Rechercher un utilisateur..."
+          />
+          <DataTable<User>
+            columns={columns}
+            data={users as User[]}
+            emptyMessage="Aucun utilisateur trouvé"
+            total={total}
+            page={page}
+            limit={limit}
+            onPageChange={(p) => updateParams({ page: String(p) })}
+            renderActions={(row) => (
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <ButtonZbl theme="light" navTo={`/admin/back-office/users/${row.id}`}>
+                  <PencilLine size={16} />
+                  <span className="btn-label">Modifier</span>
+                </ButtonZbl>
+                <ButtonZbl
+                  theme="custom"
+                  className="btn-danger"
+                  navTo=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPendingDeleteId(row.id);
+                  }}
+                >
+                  <Trash2 size={16} />
+                  <span className="btn-label">Supprimer</span>
+                </ButtonZbl>
+              </div>
+            )}
+          />
+        </>
       )}
     </div>
+  );
+}
+
+// useSearchParams reads the URL, which is only known on the client, so Next.js
+// requires it to be wrapped in a Suspense boundary. The outer component provides
+// that boundary; UsersPageInner holds the actual logic.
+export default function UsersPage() {
+  return (
+    <Suspense>
+      <UsersPageInner />
+    </Suspense>
   );
 }

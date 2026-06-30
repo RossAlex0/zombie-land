@@ -2,6 +2,7 @@ import TextZbl from '../text-zbl/TextZbl';
 import './statusBadge.scss';
 export type BadgeStatus =
   | 'pending'
+  | 'paid'
   | 'validated'
   | 'valid'
   | 'open'

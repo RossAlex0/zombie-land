@@ -1,9 +1,11 @@
 import { randomBytes } from 'crypto';
+import { bookingWhereInput } from '../../../../prisma/generated/models';
 import { AbstractModel } from '@server/services/AbstractModel';
-import { addUtcDays, getNbDays } from '@shared/date';
+import { startOfUtcDay, endOfUtcDay, addUtcDays, getNbDays } from '@shared/date';
 import { ConfigurationModel } from '@server/services/configuration/configuration.service';
 import { BadRequestError, NotFoundError } from '../../../utils/errors/errors';
 import { BookingStatus } from '@customTypes/collections/booking';
+import type { BookingSearchParams } from '@server/schemas/booking/booking.schema';
 
 type TicketLine = { category_id: number; quantity: number };
 
@@ -93,6 +95,40 @@ export class BookingModel extends AbstractModel<'booking'> {
       },
       include: { ticket: true },
     });
+  }
+
+  /** Paginated list of bookings for the back-office (search by reference + status filter). */
+  async searchAndCount(params: BookingSearchParams) {
+    const where: bookingWhereInput = {};
+
+    if (params.search) {
+      where.reference = { contains: params.search, mode: 'insensitive' };
+    }
+
+    if (params.status) {
+      where.status = params.status;
+    }
+
+    // Filter on the visit date (start_at), inclusive on both bounds.
+    if (params.dateFrom || params.dateTo) {
+      where.start_at = {
+        ...(params.dateFrom && { gte: startOfUtcDay(params.dateFrom) }),
+        ...(params.dateTo && { lte: endOfUtcDay(params.dateTo) }),
+      };
+    }
+
+    const [data, total] = await Promise.all([
+      this.table.findMany({
+        where,
+        include: { _count: { select: { ticket: true } } },
+        orderBy: { [params.sortBy]: params.sortOrder },
+        skip: (params.page - 1) * params.limit,
+        take: params.limit,
+      }),
+      this.table.count({ where }),
+    ]);
+
+    return { data, total, page: params.page, limit: params.limit };
   }
 
   getBookingsByUserId(userId: number) {

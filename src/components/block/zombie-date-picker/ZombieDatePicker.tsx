@@ -9,9 +9,14 @@ import './zombieDatePicker.scss';
 type ZombieDayPickerProps = {
   selected?: DateRange;
   onSelect?: (range: DateRange | undefined) => void;
+  /**
+   * Allow selecting past dates. Off by default, so the public booking flow can
+   * never book in the past. Only the back-office (read-only filtering) opts in.
+   */
+  allowPast?: boolean;
 };
 
-export default function ZombieDayPicker({ selected, onSelect }: ZombieDayPickerProps) {
+export default function ZombieDayPicker({ selected, onSelect, allowPast }: ZombieDayPickerProps) {
   return (
     <DayPicker
       mode="range"
@@ -20,7 +25,7 @@ export default function ZombieDayPicker({ selected, onSelect }: ZombieDayPickerP
       onSelect={onSelect}
       showOutsideDays
       className="zombie_dp"
-      disabled={{ before: new Date() }}
+      disabled={allowPast ? undefined : { before: new Date() }}
     />
   );
 }
