@@ -2,18 +2,16 @@ import { BookingModel } from '@server/services';
 import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../../utils/errors/errors';
 import { NextContext } from '@customTypes/nextApi';
+import { bookingSearchSchema } from '@server/schemas/booking/booking.schema';
 
 export const adminBookingController = {
-  getAllBookings: async (_req: NextRequest) => {
+  getAllBookings: async (req: NextRequest) => {
     const bookingService = new BookingModel();
-    const bookings = await bookingService.readAll({
-      include: {
-        _count: {
-          select: { ticket: true },
-        },
-      },
-    });
-    return NextResponse.json({ data: bookings });
+    const params = bookingSearchSchema.parse(Object.fromEntries(req.nextUrl.searchParams));
+
+    const result = await bookingService.searchAndCount(params);
+
+    return NextResponse.json(result);
   },
 
   getBookingById: async (_req: NextRequest, context: NextContext<{ bookingId: string }>) => {

@@ -199,7 +199,9 @@ function UsersPageInner() {
   );
 }
 
-// useSearchParams impose une frontière Suspense (même pattern que FlashMessage)
+// useSearchParams reads the URL, which is only known on the client, so Next.js
+// requires it to be wrapped in a Suspense boundary. The outer component provides
+// that boundary; UsersPageInner holds the actual logic.
 export default function UsersPage() {
   return (
     <Suspense>

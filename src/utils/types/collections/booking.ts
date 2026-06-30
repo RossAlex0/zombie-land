@@ -25,3 +25,13 @@ export enum BookingStatus {
   PENDING = 'pending',
   CONFIRMED = 'confirmed',
 }
+// A booking as listed in the back-office (with its ticket count).
+export interface IBookingBO {
+  id: number;
+  reference: string;
+  status: string;
+  start_at: string;
+  end_at: string;
+  total_paid: string;
+  _count: { ticket: number };
+}
