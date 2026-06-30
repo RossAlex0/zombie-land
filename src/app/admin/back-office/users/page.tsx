@@ -1,7 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import { PencilLine, Trash2 } from 'lucide-react';
 import DataTable, { Column } from '@components/block/data-table/DataTable';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
@@ -10,6 +9,7 @@ import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import SearchInput from '@components/ui/input/search-input/SearchInput';
 import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
+import { useBackofficeFilters } from '@hooks/useBackofficeFilters';
 import { useUserSearch } from '@hooks/api-request/user/useUserSearch';
 import type { IUserBO } from '@customTypes/collections/user';
 
@@ -44,37 +44,10 @@ const roleOptions = [
 const LIMIT = 20;
 
 function UsersPageInner() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { router, searchParams, page, urlSearch, inputSearch, setInputSearch, updateParams } =
+    useBackofficeFilters();
 
-  // L'URL est la source de vérité : recherche, rôle et page survivent à la navigation.
-  const urlSearch = searchParams.get('search') ?? '';
   const role = searchParams.get('role') ?? '';
-  const page = Number(searchParams.get('page') ?? 1);
-
-  // État local uniquement pour la frappe : l'input réagit immédiatement,
-  // l'URL est mise à jour après le debounce.
-  const [inputSearch, setInputSearch] = useState(urlSearch);
-
-  const updateParams = useCallback(
-    (updates: Record<string, string>) => {
-      const params = new URLSearchParams(searchParams.toString());
-      for (const [key, value] of Object.entries(updates)) {
-        if (value) params.set(key, value);
-        else params.delete(key);
-      }
-      // Tout changement de filtre ramène à la page 1
-      if (!('page' in updates)) params.delete('page');
-      router.replace(`?${params.toString()}`, { scroll: false });
-    },
-    [searchParams, router]
-  );
-
-  useEffect(() => {
-    if (inputSearch === urlSearch) return;
-    const timer = setTimeout(() => updateParams({ search: inputSearch }), 300);
-    return () => clearTimeout(timer);
-  }, [inputSearch, urlSearch, updateParams]);
 
   const query = new URLSearchParams();
   if (urlSearch) query.set('search', urlSearch);
@@ -99,7 +72,7 @@ function UsersPageInner() {
       setPendingDeleteId(null);
       if (res.ok) {
         refresh();
-        // On repart des paramètres courants pour conserver recherche, rôle et page
+        // Start from the current params to keep search, role and page intact.
         const params = new URLSearchParams(searchParams.toString());
         params.set('success', 'deleted');
         params.set('entity', 'Utilisateur');

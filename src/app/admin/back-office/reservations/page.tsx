@@ -1,19 +1,17 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { CalendarRange, Eye, X } from 'lucide-react';
-import type { DateRange } from 'react-day-picker';
+import { Suspense } from 'react';
+import { Eye } from 'lucide-react';
 import DataTable, { Column } from '@components/block/data-table/DataTable';
-import ZombieDayPicker from '@components/block/zombie-date-picker/ZombieDatePicker';
+import DateRangeFilter from '@components/block/date-range-filter/DateRangeFilter';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import SearchInput from '@components/ui/input/search-input/SearchInput';
 import StatusBadge, { BadgeStatus } from '@components/ui/status-badge/StatusBadge';
 import FlashMessage from '@components/ui/flash-message/FlashMessage';
+import { useBackofficeFilters } from '@hooks/useBackofficeFilters';
 import { useBookingSearch } from '@hooks/api-request/booking/useBookingSearch';
-import { parseDateWithoutTime } from '@shared/date';
 import type { IBookingBO } from '@customTypes/collections/booking';
 import '../backoffice.scss';
 
@@ -53,75 +51,13 @@ const statusOptions = [
 
 const LIMIT = 20;
 
-// Parse a "yyyy-MM-dd" string as a local date (avoids the UTC shift of new Date(str)),
-// so the calendar highlights the exact day the user picked.
-function parseLocalDate(value: string): Date {
-  const [year, month, day] = value.split('-').map(Number);
-  return new Date(year, month - 1, day);
-}
-
 function ReservationsPageInner() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { searchParams, page, urlSearch, inputSearch, setInputSearch, updateParams } =
+    useBackofficeFilters();
 
-  // The URL is the source of truth: search, status, dates and page survive navigation.
-  const urlSearch = searchParams.get('search') ?? '';
   const status = searchParams.get('status') ?? '';
   const dateFrom = searchParams.get('dateFrom') ?? '';
   const dateTo = searchParams.get('dateTo') ?? '';
-  const page = Number(searchParams.get('page') ?? 1);
-
-  // Local state only for typing: the input reacts immediately,
-  // the URL is updated after the debounce.
-  const [inputSearch, setInputSearch] = useState(urlSearch);
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
-
-  // Rebuild the calendar selection from the URL (visit-date range filter).
-  const selectedRange = useMemo<DateRange | undefined>(() => {
-    if (!dateFrom && !dateTo) return undefined;
-    return {
-      from: dateFrom ? parseLocalDate(dateFrom) : undefined,
-      to: dateTo ? parseLocalDate(dateTo) : undefined,
-    };
-  }, [dateFrom, dateTo]);
-
-  const dateLabel = selectedRange
-    ? `${selectedRange.from?.toLocaleDateString('fr-FR') ?? '…'} → ${selectedRange.to?.toLocaleDateString('fr-FR') ?? '…'}`
-    : 'Dates de visite';
-
-  const updateParams = useCallback(
-    (updates: Record<string, string>) => {
-      const params = new URLSearchParams(searchParams.toString());
-      for (const [key, value] of Object.entries(updates)) {
-        if (value) params.set(key, value);
-        else params.delete(key);
-      }
-      // Any filter change resets to page 1
-      if (!('page' in updates)) params.delete('page');
-      router.replace(`?${params.toString()}`, { scroll: false });
-    },
-    [searchParams, router]
-  );
-
-  useEffect(() => {
-    if (inputSearch === urlSearch) return;
-    const timer = setTimeout(() => updateParams({ search: inputSearch }), 300);
-    return () => clearTimeout(timer);
-  }, [inputSearch, urlSearch, updateParams]);
-
-  // react-day-picker gives local Dates; serialize them as plain yyyy-MM-dd so the
-  // back-office filters on the calendar day the admin sees, regardless of timezone.
-  const handleDateSelect = (range: DateRange | undefined) => {
-    updateParams({
-      dateFrom: range?.from ? parseDateWithoutTime(range.from) : '',
-      dateTo: range?.to ? parseDateWithoutTime(range.to) : '',
-    });
-  };
-
-  const clearDates = () => {
-    updateParams({ dateFrom: '', dateTo: '' });
-    setDatePickerOpen(false);
-  };
 
   const query = new URLSearchParams();
   if (urlSearch) query.set('search', urlSearch);
@@ -170,27 +106,11 @@ function ReservationsPageInner() {
               onChange={setInputSearch}
               placeholder="Rechercher une réservation..."
             />
-            <div className="bo-date-filter">
-              <ButtonZbl theme="light" navTo="" onClick={() => setDatePickerOpen((open) => !open)}>
-                <CalendarRange size={16} />
-                <span className="btn-label">{dateLabel}</span>
-              </ButtonZbl>
-              {selectedRange && (
-                <ButtonZbl
-                  theme="light"
-                  navTo=""
-                  onClick={clearDates}
-                  aria-label="Effacer le filtre de dates"
-                >
-                  <X size={16} />
-                </ButtonZbl>
-              )}
-              {datePickerOpen && (
-                <div className="bo-date-filter_panel">
-                  <ZombieDayPicker allowPast selected={selectedRange} onSelect={handleDateSelect} />
-                </div>
-              )}
-            </div>
+            <DateRangeFilter
+              from={dateFrom}
+              to={dateTo}
+              onChange={({ from, to }) => updateParams({ dateFrom: from, dateTo: to })}
+            />
           </div>
           <DataTable<BookingRow>
             columns={columns}
