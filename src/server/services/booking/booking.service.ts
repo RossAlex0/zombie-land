@@ -1,7 +1,7 @@
 import { randomBytes } from 'crypto';
 import { bookingWhereInput } from '../../../../prisma/generated/models';
 import { AbstractModel } from '@server/services/AbstractModel';
-import { addUtcDays, getNbDays } from '@shared/date';
+import { startOfUtcDay, endOfUtcDay, addUtcDays, getNbDays } from '@shared/date';
 import { ConfigurationModel } from '@server/services/configuration/configuration.service';
 import { BadRequestError, NotFoundError } from '../../../utils/errors/errors';
 import { BookingStatus } from '@customTypes/collections/booking';
@@ -107,6 +107,14 @@ export class BookingModel extends AbstractModel<'booking'> {
 
     if (params.status) {
       where.status = params.status;
+    }
+
+    // Filter on the visit date (start_at), inclusive on both bounds.
+    if (params.dateFrom || params.dateTo) {
+      where.start_at = {
+        ...(params.dateFrom && { gte: startOfUtcDay(params.dateFrom) }),
+        ...(params.dateTo && { lte: endOfUtcDay(params.dateTo) }),
+      };
     }
 
     const [data, total] = await Promise.all([
