@@ -49,6 +49,9 @@ export default function BookingCard({ booking, onCancelled }: BookingCardProps) 
     return acc;
   }, {});
 
+  // A billet exists only for paid tickets; robust to the paid/confirmed status split.
+  const hasValidTickets = booking.ticket.some((t) => t.status === 'valid');
+
   const handleClickPaid = async () => {
     const response = await createCheckoutSession(booking.id);
     if (response.error) {
@@ -91,6 +94,9 @@ export default function BookingCard({ booking, onCancelled }: BookingCardProps) 
                 <span className="btn-label">Annuler</span>
               </ButtonZbl>
             </>
+          ) : undefined}
+          {hasValidTickets ? (
+            <ButtonZbl navTo={`/booking/me/${booking.id}/billet`}>Mes billets</ButtonZbl>
           ) : undefined}
         </div>
       </div>
