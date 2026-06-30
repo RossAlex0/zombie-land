@@ -38,7 +38,6 @@ export const bookingController = {
     return NextResponse.json(booking, { status: 200 });
   },
 
-  /*
   cancelMyBooking: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {
     const token = getTokenAccess(req);
     const { bookingId } = await context.params;
@@ -54,6 +53,12 @@ export const bookingController = {
     if (!booking.length) {
       throw new NotFoundError('Booking not found');
     }
+    if (booking[0].status === 'confirmed') {
+      return NextResponse.json(
+        { message: 'You cannot cancel a booking already paid' },
+        { status: 200 }
+      );
+    }
 
     if (booking[0].status === 'cancelled') {
       return NextResponse.json({ message: 'Booking already cancelled' }, { status: 200 });
@@ -67,5 +72,4 @@ export const bookingController = {
 
     return NextResponse.json({ message: 'Booking cancelled' }, { status: 200 });
   },
-  */
 };

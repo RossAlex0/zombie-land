@@ -24,17 +24,22 @@ export const adminBookingController = {
     return NextResponse.json({ data: booking });
   },
 
-  /*cancelBooking: async (req: NextRequest, context: { params: { bookingId: string } }) => {
-    const { bookingId } = context.params;
+  cancelBooking: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {
+    const { bookingId } = await context.params;
     const bookingService = new BookingModel();
-    const booking = await bookingService.cancel(Number(bookingId));
+
+    const booking = await bookingService.getBookingById(Number(bookingId));
     if (!booking) {
       throw new NotFoundError('Booking not found');
+    }
+
+    if (booking.status === 'confirmed') {
+      return NextResponse.json({ message: 'Booking already paid, need refund' }, { status: 200 });
     }
     if (booking.status === 'cancelled') {
       return NextResponse.json({ message: 'Booking already cancelled' }, { status: 200 });
     }
-    return NextResponse.json({ message: 'Booking cancelled' });
+    const cancelled = await bookingService.cancel(Number(bookingId));
+    return NextResponse.json({ message: 'Booking cancelled', data: cancelled });
   },
-    */
 };
