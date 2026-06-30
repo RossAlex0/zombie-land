@@ -33,8 +33,8 @@ export async function getCheckoutSessionURL(
   const sessionParameters: stripe.Checkout.SessionCreateParams = {
     line_items: items,
     mode: 'payment',
-    success_url: `${FRONT_URL}/checkout/success`,
-    cancel_url: `${FRONT_URL}/checkout/cancel`,
+    success_url: `${FRONT_URL}/checkout/status?status=success&booking_id=${bookingId}`,
+    cancel_url: `${FRONT_URL}/checkout/status?status=cancel&booking_id=${bookingId}`,
     automatic_tax: { enabled: true },
     metadata: {
       booking_id: bookingId,
