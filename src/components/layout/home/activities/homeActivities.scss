@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../../utils/styles/variables' as *;
 
 .home_activities {
@@ -21,6 +22,29 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'tablet')) {
+  .home_activities {
+    height: auto;
+    gap: 2rem;
+    padding: 3rem 2rem;
+
+    &_text {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .home_activities {
+    padding: 2rem 1.25rem;
+
+    &_text_title {
+      flex-wrap: wrap;
     }
   }
 }
