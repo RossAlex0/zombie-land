@@ -15,7 +15,7 @@ export default function InfectLogo() {
           ZOMBIE LAND
         </TextZbl>
         <TextZbl jetbrains redPrefix="//">
-          Zone_infecté_001
+          Zone_infectée_001
         </TextZbl>
       </div>
     </Link>

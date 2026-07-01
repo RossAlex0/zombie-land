@@ -19,7 +19,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             </TextZbl>
           </span>
           <TextZbl jetbrains redPrefix="//">
-            Formulaire_access_142
+            Formulaire_accès_142
           </TextZbl>
           <div className="auth_main_logo">
             <div className="auth_main_logo_image" onClick={() => router.push('/')}>

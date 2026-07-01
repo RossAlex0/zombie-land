@@ -15,7 +15,7 @@ export const PUBLIC_NAV_ITEMS: NavItem[] = [
 ];
 
 export const PROFILE_NAV_ITEM: NavItem = {
-  label: 'Profile',
+  label: 'Profil',
   href: '/account',
   icon: <User size={28} />,
 };
