@@ -132,7 +132,7 @@ export default function BookingCard({ booking, onCancelled }: BookingCardProps) 
 
       <div className="booking_card_footer">
         <TextZbl color="grey">TOTAL</TextZbl>
-        <TextZbl color="yellow" tag="h3">
+        <TextZbl color="yellow" tag="h2">
           {Number(booking.total_paid).toFixed(2)} €
         </TextZbl>
       </div>
