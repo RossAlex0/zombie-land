@@ -54,7 +54,7 @@ export default function HomeBookings({ config }: HomeBookingsProps) {
           <span>Section_003 - reservation d’accès</span>
         </TextZbl>
         <span className="home_booking_text_title" style={{ marginBottom: '-1rem' }}>
-          <TextZbl tag="h2">PLANIFIER VOTRE</TextZbl>
+          <TextZbl tag="h2">PLANIFIEZ VOTRE</TextZbl>
           <TextZbl tag="h2" color="red">
             &nbsp;PROCHAINE&nbsp;
           </TextZbl>

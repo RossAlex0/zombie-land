@@ -131,7 +131,7 @@ export default function Account() {
       ) : (
         <section className="account_disconnect">
           <TextZbl tag="h1" color="red">
-            Pour accéder à cette page vous devez vous connectez !
+            Pour accéder à cette page vous devez vous connecter !
           </TextZbl>
           <ButtonZbl theme="dark" navTo="/">
             <Home color="#e5bf00" size={20} />

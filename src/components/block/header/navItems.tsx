@@ -10,12 +10,12 @@ export type NavItem = {
 export const PUBLIC_NAV_ITEMS: NavItem[] = [
   { label: 'Accueil', href: '/', icon: <Home size={28} /> },
   { label: 'Activités', href: '/activity', icon: <RollerCoaster size={28} /> },
-  { label: 'Reservations', href: '/booking', icon: <CalendarDays size={28} /> },
+  { label: 'Réservation', href: '/booking', icon: <CalendarDays size={28} /> },
   { label: 'Manuel de survie', href: '/info', icon: <NotepadText size={28} /> },
 ];
 
 export const PROFILE_NAV_ITEM: NavItem = {
-  label: 'Profile',
+  label: 'Profil',
   href: '/account',
   icon: <User size={28} />,
 };

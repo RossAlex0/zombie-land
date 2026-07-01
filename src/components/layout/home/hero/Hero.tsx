@@ -31,16 +31,16 @@ export default function Hero({ activities, config }: HeroProps) {
         </span>
         <span className="hero_text_title">
           <TextZbl redPrefix="//">Status: </TextZbl>
-          <TextZbl color="yellow">&nbsp;CONTAMINER&nbsp;&nbsp;</TextZbl>
+          <TextZbl color="yellow">&nbsp;CONTAMINE&nbsp;&nbsp;</TextZbl>
           <TextZbl redPrefix="//">48.8566°N — 2.3522°E</TextZbl>
         </span>
         <TextZbl>
           Le dernier parc d’attractions encore ouvert après l’effondrement nucléaire mais aussi le
           foyer de la contamination où le patient zero fut découvert. Douze attractions, des zombies
-          à perte de vue ou une seule regle prime: SURVIR
+          à perte de vue où une seule regle prime: SURVIVRE
           <br />
-          Seule les personnes les plus téméraires seront admisse au sein de l’unité des survivants,
-          votre courage et votre agilité seront mise à rude épreuves.
+          Seule les personnes les plus téméraires seront admises au sein de l’unité des survivants,
+          votre courage et votre agilité seront mis à rude épreuves.
         </TextZbl>
         <span className="hero_text_title">
           <TextZbl color="yellow" jetbrains>
@@ -54,7 +54,7 @@ export default function Hero({ activities, config }: HeroProps) {
             <RollerCoaster size={20} />
             {activities?.length ?? 0}
           </TextZbl>
-          <TextZbl jetbrains>&nbsp;attractions térrifiantes</TextZbl>
+          <TextZbl jetbrains>&nbsp;attractions terrifiantes</TextZbl>
         </span>
         <ButtonZbl navTo="/booking" theme="light" className="hero_text_btn">
           <TextZbl color="black" jetbrains>

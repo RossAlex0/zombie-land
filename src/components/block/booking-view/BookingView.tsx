@@ -38,7 +38,7 @@ export default function BookingView() {
       </div>
       <div className="booking_history_container">
         <TextZbl redPrefix="//" color="grey">
-          Mes réservations en attentes de paiement:
+          Mes réservations en attente de paiement:
         </TextZbl>
         <TextZbl tag="h3" jetbrains color="yellow">
           {booking?.filter((b) => b.status === BookingStatus.PENDING).length ?? 0}
@@ -46,7 +46,7 @@ export default function BookingView() {
       </div>
       <div className="booking_history_container">
         <TextZbl redPrefix="//" color="grey">
-          Mes réservations passé:
+          Mes réservations passées:
         </TextZbl>
         <TextZbl tag="h3" jetbrains color="yellow">
           {booking?.filter(

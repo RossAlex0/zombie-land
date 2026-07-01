@@ -39,7 +39,7 @@ export default function Home() {
       <div className="backoffice_content_header">
         <div className="backoffice_content_header_title">
           <div className="backoffice_content_header_title_dash white">
-            <TextZbl jetbrains>Dashboard globale</TextZbl>
+            <TextZbl jetbrains>Dashboard global</TextZbl>
           </div>
         </div>
       </div>

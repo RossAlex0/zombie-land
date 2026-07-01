@@ -19,7 +19,7 @@ export default function Footer() {
             title="Parc"
             links={[
               { label: 'Attractions', href: '/activity' },
-              { label: 'Reservation', href: '/booking' },
+              { label: 'Réservation', href: '/booking' },
               { label: 'Infos Pratiques', href: '/info' },
             ]}
           />
@@ -28,7 +28,7 @@ export default function Footer() {
           <FooterNav
             title="Informations Legales"
             links={[
-              { label: 'Politique de confidentialités', href: '/privacy-policy' },
+              { label: 'Politique de confidentialité', href: '/privacy-policy' },
               { label: 'Notice légale', href: '/legal-notice' },
             ]}
           />
