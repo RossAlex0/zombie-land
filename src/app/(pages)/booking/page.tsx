@@ -77,14 +77,12 @@ export default function BookingPage() {
 
   const handleSubmitBooking = async () => {
     if (canConfirm) {
-      console.info('entries', quantities);
       const tickets = Object.entries(quantities)
         .filter(([, quantity]) => quantity > 0)
         .map(([categoryId, quantity]) => ({
           category_id: Number(categoryId),
           quantity,
         }));
-      console.info('sorties', tickets);
 
       const response = await createBooking({
         from: selectedDate.from!,
@@ -106,13 +104,11 @@ export default function BookingPage() {
   const handleClickPaid = async () => {
     if (currentBooking) {
       const response = await createCheckoutSession(currentBooking.id);
-      console.info('toto', response);
       if (response.error) {
         throw new Error(response.error);
       }
 
       if (response.redirect) {
-        console.info(response.redirect);
         redirect(response.redirect);
       }
     }
