@@ -4,6 +4,7 @@ import ActivityCard from '../card/ActivityCard';
 import Slider from 'react-slick';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
+import { useSlidesToShow } from '@hooks/useSlidesToShow';
 import Link from 'next/link';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -38,24 +39,16 @@ export default function AttractionsCarousel({
 }: {
   activities: ActivityWithCategory[];
 }) {
+  const slidesToShow = useSlidesToShow();
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow,
     slidesToScroll: 1,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 640,
-        settings: { slidesToShow: 1, arrows: false },
-      },
-    ],
   };
 
   return (

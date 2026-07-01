@@ -50,6 +50,17 @@
   &::before {
     display: none;
   }
+
+  // Tablette : les flèches reviennent dans le container pour ne pas déborder
+  @media (max-width: 768px) {
+    &--prev {
+      left: 0;
+    }
+
+    &--next {
+      right: 0;
+    }
+  }
 }
 
 .attractions-carousel .slick-dots {

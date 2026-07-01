@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../../utils/styles/variables' as *;
 
 .activity_details {
@@ -51,4 +52,44 @@
   margin-inline: auto;
   margin-block: 2rem;
   width: 60%;
+}
+
+// Tablette : description en colonne (texte au-dessus, image en dessous)
+@media (max-width: map.get($breakpoints, 'tablet')) {
+  .activity_details {
+    padding: 3rem 2rem;
+    gap: 2rem;
+
+    &_desc {
+      flex-direction: column;
+      max-height: none;
+      gap: 2rem;
+
+      &_text {
+        width: 100%;
+      }
+
+      &_img {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: 40vh;
+      }
+    }
+  }
+
+  .details_separtor {
+    width: 80%;
+  }
+}
+
+// Mobile : padding réduit, image un peu moins haute
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .activity_details {
+    padding: 2rem 1.25rem;
+
+    &_desc_img {
+      height: 32vh;
+    }
+  }
 }

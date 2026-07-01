@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../../utils/styles/variables' as *;
 
 .home_booking {
@@ -158,4 +159,46 @@
   background-color: transparent;
   border: 0.5px solid $dark-white;
   opacity: 0.5;
+}
+
+@media (max-width: map.get($breakpoints, 'tablet')) {
+  .home_booking {
+    height: auto;
+    gap: 2rem;
+    padding: 3rem 2rem;
+
+    &_text {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    &_content {
+      flex-direction: column;
+      height: auto;
+      gap: 2rem;
+
+      &_planning,
+      &_ticket {
+        width: 100%;
+      }
+
+      &_planning {
+        height: auto;
+      }
+    }
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .home_booking {
+    padding: 2rem 1.25rem;
+
+    &_text_title {
+      flex-wrap: wrap;
+    }
+
+    &_content_title {
+      margin-inline: 0;
+    }
+  }
 }

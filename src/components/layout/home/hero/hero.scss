@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../../utils/styles/variables' as *;
 
 .hero {
@@ -41,6 +42,40 @@
       margin-top: 0.5rem;
       display: flex;
       flex-direction: row;
+    }
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'tablet')) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+    gap: 3rem;
+    padding: 3rem 2rem;
+
+    &_text {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    &_map {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: map.get($breakpoints, 'mobile')) {
+  .hero {
+    gap: 2rem;
+    padding: 2rem 1.25rem;
+
+    &_text_title {
+      flex-wrap: wrap;
+    }
+
+    &_map_desc {
+      flex-wrap: wrap;
+      justify-content: center;
     }
   }
 }
