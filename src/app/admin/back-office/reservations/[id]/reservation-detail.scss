@@ -19,4 +19,10 @@
   &__section-title {
     margin-bottom: 0.5rem;
   }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
 }
