@@ -45,7 +45,7 @@ const columns: Column<BookingRow>[] = [
 const statusOptions = [
   { label: 'Tous les statuts', value: '' },
   { label: 'En attente', value: 'pending' },
-  { label: 'Payée', value: 'paid' },
+  { label: 'Payée', value: 'confirmed' },
   { label: 'Annulée', value: 'cancelled' },
 ];
 

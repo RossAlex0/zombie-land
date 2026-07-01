@@ -31,7 +31,7 @@ export const bookingCreateSchema = z
 
 export const bookingSearchSchema = z.object({
   search: z.string().optional(),
-  status: z.enum(['pending', 'paid', 'cancelled']).optional(),
+  status: z.enum(['pending', 'confirmed', 'cancelled']).optional(),
   // Filter on the visit date (start_at), inclusive range.
   dateFrom: z.coerce.date().optional(),
   dateTo: z.coerce.date().optional(),
