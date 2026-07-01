@@ -90,7 +90,6 @@ export const authController = {
   logout: async (req: NextRequest) => {
     try {
       const refreshTokenId = req.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
-
       if (refreshTokenId) {
         const refreshTokenService = new RefreshTokenModel();
         await refreshTokenService.delete({ where: { token: refreshTokenId } });
