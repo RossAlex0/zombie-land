@@ -52,7 +52,9 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
   const handleSubmit = async (formData: FormData) => {
     setSubmitError(null);
     const name = (formData.get('name') as string)?.trim() ?? '';
-    const picture = (formData.get('picture') as File) ?? null;
+    const pictureFile = formData.get('picture');
+    // An empty file input still yields a File (size 0, type ''), not null — normalize it.
+    const picture = pictureFile instanceof File && pictureFile.size > 0 ? pictureFile : null;
     const description = (formData.get('description') as string)?.trim() ?? '';
 
     if (!name) {
