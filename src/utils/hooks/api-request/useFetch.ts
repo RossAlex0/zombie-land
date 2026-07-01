@@ -10,8 +10,14 @@ export function clearCache(url: string) {
 }
 
 export default function useFetch<T>(url: string | null, forceRefresh = false) {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Seed from the module cache so a warm cache means data-ready / not-loading from the
+  // first render. Otherwise `loading` stays stuck at `true` (the effect skips fetching on a
+  // warm cache), and a later clearCache() bypasses the shortcut below and strands the
+  // caller on an infinite spinner.
+  const [data, setData] = useState<T | null>(() =>
+    url && cache.has(url) ? (cache.get(url) as T) : null
+  );
+  const [loading, setLoading] = useState(() => !!url && !cache.has(url));
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {

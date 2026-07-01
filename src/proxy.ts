@@ -20,10 +20,8 @@ export async function proxy(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
   }
-  console.info('paaht', request.nextUrl.pathname);
   if (request.nextUrl.pathname.includes('/admin/back-office')) {
     const token = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
-    console.info('tok', token);
 
     if (!token) {
       return NextResponse.redirect(new URL('/auth/login', request.url));

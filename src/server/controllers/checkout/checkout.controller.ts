@@ -45,7 +45,6 @@ export const checkoutController = {
     const user = await userService.findUserById(userId, { id: true, stripe_customer_id: true });
     const line_items = ticketToStripeLineItems(booking.ticket);
     const session = await getCheckoutSessionURL(line_items, bookingId, user?.stripe_customer_id);
-    console.log(session.url);
     return NextResponse.json({ checkoutURL: session.url });
   },
 };
