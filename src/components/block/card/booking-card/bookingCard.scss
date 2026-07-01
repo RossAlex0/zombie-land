@@ -89,4 +89,14 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  // Cancel button: red, icon-only (label hidden) — mirrors the back-office delete button.
+  .btn-danger {
+    background-color: $primary-red;
+    border: none;
+
+    .btn-label {
+      display: none;
+    }
+  }
 }

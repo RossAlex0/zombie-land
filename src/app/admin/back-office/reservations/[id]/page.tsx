@@ -1,14 +1,18 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { Trash2 } from 'lucide-react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import StatusBadge, { BadgeStatus } from '@components/ui/status-badge/StatusBadge';
 import DataTable, { Column } from '@components/block/data-table/DataTable';
-import useFetch from '@hooks/api-request/useFetch';
+import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
+import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import '../../backoffice.scss';
 import './reservation-detail.scss';
-import { BookingWithTickets } from '@customTypes/collections/booking';
+import { BookingStatus, BookingWithTickets } from '@customTypes/collections/booking';
 
 type TicketRow = {
   [key: string]: unknown;
@@ -31,7 +35,26 @@ const ticketColumns: Column<TicketRow>[] = [
 
 export default function ReservationDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const router = useRouter();
   const { data: booking, loading, error } = useFetch<BookingWithTickets>(`/api/booking/${id}`);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+
+  // Soft-cancel restricted to pending bookings: no payment, so no refund concern.
+  const handleCancel = async () => {
+    setCancelling(true);
+    try {
+      const res = await fetchWithAuth(`/api/booking/${id}`, { method: 'DELETE' });
+      if (!res.ok) {
+        throw new Error("La réservation n'a pas pu être annulée.");
+      }
+      clearCache(`/api/booking/${id}`);
+      router.push('/admin/back-office/reservations');
+    } finally {
+      setCancelling(false);
+      setConfirmOpen(false);
+    }
+  };
 
   const ticketRows: TicketRow[] =
     booking?.ticket.map((t) => ({
@@ -128,9 +151,37 @@ export default function ReservationDetailPage() {
             />
           </div>
 
-          <ButtonZbl theme="light" navTo="/admin/back-office/reservations">
-            Retour
-          </ButtonZbl>
+          <div className="reservation-detail__actions">
+            <ButtonZbl theme="light" navTo="/admin/back-office/reservations">
+              Retour
+            </ButtonZbl>
+            {booking.status === BookingStatus.PENDING && (
+              <ButtonZbl
+                theme="custom"
+                className="btn-danger"
+                navTo=""
+                aria-label="Annuler la réservation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setConfirmOpen(true);
+                }}
+              >
+                <Trash2 size={16} />
+                <span className="btn-label">Annuler</span>
+              </ButtonZbl>
+            )}
+          </div>
+
+          <ConfirmModal
+            isOpen={confirmOpen}
+            title="Annuler la réservation"
+            message={`Annuler la réservation ${booking.reference} ? Cette action est irréversible.`}
+            confirmLabel={cancelling ? 'Annulation…' : 'Oui, annuler'}
+            cancelLabel="Retour"
+            danger
+            onConfirm={handleCancel}
+            onCancel={() => setConfirmOpen(false)}
+          />
         </div>
       )}
     </div>

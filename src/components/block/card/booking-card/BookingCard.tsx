@@ -1,16 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
-import { Calendar1, Ticket, Hash } from 'lucide-react';
+import { Calendar1, Ticket, Hash, Trash2 } from 'lucide-react';
 import { parseDateFr } from '@shared/date';
 import './bookingCard.scss';
 import { BookingStatus, BookingWithTickets } from '@customTypes/collections/booking';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
+import { fetchWithAuth } from '@shared/fetchWithAuth';
 import { redirect } from 'next/navigation';
 import useCreateCheckoutSession from '@hooks/api-request/checkout/useCreateCheckoutSession';
 
 type BookingCardProps = {
   booking: BookingWithTickets;
+  onCancelled?: (id: number) => void;
 };
 
 const statusConfig: Record<string, { label: string; className: string }> = {
@@ -19,9 +23,25 @@ const statusConfig: Record<string, { label: string; className: string }> = {
   [BookingStatus.CANCELLED]: { label: 'Annulée', className: 'booking_card_status_cancelled' },
 };
 
-export default function BookingCard({ booking }: BookingCardProps) {
+export default function BookingCard({ booking, onCancelled }: BookingCardProps) {
   const { createCheckoutSession } = useCreateCheckoutSession();
   const status = statusConfig[booking.status] ?? statusConfig[BookingStatus.PENDING];
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+
+  const handleConfirmCancel = async () => {
+    setCancelling(true);
+    try {
+      const res = await fetchWithAuth(`/api/booking/me/${booking.id}`, { method: 'PATCH' });
+      if (!res.ok) {
+        throw new Error('La réservation n’a pas pu être annulée.');
+      }
+      onCancelled?.(booking.id);
+    } finally {
+      setCancelling(false);
+      setConfirmOpen(false);
+    }
+  };
 
   const ticketsByCategory = booking.ticket.reduce<Record<string, number>>((acc, t) => {
     const label = t.category.label;
@@ -53,9 +73,24 @@ export default function BookingCard({ booking }: BookingCardProps) {
             <TextZbl jetbrains>{status.label}</TextZbl>
           </span>
           {booking.status === BookingStatus.PENDING ? (
-            <ButtonZbl onClick={handleClickPaid} type="submit">
-              Payez la réservations
-            </ButtonZbl>
+            <>
+              <ButtonZbl onClick={handleClickPaid} type="submit">
+                Payer la réservation
+              </ButtonZbl>
+              <ButtonZbl
+                theme="custom"
+                className="btn-danger"
+                navTo=""
+                aria-label="Annuler la réservation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setConfirmOpen(true);
+                }}
+              >
+                <Trash2 size={16} />
+                <span className="btn-label">Annuler</span>
+              </ButtonZbl>
+            </>
           ) : undefined}
         </div>
       </div>
@@ -95,6 +130,17 @@ export default function BookingCard({ booking }: BookingCardProps) {
           {Number(booking.total_paid).toFixed(2)} €
         </TextZbl>
       </div>
+
+      <ConfirmModal
+        isOpen={confirmOpen}
+        title="Annuler la réservation"
+        message={`Annuler la réservation ${booking.reference} ? Votre réservation sera définitivement annulée.`}
+        confirmLabel={cancelling ? 'Annulation…' : 'Oui, annuler'}
+        cancelLabel="Retour"
+        danger
+        onConfirm={handleConfirmCancel}
+        onCancel={() => setConfirmOpen(false)}
+      />
     </article>
   );
 }
