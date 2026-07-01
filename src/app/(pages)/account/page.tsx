@@ -3,11 +3,12 @@
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import TextZbl from '@components/ui/text-zbl/TextZbl';
 import { useAuth } from '@context/authProvider';
-import { Home } from 'lucide-react';
+import { Home, LogOut } from 'lucide-react';
 import Loading from '../../loading';
 import { useState } from 'react';
 import { useUpdateProfile } from '@hooks/api-request/user/useUpdateProfile';
 import { useUpdatePassword } from '@hooks/api-request/user/useUpdatePassword';
+import useLogout from '@hooks/api-request/auth/useLogout';
 import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import { usePathname, useRouter } from 'next/navigation';
 import ModalPassword from '@components/block/modal-zbl/modal-password/ModalPassword';
@@ -19,6 +20,7 @@ import './account.scss';
 
 export default function Account() {
   const { user, loading, setUser } = useAuth();
+  const { logout, loading: loadingLogout } = useLogout();
   const { data: bookings, loading: loadingBookings } =
     useFetch<BookingWithTickets[]>('/api/booking/me');
   const updateProfile = useUpdateProfile();
@@ -111,6 +113,19 @@ export default function Account() {
                 Aucune réservation enregistrée.
               </TextZbl>
             )}
+          </div>
+          <div className="account_absolute">
+            <ButtonZbl
+              theme="dark"
+              onClick={() => logout()}
+              disabled={loadingLogout}
+              className="account_logout"
+            >
+              <LogOut size={16} color="#ac382a" />
+              <TextZbl color="red" jetbrains>
+                Se déconnecter
+              </TextZbl>
+            </ButtonZbl>
           </div>
         </section>
       ) : (
