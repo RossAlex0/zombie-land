@@ -163,12 +163,7 @@ export default function ProfileForm({
             {passwordError}
           </TextZbl>
         )}
-        <ButtonZbl
-          type="submit"
-          theme="dark"
-          style={{ marginLeft: 'auto' }}
-          disabled={!!passwordError || !hasChanges}
-        >
+        <ButtonZbl type="submit" theme="dark" disabled={!!passwordError || !hasChanges}>
           <TextZbl color="yellow">Valider les changements</TextZbl>
         </ButtonZbl>
       </div>
