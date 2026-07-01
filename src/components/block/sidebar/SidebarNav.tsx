@@ -6,7 +6,7 @@ import './sidebar.scss';
 
 const links = [
   { label: 'Accueil', href: '/admin/back-office', icon: House },
-  { label: 'Activitées', href: '/admin/back-office/activities', icon: FerrisWheel },
+  { label: 'Activités', href: '/admin/back-office/activities', icon: FerrisWheel },
   { label: 'Catégories', href: '/admin/back-office/categories', icon: Tag },
   { label: 'Utilisateurs', href: '/admin/back-office/users', icon: Users },
   { label: 'Réservations', href: '/admin/back-office/reservations', icon: CalendarDays },

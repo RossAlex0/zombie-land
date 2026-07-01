@@ -24,9 +24,9 @@ export default function Home() {
 
   const stats: Stat[] = [
     { label: 'Réservations', value: data?.bookings ?? 0, lowLevel: 10, highLevel: 40 },
-    { label: 'Tickets vendues', value: data?.ticketsSold ?? 0, lowLevel: 20, highLevel: 100 },
+    { label: 'Tickets vendus', value: data?.ticketsSold ?? 0, lowLevel: 20, highLevel: 100 },
     {
-      label: "Chiffres d'affaires",
+      label: "Chiffre d'affaires",
       value: data?.revenue ?? 0,
       unit: '€',
       lowLevel: 600,
