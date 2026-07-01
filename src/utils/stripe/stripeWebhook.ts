@@ -28,7 +28,7 @@ export async function stripeWebhook(req: NextRequest) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        //récupère le stripe_customer_id fourni par stripe sous forme de string (stripe peut renvoyer un object dans certains cas)
+        // get the stripe_customer_id from stripe in string (stripe can sometimes return an object)
         let customerId: string | null = null;
         if (typeof session.customer === 'string') {
           customerId = session.customer;
@@ -45,10 +45,31 @@ export async function stripeWebhook(req: NextRequest) {
         const bookingId = Number(bookingIdRaw);
 
         if (session.payment_status === 'paid') {
+          let promoCode: string | null = null;
+          if (session.discounts && session.discounts.length > 0) {
+            const discount = session.discounts[0];
+            if (typeof discount.promotion_code === 'string') {
+              const promotionCode = await stripe.promotionCodes.retrieve(discount.promotion_code);
+              promoCode = promotionCode.code;
+            } else if (discount.promotion_code?.code) {
+              promoCode = discount.promotion_code.code;
+            }
+          }
+
+          const subtotal = session.amount_subtotal ? session.amount_subtotal / 100 : 0;
+          const total = session.amount_total ? session.amount_total / 100 : 0;
+          const discountAmount = subtotal - total;
+
           await prisma.$transaction([
             prisma.booking.updateMany({
               where: { id: bookingId, status: BookingStatus.PENDING },
-              data: { status: BookingStatus.CONFIRMED },
+              data: {
+                status: BookingStatus.CONFIRMED,
+                subtotal: subtotal,
+                total_paid: total,
+                discount: discountAmount,
+                ...(promoCode && { promo_code: promoCode }),
+              },
             }),
             prisma.ticket.updateMany({
               where: { booking_id: bookingId },

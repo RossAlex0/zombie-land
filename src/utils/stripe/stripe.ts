@@ -1,17 +1,27 @@
-import { ticket } from '@prismaInstance/*';
+import { ticket, ticket_category } from '@prismaInstance/*';
 import stripe from 'stripe';
 
 export function ticketToStripeLineItems(
-  tickets: ticket[]
+  tickets: (ticket & { category: ticket_category })[]
 ): stripe.Checkout.SessionCreateParams.LineItem[] {
-  return tickets.map((ticket) => ({
-    quantity: 1,
+  const grouped = tickets.reduce(
+    (acc, ticket) => {
+      const cat = ticket.category.label;
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(ticket);
+      return acc;
+    },
+    {} as Record<string, (ticket & { category: ticket_category })[]>
+  );
+
+  return Object.values(grouped).map((ticketsGrouped) => ({
+    quantity: ticketsGrouped.length,
     price_data: {
       currency: 'eur',
       product_data: {
-        name: `Ticket #${ticket.id}`,
+        name: `Tickets ${ticketsGrouped[0].category.label}`,
       },
-      unit_amount: Math.round(Number(ticket.unit_price) * 100),
+      unit_amount: Math.round(Number(ticketsGrouped[0].unit_price) * 100),
     },
   }));
 }
@@ -27,7 +37,7 @@ export async function getCheckoutSessionURL(
   const FRONT_URL = process.env.FRONT_URL;
 
   if (!FRONT_URL?.startsWith('http')) {
-    throw new Error(`FRONT_URL invalide : ${FRONT_URL}`);
+    throw new Error(`FRONT_URL invalid : ${FRONT_URL}`);
   }
 
   const sessionParameters: stripe.Checkout.SessionCreateParams = {
@@ -36,6 +46,7 @@ export async function getCheckoutSessionURL(
     success_url: `${FRONT_URL}/checkout/status?status=success&booking_id=${bookingId}`,
     cancel_url: `${FRONT_URL}/checkout/status?status=cancel&booking_id=${bookingId}`,
     automatic_tax: { enabled: true },
+    allow_promotion_codes: true,
     metadata: {
       booking_id: bookingId,
     },
