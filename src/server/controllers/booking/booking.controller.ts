@@ -2,6 +2,7 @@ import { bookingCreateSchema } from '@server/schemas';
 import { BookingModel } from '@server/services';
 
 import { getTokenAccess } from '../../../utils/api/token';
+import { signTicketToken } from '../../../utils/api/ticketToken';
 import { NextRequest, NextResponse } from 'next/server';
 import { NotFoundError } from '../../../utils/errors/errors';
 import { NextContext } from '@customTypes/nextApi';
@@ -36,6 +37,41 @@ export const bookingController = {
       throw new NotFoundError('Booking not found');
     }
     return NextResponse.json(booking, { status: 200 });
+  },
+
+  getMyBookingBillets: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {
+    const token = getTokenAccess(req);
+    const { bookingId } = await context.params;
+    const bookingService = new BookingModel();
+    const booking = await bookingService.getBookingById(Number(bookingId));
+    if (!booking || booking.user_id !== token.userId) {
+      throw new NotFoundError('Booking not found');
+    }
+    // One billet per valid (paid) ticket; pending/cancelled tickets get none.
+    const billets = booking.ticket
+      .filter((t) => t.status === 'valid')
+      .map((t) => ({
+        id: t.id,
+        reservation_number: t.reservation_number,
+        category_label: t.category.label,
+        validity_date: t.validity_date,
+        qr_token: signTicketToken({
+          tid: t.id,
+          rn: t.reservation_number,
+          vd: new Date(t.validity_date).toISOString().slice(0, 10),
+        }),
+      }));
+    return NextResponse.json(
+      {
+        data: {
+          reference: booking.reference,
+          start_at: booking.start_at,
+          end_at: booking.end_at,
+          billets,
+        },
+      },
+      { status: 200 }
+    );
   },
 
   cancelMyBooking: async (req: NextRequest, context: NextContext<{ bookingId: string }>) => {

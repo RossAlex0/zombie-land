@@ -1,0 +1,148 @@
+@use 'sass:map';
+@use '../../../../../../utils/styles/variables' as *;
+
+.billet {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  &_spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid $light-black;
+    border-top-color: $primary-yellow;
+    border-radius: 50%;
+    animation: billet-spin 0.8s linear infinite;
+    align-self: center;
+  }
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    &_actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  }
+
+  &_print_label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_ticket {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    background-color: $medium-black;
+    border: 1px solid $light-black;
+    border-radius: 12px;
+
+    &_info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    &_brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &_row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    &_qr {
+      background-color: #fff;
+      padding: 0.75rem;
+      border-radius: 8px;
+      flex-shrink: 0;
+      line-height: 0;
+    }
+  }
+
+  @media (max-width: map.get($breakpoints, 'tablet')) {
+    padding: 2rem 1.5rem;
+
+    &_ticket {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      text-align: center;
+
+      &_row {
+        justify-content: center;
+      }
+
+      &_qr {
+        align-self: center;
+      }
+    }
+  }
+}
+
+@keyframes billet-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Print: clean white tickets, hide UI chrome, one ticket never split across pages.
+@media print {
+  // Hide the global site header/footer and the page's own controls so only billets print.
+  .header,
+  .footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .billet {
+    padding: 0;
+    gap: 1rem;
+  }
+
+  .billet_ticket {
+    background: #fff !important;
+    border: 1px solid #000;
+    break-inside: avoid;
+
+    * {
+      color: #000 !important;
+    }
+  }
+}
