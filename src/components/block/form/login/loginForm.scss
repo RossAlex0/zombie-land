@@ -28,6 +28,7 @@
 
   & &__submit {
     width: 100%;
+    height: 42px;
     margin-top: 0.5rem;
   }
 
@@ -39,6 +40,7 @@
   & &__google-btn {
     width: 100%;
     padding: 0.75rem;
+    height: 42px;
     background-color: $primary-white;
     color: $primary-black;
     border: 1px solid $primary-white;
