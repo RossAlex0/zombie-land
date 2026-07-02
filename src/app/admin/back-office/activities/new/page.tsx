@@ -8,7 +8,7 @@ import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
 import FormInput from '@components/ui/input/form-input/FormInput';
 import useCreateActivity from '@hooks/api-request/activity/useCreateActivity';
-import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import useFetch, { clearCacheByPrefix } from '@hooks/api-request/useFetch';
 import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
 import '../[id]/activityEdit.scss';
@@ -73,7 +73,7 @@ export default function ActivityCreatePage() {
       category_activity: categoryIds.map((id) => ({ category_id: id })),
     });
     if (res?.ok) {
-      clearCache('/api/activity');
+      clearCacheByPrefix('/api/activity');
       router.push('/admin/back-office/activities?success=created&entity=Activité');
     } else if (res?.error) {
       setSubmitError(res.error);

@@ -9,6 +9,19 @@ export function clearCache(url: string) {
   cache.delete(url);
 }
 
+/**
+ * Evicts every cached entry whose URL starts with `prefix`. Useful after a
+ * mutation to invalidate a whole resource at once, including its filtered
+ * variants (e.g. `/api/activity`, `/api/activity/5`, `/api/activity?category=3`).
+ */
+export function clearCacheByPrefix(prefix: string) {
+  for (const key of cache.keys()) {
+    if (key.startsWith(prefix)) {
+      cache.delete(key);
+    }
+  }
+}
+
 export default function useFetch<T>(url: string | null, forceRefresh = false) {
   // Seed from the module cache so a warm cache means data-ready / not-loading from the
   // first render. Otherwise `loading` stays stuck at `true` (the effect skips fetching on a

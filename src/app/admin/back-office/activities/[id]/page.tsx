@@ -7,7 +7,7 @@ import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import DropDownZbl from '@components/ui/drop-down-zbl/DropDownZbl';
 import Chips from '@components/ui/chips/Chips';
 import FormInput from '@components/ui/input/form-input/FormInput';
-import useFetch, { clearCache } from '@hooks/api-request/useFetch';
+import useFetch, { clearCacheByPrefix } from '@hooks/api-request/useFetch';
 import usePatchActivity from '@hooks/api-request/activity/usePatchActivity';
 import { category } from '@prismaInstance/*';
 import '../../backoffice.scss';
@@ -108,8 +108,7 @@ function ActivityEditForm({ activity, id, categories }: FormProps) {
         category_activity: categoryIds.map((catId) => ({ category_id: catId })),
       });
       if ('ok' in res && res.ok) {
-        clearCache('/api/activity');
-        clearCache(`/api/activity/${id}`);
+        clearCacheByPrefix('/api/activity');
         router.push('/admin/back-office/activities?success=updated&entity=Activité');
       } else if ('error' in res) {
         setSubmitError(res.error);
