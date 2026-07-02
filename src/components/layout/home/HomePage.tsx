@@ -1,10 +1,12 @@
 'use client';
+import { useMemo } from 'react';
 import useFetch from '@hooks/api-request/useFetch';
 import Hero from './hero/Hero';
 import HomeActivites from './activities/Activities';
 import HomeBookings from './booking/Booking';
 import Loading from '../../../app/loading';
 import { ActivityWithCategory } from '@customTypes/collections/activity';
+import { filterPublicActivities } from '@shared/activity';
 import { configuration } from '@prismaInstance/*';
 
 export default function HomePage() {
@@ -13,6 +15,8 @@ export default function HomePage() {
     loading: loadingActivities,
     error: errorActivities,
   } = useFetch<ActivityWithCategory[]>('/api/activity');
+
+  const visibleActivities = useMemo(() => filterPublicActivities(activities ?? []), [activities]);
   const {
     data: config,
     loading: loadingConfig,
@@ -31,8 +35,8 @@ export default function HomePage() {
     <>
       {activities && config ? (
         <>
-          <Hero activities={activities} config={config} />
-          <HomeActivites activities={activities} />
+          <Hero activities={visibleActivities} config={config} />
+          <HomeActivites activities={visibleActivities} />
           <HomeBookings config={config} />
         </>
       ) : (

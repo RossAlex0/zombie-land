@@ -9,7 +9,7 @@ import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import StatusBadge, { BadgeStatus } from '@components/ui/status-badge/StatusBadge';
 import FlashMessage from '@components/ui/flash-message/FlashMessage';
 import ConfirmModal from '@components/block/modal-zbl/confirm-modal/ConfirmModal';
-import useFetch from '@hooks/api-request/useFetch';
+import useFetch, { clearCacheByPrefix } from '@hooks/api-request/useFetch';
 import useDeleteActivity from '@hooks/api-request/activity/useDeleteActivity';
 import '../backoffice.scss';
 
@@ -46,6 +46,7 @@ export default function ActivitiesPage() {
     const result = await deleteActivity(pendingDeleteId);
     setPendingDeleteId(null);
     if ('ok' in result && result.ok) {
+      clearCacheByPrefix('/api/activity');
       setDeletedIds((prev) => new Set([...prev, pendingDeleteId]));
       router.replace('/admin/back-office/activities?success=deleted&entity=Activité');
     }

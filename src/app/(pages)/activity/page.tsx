@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Chips from '@components/ui/chips/Chips';
 import SearchInput from '@components/ui/input/search-input/SearchInput';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
+import { filterPublicActivities } from '@shared/activity';
 import './activity.scss';
 
 export default function ActivitiesPage() {
@@ -29,12 +30,12 @@ export default function ActivitiesPage() {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [inputSearch, setInputSearch] = useState<string | null>(null);
 
-  const filteredActivities = useMemo(() => {
-    if (!activities) return [];
+  const visibleActivities = useMemo(() => filterPublicActivities(activities ?? []), [activities]);
 
+  const filteredActivities = useMemo(() => {
     const search = inputSearch?.trim().toLowerCase() ?? '';
 
-    return activities.filter((a) => {
+    return visibleActivities.filter((a) => {
       const matchCategory =
         selectedCategories.length === 0 ||
         a.category_activity.some((c) => selectedCategories.includes(c.category.id));
@@ -43,7 +44,7 @@ export default function ActivitiesPage() {
 
       return matchCategory && matchSearch;
     });
-  }, [activities, inputSearch, selectedCategories]);
+  }, [visibleActivities, inputSearch, selectedCategories]);
 
   const handleClickChips = useCallback((id: number) => {
     setSelectedCategories((prev) =>
@@ -59,7 +60,7 @@ export default function ActivitiesPage() {
     throw new Error('Erreur durant la récupération des données sur la page ( /activity )');
   }
 
-  if (!activities || activities.length === 0) {
+  if (visibleActivities.length === 0) {
     return (
       <div className="activity_no_data">
         <TextZbl tag="h1">Aucune activités trouvées</TextZbl>
@@ -74,8 +75,8 @@ export default function ActivitiesPage() {
         <div className="activity_header_title">
           <TextZbl tag="h1" color="red">
             <span>
-              <span className="activity_white">{activities.length}</span> attraction
-              {activities.length > 1 ? 's' : ''} <br /> une seule règle survivre...
+              <span className="activity_white">{visibleActivities.length}</span> attraction
+              {visibleActivities.length > 1 ? 's' : ''} <br /> une seule règle survivre...
             </span>
           </TextZbl>
         </div>

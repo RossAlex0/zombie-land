@@ -7,6 +7,7 @@ import Loading from '../../../loading';
 import Image from 'next/image';
 import { parseDateWithoutTime } from '@shared/date';
 import AttractionsCarousel from '@components/block/carousel/CarouselZbl';
+import { filterPublicActivities } from '@shared/activity';
 import { useMemo } from 'react';
 import './activity.scss';
 
@@ -26,6 +27,11 @@ export default function ActivityDetails() {
 
   const { data: activities } = useFetch<ActivityWithCategory[]>(
     categoryId ? `/api/activity?category=${categoryId}` : null
+  );
+
+  const relatedActivities = useMemo(
+    () => filterPublicActivities(activities ?? []).filter((a) => a.id !== activity?.id),
+    [activities, activity?.id]
   );
 
   if (loadingActivity) {
@@ -76,8 +82,8 @@ export default function ActivityDetails() {
       <div className="details_separtor" />
       <div className="activity_details_carousel">
         <TextZbl tag="h2">{`Plus d'expériences ${label}`}</TextZbl>
-        {activities && activities.length !== 0 ? (
-          <AttractionsCarousel activities={activities} />
+        {relatedActivities.length !== 0 ? (
+          <AttractionsCarousel activities={relatedActivities} />
         ) : undefined}
       </div>
     </section>
