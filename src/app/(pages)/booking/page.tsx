@@ -161,9 +161,20 @@ export default function BookingPage() {
               </TextZbl>
             </div>
             <div className="booking_container_validation_btn">
-              <ButtonZbl disabled={!canConfirm} onClick={handleSubmitBooking} type="submit">
-                <TextZbl color="black">Confirmer</TextZbl>
-              </ButtonZbl>
+              {user ? (
+                <ButtonZbl disabled={!canConfirm} onClick={handleSubmitBooking} type="submit">
+                  <TextZbl color="black">Confirmer</TextZbl>
+                </ButtonZbl>
+              ) : (
+                <div className="booking_container_validation_login">
+                  <TextZbl color="yellow" jetbrains>
+                    Connectez-vous pour réserver votre séjour.
+                  </TextZbl>
+                  <ButtonZbl navTo="/auth/login" theme="light">
+                    <TextZbl color="black">Se connecter</TextZbl>
+                  </ButtonZbl>
+                </div>
+              )}
             </div>
             <div className="booking_container_validation_desc">
               <TextZbl color="grey">
