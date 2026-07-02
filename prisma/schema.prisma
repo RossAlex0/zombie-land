@@ -115,6 +115,7 @@ model user {
   deleted_at          DateTime?       @db.Timestamp(6)
   deleted             Boolean         @default(false)
   stripe_customer_id  String?         @unique @db.VarChar(255)
+  google_id           String?         @unique @db.VarChar(255)
   booking             booking[]
   refresh_token       refresh_token[]
   role                role            @relation(fields: [role_id], references: [id], onUpdate: NoAction, map: "fk_user_role")

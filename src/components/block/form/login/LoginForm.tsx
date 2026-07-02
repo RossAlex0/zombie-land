@@ -6,6 +6,7 @@ import TextZbl from '@components/ui/text-zbl/TextZbl';
 import useLogin from '@hooks/api-request/auth/useLogin';
 import ButtonZbl from '@components/ui/button-zbl/ButtonZbl';
 import FormInput from '@components/ui/input/form-input/FormInput';
+import { ArrowRight } from 'lucide-react';
 import './loginForm.scss';
 
 export default function LoginForm() {
@@ -81,23 +82,7 @@ export default function LoginForm() {
           <TextZbl color="black" jetbrains>
             {loading ? 'Connexion…' : 'Se connecter'}
           </TextZbl>
-          <svg
-            className="login-form__submit-icon"
-            aria-hidden="true"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 12h14M13 6l6 6-6 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ArrowRight color="black" size={18} />
         </ButtonZbl>
 
         <ButtonZbl
@@ -105,6 +90,11 @@ export default function LoginForm() {
           theme="custom"
           className="login-form__google-btn"
           aria-label="Se connecter avec Google"
+          disabled={loading}
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.assign('/api/auth/google');
+          }}
         >
           <TextZbl color="black" jetbrains>
             Se connecter

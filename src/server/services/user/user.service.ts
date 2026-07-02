@@ -23,6 +23,20 @@ export class UserModel extends AbstractModel<'user'> {
     });
   }
 
+  async findUserByGoogleId(googleId: string) {
+    return await this.table.findFirst({
+      where: { google_id: googleId, deleted_at: null },
+      select: { id: true, role: true },
+    });
+  }
+
+  async linkGoogleId(userId: number, googleId: string) {
+    return await this.table.update({
+      where: { id: userId },
+      data: { google_id: googleId },
+    });
+  }
+
   async findUserById(id: number, fields?: userFindUniqueArgs['select']) {
     const args: userFindUniqueArgs = { where: { id }, select: fields ?? {} };
 
