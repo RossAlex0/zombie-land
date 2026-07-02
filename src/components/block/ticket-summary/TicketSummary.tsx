@@ -31,8 +31,11 @@ export default function TicketSummary({
           Date :
         </TextZbl>
         <TextZbl jetbrains className="ticket_summary_text_wrap">
-          {selectedDate?.from ? parseDateFr(selectedDate.from) : ''} au&nbsp;
-          {selectedDate?.to ? parseDateFr(selectedDate.to) : ''}
+          {selectedDate?.from && selectedDate?.to
+            ? selectedDate?.from === selectedDate?.to
+              ? ` ${parseDateFr(selectedDate?.from)}`
+              : ` ${parseDateFr(selectedDate?.from)} au ${parseDateFr(selectedDate?.to)}`
+            : undefined}
         </TextZbl>
       </div>
 
