@@ -14,7 +14,7 @@ import './booking.scss';
 import { useBooking } from '@context/bookingProvider';
 import useCreateBooking from '@hooks/api-request/booking/useCreateBooking';
 import FinalBookingModal from '@components/block/modal-zbl/final-booking/FinaleBookingModal';
-import { BookingStatus, BookingWithTickets } from '@customTypes/collections/booking';
+import { BookingWithTickets } from '@customTypes/collections/booking';
 import useCreateCheckoutSession from '@hooks/api-request/checkout/useCreateCheckoutSession';
 import { redirect } from 'next/navigation';
 import { useAuth } from '@context/authProvider';
