@@ -69,7 +69,9 @@ function CheckoutStatusContent() {
                 </TextZbl>
               </span>
               <TextZbl jetbrains>
-                {parseDateFr(new Date(booking.start_at))} — {parseDateFr(new Date(booking.end_at))}
+                {booking.start_at === booking.end_at
+                  ? ` ${parseDateFr(booking.start_at)}`
+                  : ` ${parseDateFr(booking.start_at)} - ${parseDateFr(booking.end_at)}`}
               </TextZbl>
             </div>
 

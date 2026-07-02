@@ -104,7 +104,9 @@ export default function BookingCard({ booking, onCancelled }: BookingCardProps) 
       <div className="booking_card_dates">
         <Calendar1 color="#ac382a" size={18} />
         <TextZbl jetbrains>
-          {parseDateFr(new Date(booking.start_at))} — {parseDateFr(new Date(booking.end_at))}
+          {booking.start_at === booking.end_at
+            ? ` ${parseDateFr(booking.start_at)}`
+            : ` ${parseDateFr(booking.start_at)} - ${parseDateFr(booking.end_at)}`}
         </TextZbl>
         <TextZbl jetbrains color="grey">
           ({booking.duration} jour{booking.duration > 1 ? 's' : ''})
