@@ -6,6 +6,11 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     environment: 'node',
-    env: loadEnv('mode', process.cwd(), ''),
+    env: loadEnv('test', process.cwd(), ''),
+    // Integration tests on a shared database: we forbid parallel execution of files
+    // (otherwise their cleanups/inserts collide).
+    fileParallelism: false,
+    // Clean the database before each test file.
+    setupFiles: ['./src/test/db-reset.ts'],
   },
 });
