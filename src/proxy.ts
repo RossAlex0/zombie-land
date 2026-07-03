@@ -20,7 +20,7 @@ export async function proxy(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
   }
-  if (request.nextUrl.pathname.includes('/admin/back-office')) {
+  if (request.nextUrl.pathname.startsWith('/admin')) {
     const token = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
     if (!token) {
@@ -43,5 +43,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/back-office'],
+  // everything under /admin is protected by the proxy middleware
+  matcher: ['/admin', '/admin/:path*'],
 };
