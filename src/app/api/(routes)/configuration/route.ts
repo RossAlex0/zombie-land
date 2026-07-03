@@ -4,4 +4,4 @@ import { configurationController } from '@server/controllers/configuration/confi
 
 export const GET = withErrorHandler(configurationController.getConfiguration);
 
-export const PATCH = withErrorHandler(configurationController.updateConfiguration);
+export const PATCH = withErrorHandler(verifyAdmin(configurationController.updateConfiguration));
