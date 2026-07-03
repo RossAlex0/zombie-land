@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll, beforeEach, afterAll } from 'vitest';
+import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { ZodError } from 'zod';
 import { NextRequest } from 'next/server';
 import { prisma } from '../../../utils/api/database/client';
@@ -20,11 +20,6 @@ beforeAll(async () => {
     update: {},
     create: { id: 1, name: 'CUSTOMER' },
   });
-});
-
-beforeEach(async () => {
-  await prisma.refresh_token.deleteMany();
-  await prisma.user.deleteMany();
 });
 
 afterAll(async () => {
