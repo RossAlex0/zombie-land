@@ -81,6 +81,14 @@
         justify-content: center;
       }
 
+      &_login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+
       &_desc {
         display: flex;
         justify-content: center;

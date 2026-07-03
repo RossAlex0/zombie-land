@@ -14,7 +14,7 @@ import './booking.scss';
 import { useBooking } from '@context/bookingProvider';
 import useCreateBooking from '@hooks/api-request/booking/useCreateBooking';
 import FinalBookingModal from '@components/block/modal-zbl/final-booking/FinaleBookingModal';
-import { BookingStatus, BookingWithTickets } from '@customTypes/collections/booking';
+import { BookingWithTickets } from '@customTypes/collections/booking';
 import useCreateCheckoutSession from '@hooks/api-request/checkout/useCreateCheckoutSession';
 import { redirect } from 'next/navigation';
 import { useAuth } from '@context/authProvider';
@@ -161,9 +161,20 @@ export default function BookingPage() {
               </TextZbl>
             </div>
             <div className="booking_container_validation_btn">
-              <ButtonZbl disabled={!canConfirm} onClick={handleSubmitBooking} type="submit">
-                <TextZbl color="black">Confirmer</TextZbl>
-              </ButtonZbl>
+              {user ? (
+                <ButtonZbl disabled={!canConfirm} onClick={handleSubmitBooking} type="submit">
+                  <TextZbl color="black">Confirmer</TextZbl>
+                </ButtonZbl>
+              ) : (
+                <div className="booking_container_validation_login">
+                  <TextZbl color="yellow" jetbrains>
+                    Connectez-vous pour réserver votre séjour.
+                  </TextZbl>
+                  <ButtonZbl navTo="/auth/login" theme="light">
+                    <TextZbl color="black">Se connecter</TextZbl>
+                  </ButtonZbl>
+                </div>
+              )}
             </div>
             <div className="booking_container_validation_desc">
               <TextZbl color="grey">
