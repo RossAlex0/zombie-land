@@ -2,8 +2,7 @@ import { z } from 'zod';
 
 export const loginSchema = z.object({
   email: z.email('Adresse email invalide'),
-  //!A changer pour au moins 12 avant le passage du TP
-  password: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
+  password: z.string().min(12, 'Le mot de passe doit contenir au moins 12 caractères'),
 });
 
 export const signupSchema = z
@@ -12,8 +11,7 @@ export const signupSchema = z
     last_name: z.string().min(3, 'Le nom doit contenir au moins 3 caractères'),
 
     email: z.email('Adresse email invalide'),
-    //!A changer pour au moins 12 avant le passage du TP
-    password: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
+    password: z.string().min(12, 'Le mot de passe doit contenir au moins 12 caractères'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -29,10 +27,9 @@ export const updateUserSchema = z.object({
 
 export const updatePasswordSchema = z
   .object({
-    //!A changer pour au moins 12 avant le passage du TP
-    oldPassword: z.string().min(6),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
+    oldPassword: z.string().min(12),
+    password: z.string().min(12),
+    confirmPassword: z.string().min(12),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Les nouveaux mots de passe ne correspondent pas',

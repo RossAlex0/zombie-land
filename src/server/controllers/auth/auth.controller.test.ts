@@ -40,8 +40,8 @@ describe('authController.signup', () => {
       first_name: 'John',
       last_name: 'Doe',
       email: 'john@test.com',
-      password: 'secret123',
-      confirmPassword: 'secret123',
+      password: 'Secret123456!',
+      confirmPassword: 'Secret123456!',
     });
 
     //ACT
@@ -54,7 +54,7 @@ describe('authController.signup', () => {
 
     const createdUser = await prisma.user.findFirst({ where: { email: 'john@test.com' } });
     expect(createdUser).toBeTruthy();
-    expect(createdUser?.password).not.toBe('secret123');
+    expect(createdUser?.password).not.toBe('Secret123456!');
     expect(createdUser?.password).toMatch(/^\$argon2/);
   });
 
@@ -64,8 +64,8 @@ describe('authController.signup', () => {
       first_name: 'John',
       last_name: 'Doe',
       email: 'pas-un-email',
-      password: 'secret123',
-      confirmPassword: 'secret123',
+      password: 'Secret123456!',
+      confirmPassword: 'Secret123456!',
     });
 
     //ACT + ASSERT
@@ -78,7 +78,7 @@ describe('authController.signup', () => {
       first_name: 'John',
       last_name: 'Doe',
       email: 'john@test.com',
-      password: 'secret123',
+      password: 'Secret123456!',
       confirmPassword: 'autremdp',
     });
 
@@ -92,8 +92,8 @@ describe('authController.signup', () => {
       first_name: 'John',
       last_name: 'Doe',
       email: 'john@test.com',
-      password: 'secret123',
-      confirmPassword: 'secret123',
+      password: 'Secret123456!',
+      confirmPassword: 'Secret123456!',
     };
     await authController.signup(makeReq(payload)); // premier signup OK
 
@@ -117,11 +117,11 @@ describe('authController.login', () => {
         first_name: 'John',
         last_name: 'Doe',
         email: 'john@test.com',
-        password: 'secret123',
-        confirmPassword: 'secret123',
+        password: 'Secret123456!',
+        confirmPassword: 'Secret123456!',
       })
     );
-    const req = makeReq({ email: 'john@test.com', password: 'secret123' });
+    const req = makeReq({ email: 'john@test.com', password: 'Secret123456!' });
 
     //ACT
     const res = await authController.login(req);
@@ -137,7 +137,7 @@ describe('authController.login', () => {
 
   test('it should return 401 when the email is not found', async () => {
     //ARRANGE
-    const req = makeReq({ email: 'inconnu@test.com', password: 'secret123' });
+    const req = makeReq({ email: 'inconnu@test.com', password: 'Secret123456!' });
 
     //ACT
     const res = await authController.login(req);
@@ -155,11 +155,11 @@ describe('authController.login', () => {
         first_name: 'John',
         last_name: 'Doe',
         email: 'john@test.com',
-        password: 'secret123',
-        confirmPassword: 'secret123',
+        password: 'Secret123456!',
+        confirmPassword: 'Secret123456!',
       })
     );
-    const req = makeReq({ email: 'john@test.com', password: 'mauvais-mdp' });
+    const req = makeReq({ email: 'john@test.com', password: 'MauvaisMotDePasse1!' });
 
     //ACT
     const res = await authController.login(req);
@@ -171,7 +171,7 @@ describe('authController.login', () => {
 
   test('it should throw a ZodError when the request body contains a malformed email', async () => {
     //ARRANGE
-    const req = makeReq({ email: 'pas-un-email', password: 'secret123' });
+    const req = makeReq({ email: 'pas-un-email', password: 'Secret123456!' });
 
     //ACT + ASSERT
     await expect(() => authController.login(req)).rejects.toThrow(ZodError);

@@ -1,22 +1,44 @@
+```mermaid
+%%{init: {'er': {'layoutDirection': 'TB', 'entityPadding': 10, 'minEntityWidth': 120}}}%%
 erDiagram
-    USER ||--o{ BOOKING : ""
-    BOOKING ||--|{ TICKET : ""
-    ACTIVITY ||--o{ CATEGORY_ACTIVITY : ""
-    CATEGORY ||--o{ CATEGORY_ACTIVITY : ""
-    TICKET ||--o{ TICKET_PRICE_MODIFIER : ""
-    PRICE_MODIFIER ||--o{ TICKET_PRICE_MODIFIER : ""
-    ROLE ||--o{ USER : ""
-    REFRESH_TOKEN ||--o{ USER : ""
+    ROLE              ||--o{ USER              : "assigns"
+    USER              ||--o{ REFRESH_TOKEN     : "owns"
+    USER              ||--o{ BOOKING           : "makes"
+    BOOKING           ||--|{ TICKET            : "contains"
+    TICKET_CATEGORY   ||--o{ TICKET            : "prices"
+    ACTIVITY          ||--o{ CATEGORY_ACTIVITY : "belongs to"
+    CATEGORY          ||--o{ CATEGORY_ACTIVITY : "groups"
 
-    CONFIGURATION {
+    ROLE {
         SERIAL id PK
-        DECIMAL_10_2 entry_price "NOT NULL"
-        INTEGER capacity "NOT NULL"
-        VARCHAR_50 status "NOT NULL DEFAULT 'active'"
-        TIME opening_hours "NOT NULL"
-        TIME closing_hours "NOT NULL"
+        VARCHAR_50 name "NOT NULL UNIQUE"
+        TIMESTAMP created_at "DEFAULT NOW()"
+    }
+
+    USER {
+        SERIAL id PK
+        INTEGER role_id FK "NOT NULL DEFAULT 1 REFERENCES ROLE(id)"
+        VARCHAR_100 first_name "NOT NULL"
+        VARCHAR_100 last_name "NOT NULL"
+        VARCHAR_255 email "NOT NULL UNIQUE"
+        BOOLEAN valid_email "DEFAULT FALSE"
+        DATE birth_date
+        VARCHAR_255 password "NOT NULL"
+        TIMESTAMP password_changed_at
+        BOOLEAN deleted "NOT NULL DEFAULT FALSE"
+        TIMESTAMP deleted_at "INDEX"
+        VARCHAR_255 stripe_customer_id "UNIQUE"
+        VARCHAR_255 google_id "UNIQUE"
         TIMESTAMP created_at "DEFAULT NOW()"
         TIMESTAMP updated_at "DEFAULT NOW()"
+    }
+
+    REFRESH_TOKEN {
+        SERIAL id PK
+        INTEGER user_id FK "NOT NULL REFERENCES USER(id) ON DELETE CASCADE"
+        VARCHAR_512 token "NOT NULL UNIQUE"
+        TIMESTAMP issued_at "DEFAULT NOW()"
+        TIMESTAMP expired_at "NOT NULL"
     }
 
     ACTIVITY {
@@ -42,64 +64,52 @@ erDiagram
         TIMESTAMP created_at "DEFAULT NOW()"
     }
 
-    ROLE {
-        SERIAL id PK
-        VARCHAR_50 name "NOT NULL UNIQUE"
-        TIMESTAMP created_at "DEFAULT NOW()"
-    }
-
-    USER {
-        SERIAL id PK
-        VARCHAR_100 first_name "NOT NULL"
-        VARCHAR_100 last_name "NOT NULL"
-        VARCHAR_255 email "NOT NULL UNIQUE"
-        DATE birth_date "NOT NULL"
-        VARCHAR_255 password "NOT NULL"
-        INTEGER role_id FK "REFERENCES ROLE(id) NOT NULL DEFAUT 1"
-        TIMESTAMP created_at "DEFAULT NOW()"
-        TIMESTAMP updated_at "DEFAULT NOW()"
-        INTEGER refresh_token_id FK "REFERENCES ROLE(id)"
-    }
-
     BOOKING {
         SERIAL id PK
+        INTEGER user_id FK "NOT NULL REFERENCES USER(id) ON DELETE RESTRICT"
+        VARCHAR_50 reference "NOT NULL UNIQUE"
         VARCHAR_50 status "NOT NULL DEFAULT 'pending'"
         TIMESTAMP start_at "NOT NULL"
-        TIMESTAMP end_at "NOT NULL"
+        TIMESTAMP end_at "NOT NULL CHECK (end_at > start_at)"
         INTEGER duration "NOT NULL"
-        INTEGER id_user FK "REFERENCES USER(id) NOT NULL"
+        DECIMAL_10_2 subtotal "NOT NULL DEFAULT 0"
+        DECIMAL_10_2 discount "NOT NULL DEFAULT 0"
+        VARCHAR_50 promo_code
+        DECIMAL_10_2 total_paid "NOT NULL DEFAULT 0"
         TIMESTAMP created_at "DEFAULT NOW()"
         TIMESTAMP updated_at "DEFAULT NOW()"
     }
 
     TICKET {
         SERIAL id PK
-        VARCHAR_50 reservation_number "NOT NULL UNIQUE"
+        INTEGER booking_id FK "NOT NULL REFERENCES BOOKING(id) ON DELETE CASCADE"
+        INTEGER category_id FK "NOT NULL REFERENCES TICKET_CATEGORY(id) ON DELETE NO ACTION"
+        VARCHAR_100 reservation_number "NOT NULL UNIQUE"
         VARCHAR_50 status "NOT NULL DEFAULT 'valid'"
-        INTEGER booking_id FK "REFERENCES BOOKING(id) NOT NULL"
-        TIMESTAMP validity_date  NOT NULL
+        TIMESTAMP validity_date "NOT NULL"
+        DECIMAL_10_2 unit_price "NOT NULL"
         TIMESTAMP created_at "DEFAULT NOW()"
         TIMESTAMP updated_at "DEFAULT NOW()"
     }
 
-    PRICE_MODIFIER {
+    TICKET_CATEGORY {
         SERIAL id PK
-        VARCHAR_100 label "NOT NULL"
-        DECIMAL_5_2 reduction "NOT NULL"
+        VARCHAR_100 label "NOT NULL UNIQUE"
+        INTEGER reduction "NOT NULL DEFAULT 0 CHECK (reduction BETWEEN 0 AND 100)"
+        BOOLEAN is_default "NOT NULL DEFAULT FALSE"
+        INTEGER display_order "NOT NULL DEFAULT 0"
         TIMESTAMP created_at "DEFAULT NOW()"
         TIMESTAMP updated_at "DEFAULT NOW()"
     }
 
-    TICKET_PRICE_MODIFIER {
-        INTEGER ticket_id PK "REFERENCES TICKET(id) ON DELETE CASCADE"
-        INTEGER price_modifier_id PK "REFERENCES PRICE_MODIFIER(id) ON DELETE CASCADE"
+    CONFIGURATION {
+        SERIAL id PK "CONSTRAINT single_row CHECK (id = 1)"
+        DECIMAL_10_2 entry_price "NOT NULL"
+        INTEGER capacity "NOT NULL"
+        VARCHAR_50 status "NOT NULL DEFAULT 'active'"
+        TIME opening_hours "NOT NULL"
+        TIME closing_hours "NOT NULL"
         TIMESTAMP created_at "DEFAULT NOW()"
+        TIMESTAMP updated_at "DEFAULT NOW()"
     }
-
-    REFRESH_TOKEN {
-        SERIAL id Pk
-        TEXT token "NOT NULL"
-        TIMESTAMP issued_at "NOT NULL DEFAULT NOW()"
-        TIMESTAMP expired_at  "NOT NULL"
-        INTEGER user_id "NOT NULL"
-    }
+```

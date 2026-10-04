@@ -44,5 +44,5 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   // everything under /admin is protected by the proxy middleware
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*', '/api/auth/:path*'],
 };
