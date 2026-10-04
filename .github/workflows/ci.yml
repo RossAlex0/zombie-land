@@ -12,6 +12,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Base éphémère pour les tests d'intégration, équivalent CI de docker-compose.test.yml
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: admin_zombieland
+          POSTGRES_PASSWORD: zombieland
+          POSTGRES_DB: zombieland_test
+        ports:
+          - 5434:5432
+        options: >-
+          --health-cmd "pg_isready -U admin_zombieland -d zombieland_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://admin_zombieland:zombieland@localhost:5434/zombieland_test
+      JWT_SECRET: test-secret-jwt
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,6 +49,15 @@ jobs:
 
       - name: Run Prettier
         run: npm run format:check
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Apply migrations on the test database
+        run: npx prisma migrate deploy
+
+      - name: Run integration tests
+        run: npm run test:int
 
       - name: Build Next.js
         run: npm run build
