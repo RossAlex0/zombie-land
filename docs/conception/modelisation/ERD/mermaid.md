@@ -1,86 +1,98 @@
+```mermaid
+%%{init: {'er': {'layoutDirection': 'TB', 'entityPadding': 10, 'minEntityWidth': 120}}}%%
 erDiagram
-USER ||--o{ BOOKING : ""
-BOOKING ||--|{ TICKET : ""
-ACTIVITY ||--o{ CATEGORY_ACTIVITY : ""
-CATEGORY ||--o{ CATEGORY_ACTIVITY : ""
-TICKET ||--o{ TICKET_PRICE_MODIFIER : ""
-PRICE_MODIFIER ||--o{ TICKET_PRICE_MODIFIER : ""
-ROLE ||--o{ USER : ""
-REFRESH_TOKEN ||--o{ USER : ""
+    ROLE              ||--o{ USER              : "assigns"
+    USER              ||--o{ REFRESH_TOKEN     : "owns"
+    USER              ||--o{ BOOKING           : "makes"
+    BOOKING           ||--|{ TICKET            : "contains"
+    TICKET_CATEGORY   ||--o{ TICKET            : "prices"
+    ACTIVITY          ||--o{ CATEGORY_ACTIVITY : "belongs to"
+    CATEGORY          ||--o{ CATEGORY_ACTIVITY : "groups"
 
-    CONFIGURATION {
-        int id PK
-        decimal entry_price
-        int capacity
-        string status
-        string opening_hours
-        string closing_hours
-    }
-
-    ACTIVITY {
-        int id PK
-        string name
-        string description
-        string picture
-        string status
-    }
-
-    CATEGORY {
-        int id PK
-        string label
-    }
-
-    CATEGORY_ACTIVITY {
-        int activity_id FK
-        int category_id FK
+    ROLE {
+        _ id PK
+        _ name
     }
 
     USER {
-        int id PK
-        string first_name
-        string last_name
-        string email
-        date birth_date
-        string password
-        string role_id FK
-    }
-
-    ROLE {
-        int id PK
-        string name
-    }
-
-    BOOKING {
-        int id PK
-        string status
-        datetime start_at
-        datetime end_at
-        int duration
-        int user_id FK
-    }
-
-    TICKET {
-        int id PK
-        string reservation_number
-        string status
-        int booking_id FK
-    }
-
-    PRICE_MODIFIER {
-        int id PK
-        string label
-        decimal reduction
-    }
-
-    TICKET_PRICE_MODIFIER {
-        int ticket_id FK
-        int price_modifier_id FK
+        _ id PK
+        _ role_id FK
+        _ first_name
+        _ last_name
+        _ email
+        _ valid_email
+        _ birth_date
+        _ password
+        _ password_changed_at
+        _ deleted
+        _ deleted_at
+        _ stripe_customer_id
+        _ google_id
     }
 
     REFRESH_TOKEN {
-        int id PK
-        text token
-        TIMESTAMP issued_at
-        TIMESTAMP expired_at
-        int user_id FK
+        _ id PK
+        _ user_id FK
+        _ token
+        _ expired_at
     }
+
+    ACTIVITY {
+        _ id PK
+        _ name
+        _ description
+        _ picture
+        _ status
+    }
+
+    CATEGORY {
+        _ id PK
+        _ label
+    }
+
+    CATEGORY_ACTIVITY {
+        _ activity_id PK_FK
+        _ category_id PK_FK
+    }
+
+    BOOKING {
+        _ id PK
+        _ user_id FK
+        _ reference
+        _ status
+        _ start_at
+        _ end_at
+        _ duration
+        _ subtotal
+        _ discount
+        _ promo_code
+        _ total_paid
+    }
+
+    TICKET {
+        _ id PK
+        _ booking_id FK
+        _ category_id FK
+        _ reservation_number
+        _ status
+        _ validity_date
+        _ unit_price
+    }
+
+    TICKET_CATEGORY {
+        _ id PK
+        _ label
+        _ reduction
+        _ is_default
+        _ display_order
+    }
+
+    CONFIGURATION {
+        _ id PK
+        _ entry_price
+        _ capacity
+        _ status
+        _ opening_hours
+        _ closing_hours
+    }
+```
