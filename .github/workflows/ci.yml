@@ -1,4 +1,4 @@
-name: CI - Build
+name: CI - Lint, tests and build
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
 
     # Base éphémère pour les tests d'intégration, équivalent CI de docker-compose.test.yml
