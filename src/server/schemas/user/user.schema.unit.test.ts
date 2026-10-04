@@ -10,7 +10,7 @@ const validSignup = {
 };
 
 describe('signupSchema', () => {
-  test('it should reject a password shorter than the 12 characters recommended by the CNIL', () => {
+  test('it should reject a password shorter than 12 characters', () => {
     //ARRANGE
     const payload = { ...validSignup, password: 'Secret12!', confirmPassword: 'Secret12!' };
 
