@@ -30,8 +30,9 @@ export default function useSignup() {
         });
         const json = await res.json().catch(() => null);
         if (!res.ok) {
-          if (json?.errors) setFieldErrors(json.errors as FieldErrors);
-          const message = json?.message || `Erreur ${res.status}`;
+          // withErrorHandler renvoie { error, code, fieldErrors } pour une ZodError
+          if (json?.fieldErrors) setFieldErrors(json.fieldErrors as FieldErrors);
+          const message = json?.message || json?.error || `Erreur ${res.status}`;
           setError(message);
           return { ok: false, error: message };
         }
