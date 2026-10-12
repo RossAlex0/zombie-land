@@ -11,7 +11,13 @@ export const signupSchema = z
     last_name: z.string().min(3, 'Le nom doit contenir au moins 3 caractères'),
 
     email: z.email('Adresse email invalide'),
-    password: z.string().min(12, 'Le mot de passe doit contenir au moins 12 caractères'),
+    password: z
+      .string()
+      .min(12, 'Le mot de passe doit contenir au moins 12 caractères')
+      .regex(/[A-Z]/, 'Le mot de passe doit contenir une majuscule')
+      .regex(/[a-z]/, 'Le mot de passe doit contenir une minuscule')
+      .regex(/[0-9]/, 'Le mot de passe doit contenir un chiffre')
+      .regex(/[^A-Za-z0-9]/, 'Le mot de passe doit contenir un caractère spécial'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
